@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block title %}Trang chủ - SmartNote{% endblock %}
+
+{% block content %} <div class="row text-center mb-5">
+    <div class="col-md-8 mx-auto">
+        <h1 class="display-4 fw-bold">Ghi chú mọi lúc, <span class="text-primary">thông minh hơn</span></h1>
+        <p class="lead text-muted mt-3">SmartNote tích hợp AI giúp bạn phân loại, lên lịch và trích xuất văn bản từ hình ảnh tự động.</p>
+        
+        {% if user.is_authenticated %}
+            <button class="btn btn-primary btn-lg mt-3 shadow"><i class="fa-solid fa-plus"></i> Tạo ghi chú mới</button>
+        {% else %}
+            <a href="#" class="btn btn-success btn-lg mt-3 shadow">Bắt đầu miễn phí ngay</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0" style="background-color: #fff9c4;">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">Họp team đồ án</h5>
+                <p class="card-text">Nhớ báo cáo tiến độ phần Frontend và Database nhé.</p>
+                <span class="badge bg-danger">High Priority (AI)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">Ý tưởng App</h5>
+                <p class="card-text">- Tích hợp Google Login<br>- Quét ảnh OCR<br>- Checklist</p>
+                <span class="badge bg-secondary">System</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

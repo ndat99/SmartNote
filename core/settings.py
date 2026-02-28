@@ -117,9 +117,9 @@ SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'            
-LOGOUT_REDIRECT_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # CẤU HÌNH QUYỀN TRUY CẬP GOOGLE
 SOCIALACCOUNT_PROVIDERS = {
@@ -130,6 +130,13 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',
+        },
+        'APP': {
+            'client_id': 'id_gia_tam_thoi_chua_xai_duoc',
+            'secret': 'secret_gia_tam_thoi',
+            'key': ''
         }
     }
 }
+
+ACCOUNT_LOGOUT_ON_GET = True
