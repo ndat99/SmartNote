@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+
+{% block title %}Đăng ký - SmartNote{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow-lg border-0 rounded-lg">
+            <div class="card-header bg-primary text-white text-center py-3">
+                <h3 class="mb-0"><i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản</h3>
+            </div>
+            <div class="card-body p-4">
+                
+                <div class="d-grid gap-2 mb-4">
+                    <a href="{% provider_login_url 'google' %}" class="btn btn-outline-danger shadow-sm">
+                        <i class="fa-brands fa-google me-2"></i> Đăng ký nhanh bằng Google
+                    </a>
+                </div>
+
+                <div class="text-center text-muted mb-4">
+                    <span>HOẶC TẠO TÀI KHOẢN MỚI</span>
+                </div>
+
+                <form method="POST" action="{% url 'account_signup' %}">
+                    {% csrf_token %}
+                    
+                    <style>
+                        .django-form p { margin-bottom: 1rem; }
+                        .django-form input { width: 100%; padding: 0.375rem 0.75rem; border: 1px solid #ced4da; border-radius: 0.375rem; }
+                        .django-form label { font-weight: bold; margin-bottom: 0.5rem; }
+                        .django-form ul { color: red; list-style: none; padding: 0; font-size: 0.875em;}
+                        .django-form span.helptext { font-size: 0.8em; color: #6c757d; display: block; }
+                    </style>
+
+                    <div class="django-form">
+                        {{ form.as_p }}
+                    </div>
+                    
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-success btn-lg">Đăng Ký</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center py-3">
+                <div class="small"><a href="{% url 'account_login' %}">Đã có tài khoản? Về trang Đăng nhập</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
