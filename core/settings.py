@@ -133,11 +133,12 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'online',
         },
         'APP': {
-            'client_id': os.getenv('CLIENT_ID'),
-            'secret': os.getenv('SECRET'),
+            'client_id': os.getenv('GOOGLE_CLIENT_ID'),
+            'secret': os.getenv('GOOGLE_CLIENT_SECRET'),
             'key': ''
         }
     }
 }
 
 ACCOUNT_LOGOUT_ON_GET = True
+SOCIALACCOUNT_LOGIN_ON_GET = True
