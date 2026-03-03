@@ -9,45 +9,104 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        body { background-color: #f8f9fa; }
-        .navbar-brand { font-weight: bold; font-size: 1.5rem; }
+        /* Tông màu Light Mode chuẩn Google Keep */
+        body { background-color: #ffffff; color: #202124; font-family: 'Roboto', Arial, sans-serif; overflow-x: hidden; }
+        
+        /* Navbar */
+        .navbar { background-color: #ffffff; border-bottom: 1px solid #e0e0e0; padding: 8px 16px; height: 64px; }
+        .menu-btn { color: #5f6368; font-size: 1.2rem; cursor: pointer; padding: 12px; border-radius: 50%; transition: 0.2s;}
+        .menu-btn:hover { background-color: rgba(60,64,67,0.08); }
+        .search-container { max-width: 720px; width: 100%; margin: 0 auto; position: relative; }
+        .search-bar { background-color: #f1f3f4; border-radius: 8px; border: 1px solid transparent; color: #202124; padding: 10px 10px 10px 50px; width: 100%; transition: 0.2s;}
+        .search-bar:focus { outline: none; background-color: #ffffff; border-color: transparent; box-shadow: 0 1px 1px 0 rgba(65,69,73,0.3), 0 1px 3px 1px rgba(65,69,73,0.15); }
+        .search-icon { position: absolute; left: 15px; top: 12px; color: #5f6368; }
+        
+        /* Sidebar bên trái */
+        .sidebar { width: 280px; transition: 0.2s; position: fixed; height: calc(100vh - 64px); padding-top: 10px; border-right: 1px solid transparent; }
+        .sidebar.collapsed { width: 70px; }
+        .nav-item-custom { border-radius: 0 25px 25px 0; padding: 12px 24px; color: #202124; display: flex; align-items: center; text-decoration: none; margin-bottom: 5px; cursor: pointer;}
+        .nav-item-custom:hover { background-color: #f1f3f4; }
+        .nav-item-custom.active { background-color: #feefc3; color: #202124; font-weight: bold;}
+        .nav-icon { width: 24px; margin-right: 20px; text-align: center; font-size: 1.1rem; color: #5f6368;}
+        .nav-item-custom.active .nav-icon { color: #202124; }
+        .nav-text { white-space: nowrap; opacity: 1; transition: 0.2s; font-weight: 500;}
+        .sidebar.collapsed .nav-text { opacity: 0; pointer-events: none; }
+        
+        /* Khu vực chính */
+        .main-content { margin-left: 280px; transition: 0.2s; padding: 30px; }
+        .main-content.expanded { margin-left: 70px; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}"><i class="fa-solid fa-book-journal-whills"></i> SmartNote</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-toggle="target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item d-flex align-items-center">
-                            <span class="nav-link text-warning fw-bold me-2"><i class="fa-solid fa-user"></i> {{ user.username }}</span>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-outline-danger btn-sm text-white" href="{% url 'account_logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a>
-                        </li>
+    <nav class="navbar d-flex align-items-center justify-content-between fixed-top">
+        <div class="d-flex align-items-center">
+            <i class="fa-solid fa-bars menu-btn me-2" onclick="toggleSidebar()"></i>
+            <a class="navbar-brand text-secondary d-flex align-items-center" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" width="40" class="me-2">
+                <b class="fs-5 text-dark">Smart Note</b>
+            </a>
+        </div>
+        
+        <div class="search-container d-none d-md-block">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-bar" placeholder="Tìm kiếm">
+        </div>
+
+        <div class="d-flex align-items-center">
+            <i class="fa-solid fa-rotate-right menu-btn d-none d-sm-block"></i>
+            <i class="fa-solid fa-gear menu-btn d-none d-sm-block"></i>
+            
+            {% if user.is_authenticated %}
+                <div class="dropdown ms-3">
+                    {% if user.socialaccount_set.all %}
+                    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="rounded-circle shadow-sm" width="36" role="button" data-bs-toggle="dropdown" alt="Google Avatar">
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_login' %}">Đăng nhập</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary btn-sm ms-2 text-white" href="{% url 'account_signup' %}">Đăng ký</a>
-                        </li>
+                    <img src="https://ui-avatars.com/api/?name={{ user.get_full_name|default:user.username }}&background=random" class="rounded-circle shadow-sm" width="36" role="button" data-bs-toggle="dropdown" alt="Default Avatar">
                     {% endif %}
-                </ul>
-            </div>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                        <li><span class="dropdown-item-text fw-bold">{{ user.get_full_name|default:user.username }}</span></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'account_logout' %}">Đăng xuất</a></li>
+                    </ul>
+                </div>
+            {% else %}
+                <div class="ms-3">
+                    <a href="{% url 'account_login' %}" class="btn btn-outline-primary btn-sm fw-bold me-2">Đăng nhập</a>
+                    <a href="{% url 'account_signup' %}" class="btn btn-primary btn-sm fw-bold">Đăng ký</a>
+                </div>
+            {% endif %}
         </div>
     </nav>
 
-    <div class="container mt-5">
-        {% block content %}
-        {% endblock %}
+    <div class="sidebar mt-5" id="sidebar">
+        <a href="#" class="nav-item-custom active">
+            <i class="fa-regular fa-lightbulb nav-icon"></i> <span class="nav-text">Ghi chú</span>
+        </a>
+        <a href="#" class="nav-item-custom">
+            <i class="fa-regular fa-bell nav-icon"></i> <span class="nav-text">Lời nhắc</span>
+        </a>
+        <a href="#" class="nav-item-custom">
+            <i class="fa-solid fa-pen nav-icon"></i> <span class="nav-text">Chỉnh sửa nhãn</span>
+        </a>
+        <a href="#" class="nav-item-custom">
+            <i class="fa-solid fa-box-archive nav-icon"></i> <span class="nav-text">Lưu trữ</span>
+        </a>
+        <a href="#" class="nav-item-custom">
+            <i class="fa-regular fa-trash-can nav-icon"></i> <span class="nav-text">Thùng rác</span>
+        </a>
+    </div>
+
+    <div class="main-content mt-5" id="mainContent">
+        {% block content %}{% endblock %}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.getElementById('mainContent').classList.toggle('expanded');
+        }
+    </script>
 </body>
 </html>
