@@ -11,7 +11,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 ALLOWED_HOSTS = ['*']
-DEBUG = True,
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 
 INSTALLED_APPS = [
