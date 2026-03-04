@@ -12,6 +12,7 @@ except ImportError:
 def run_ai_background(note_id, text):
     try:
         ai_result = analyze_note_with_ai(text)
+        print('AI_RESULT', ai_result)
         if ai_result:
             note = Note.objects.get(id=note_id)
             
@@ -20,6 +21,7 @@ def run_ai_background(note_id, text):
             
             # 1. Bắt đầu lưu Priority
             note.priority = ai_result.get('priority')
+            note.priority_source = 'AI'
             
             # 2. Xử lý Category thông minh (Ưu tiên System -> User -> Tạo mới)
             cat_name = ai_result.get('category')

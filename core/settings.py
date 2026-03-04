@@ -85,6 +85,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'vi'
 TIME_ZONE = 'Asia/Ho_Chi_Minh'
 USE_I18N = True
 USE_TZ = True
@@ -141,3 +142,9 @@ SOCIALACCOUNT_PROVIDERS = {
 
 ACCOUNT_LOGOUT_ON_GET = True
 SOCIALACCOUNT_LOGIN_ON_GET = True
+ACCOUNT_SESSION_REMEMBER = False
+# Chỉ định cho Allauth biết phải dùng Form custom
+ACCOUNT_FORMS = {
+    'login': 'notes.forms.CustomLoginForm',
+    'signup': 'notes.forms.CustomSignupForm',
+}

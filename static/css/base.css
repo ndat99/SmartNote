@@ -1,0 +1,26 @@
+/* Tông màu Light Mode chuẩn Google Keep */
+body { background-color: #ffffff; color: #202124; font-family: 'Roboto', Arial, sans-serif; overflow-x: hidden; }
+
+/* Navbar */
+.navbar { background-color: #ffffff; border-bottom: 1px solid #e0e0e0; padding: 8px 16px; height: 64px; }
+.menu-btn { color: #5f6368; font-size: 1.2rem; cursor: pointer; padding: 12px; border-radius: 50%; transition: 0.2s;}
+.menu-btn:hover { background-color: rgba(60,64,67,0.08); }
+.search-container { max-width: 720px; width: 100%; margin: 0 auto; position: relative; }
+.search-bar { background-color: #f1f3f4; border-radius: 8px; border: 1px solid transparent; color: #202124; padding: 10px 10px 10px 50px; width: 100%; transition: 0.2s;}
+.search-bar:focus { outline: none; background-color: #ffffff; border-color: transparent; box-shadow: 0 1px 1px 0 rgba(65,69,73,0.3), 0 1px 3px 1px rgba(65,69,73,0.15); }
+.search-icon { position: absolute; left: 15px; top: 12px; color: #5f6368; }
+
+/* Sidebar bên trái */
+.sidebar { width: 280px; transition: 0.2s; position: fixed; height: calc(100vh - 64px); padding-top: 10px; border-right: 1px solid transparent; }
+.sidebar.collapsed { width: 70px; }
+.nav-item-custom { border-radius: 0 25px 25px 0; padding: 12px 24px; color: #202124; display: flex; align-items: center; text-decoration: none; margin-bottom: 5px; cursor: pointer;}
+.nav-item-custom:hover { background-color: #f1f3f4; }
+.nav-item-custom.active { background-color: #feefc3; color: #202124; font-weight: bold;}
+.nav-icon { width: 24px; margin-right: 20px; text-align: center; font-size: 1.1rem; color: #5f6368;}
+.nav-item-custom.active .nav-icon { color: #202124; }
+.nav-text { white-space: nowrap; opacity: 1; transition: 0.2s; font-weight: 500;}
+.sidebar.collapsed .nav-text { opacity: 0; pointer-events: none; }
+
+/* Khu vực chính */
+.main-content { margin-left: 280px; transition: 0.2s; padding: 30px; }
+.main-content.expanded { margin-left: 70px; }
