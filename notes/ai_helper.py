@@ -15,12 +15,13 @@ def analyze_note_with_ai(content):
     prompt = f"""
     Bạn là một trợ lý ảo phân tích ghi chú. Hãy đọc đoạn văn bản sau: "{content}"
     
-    Nhiệm vụ của bạn là phân tích và trả về KẾT QUẢ DUY NHẤT DƯỚI DẠNG CHUẨN JSON, không được thêm bất kỳ câu giải thích nào khác ngoài JSON.
+    Nhiệm vụ của bạn là phân tích và trả về KẾT QUẢ DUY NHẤT DƯỚI DẠNG CHUẨN JSON.
     Cấu trúc JSON bắt buộc: 
     {{
-        "is_task": true/false, // true nếu nội dung mang tính chất công việc cần làm, nhắc nhở, mua sắm. false nếu chỉ là ghi chú kể lể bình thường.
-        "priority": "high", "medium" hoặc "low", // Đánh giá mức độ quan trọng. Có deadline gấp hoặc từ ngữ khẩn cấp là high.
-        "due_date": "YYYY-MM-DD HH:MM:SS" // Nếu trong câu có nhắc đến thời gian, hãy tính toán ra ngày giờ cụ thể (hôm nay là {today}). Nếu không có, để là null.
+        "is_task": true/false,
+        "priority": "High", "Medium" hoặc "Low", // Nếu không rõ thì để null
+        "due_date": "YYYY-MM-DD HH:MM:SS", // Hôm nay là {today}. Nếu không có thì để null
+        "category": "Tên danh mục" // Hãy ƯU TIÊN phân loại vào 1 trong các danh mục sau nếu phù hợp: Study, Shopping, Work, Personal, Health, Finance, Home, Entertainment, Travel, Ideas. Nếu nội dung hoàn toàn không thuộc các nhóm này, hãy tự trích xuất 1 từ khóa tiếng Anh ngắn gọn khác. Nếu không thể phân loại thì để null.
     }}
     """
 
