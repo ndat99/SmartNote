@@ -23,6 +23,7 @@ def run_ai_background(note_id, text):
             
             # 1. Bắt đầu lưu Priority
             note.priority = ai_result.get('priority')
+            note.priority_source = 'AI'
             
             # 2. Xử lý Category thông minh (Ưu tiên System -> User -> Tạo mới)
             cat_name = ai_result.get('category')

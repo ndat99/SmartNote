@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
+{% endblock %} {% block content %}
 <style>
     .note-card {
         transition: box-shadow 0.2s ease-in-out;
@@ -42,7 +42,9 @@
         background-color: #ffffff;
         border: 1px solid #e0e0e0;
         border-radius: 8px;
-        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
+        box-shadow:
+            0 1px 2px 0 rgba(60, 64, 67, 0.3),
+            0 2px 6px 2px rgba(60, 64, 67, 0.15);
         position: relative;
     }
 
@@ -130,11 +132,11 @@
 
 <div class="note-form-wrapper" id="formWrapper">
     <div class="note-collapsed" id="noteCollapsed" onclick="expandForm()">
-        <span>Tạo ghi chú...</span>
-        <div>
-            <i class="fa-regular fa-square-check fs-5 me-3" title="Danh sách mới"></i>
-            <i class="fa-solid fa-paintbrush fs-5 me-3" title="Ghi chú có bản vẽ mới"></i>
-            <i class="fa-regular fa-image fs-5" title="Ghi chú mới có hình ảnh"></i>
+        <span>Tạo ghi chú…</span>
+        <div class="note-collapsed-icons">
+            <i class="fa-regular fa-square-check" title="Danh sách mới"></i>
+            <i class="fa-solid fa-paintbrush" title="Ghi chú có bản vẽ"></i>
+            <i class="fa-regular fa-image" title="Ghi chú có hình ảnh"></i>
         </div>
     </div>
 
@@ -148,21 +150,22 @@
                 <i class="fa-solid fa-palette" title="Tùy chọn nền"></i>
                 <i class="fa-solid fa-image" title="Thêm hình ảnh"></i>
                 <i class="fa-regular fa-bell" title="Nhắc nhở"></i>
-                <i class="fa-solid fa-ellipsis-vertical" title="Thêm nhãn"></i>
+                <i class="fa-solid fa-tag" title="Thêm nhãn"></i>
+                <i class="fa-solid fa-ellipsis-vertical" title="Thêm tùy chọn"></i>
             </div>
-            <button type="submit" class="btn-close-note">Đóng</button>
+            <button type="submit" class="btn-close-note">Lưu & Đóng</button>
         </div>
     </form>
 </div>
 
-
 {% if pinned_notes %}
-<h6 class="text-muted fw-bold mt-4 mb-3" style="font-size: 0.75rem; letter-spacing: 1px">ĐƯỢC GHIM</h6>
+<h6 class="text-muted fw-bold mt-4 mb-3" style="font-size: 0.75rem; letter-spacing: 1px">
+    ĐƯỢC GHIM
+</h6>
 <div class="row">
     {% for note in pinned_notes %}
     <div class="col-md-3 mb-4">
         <div class="card bg-white border rounded-3 p-3 shadow-sm h-100 position-relative note-card d-flex flex-column">
-
             <a href="{% url 'toggle_pin_note' note.id %}"
                 class="position-absolute top-0 end-0 mt-2 me-2 text-decoration-none">
                 <i class="fa-solid fa-thumbtack action-icon text-dark opacity-100" title="Bỏ ghim"></i>
@@ -173,32 +176,25 @@
             {% endif %}
 
             <small class="text-muted d-block mb-2" style="font-size: 0.8rem">
-                <i class="fa-regular fa-clock"></i> {{ note.created_at|date:"d/m/Y H:i" }}
+                <i class="fa-regular fa-clock"></i> {{ note.created_at|date:"d/m/Y H:i"}}
             </small>
-
             <p class="mb-3 text-dark flex-grow-1" style="white-space: pre-wrap; font-size: 0.95rem">{{ note.content }}
             </p>
 
             <div class="d-flex flex-wrap gap-1 mb-2">
                 {% if note.category %}
                 <span class="badge bg-secondary"><i class="fa-solid fa-tag"></i> {{ note.category.name }}</span>
-                {% endif %}
-
-                {% if note.priority == 'High' %}
+                {% endif %} {% if note.priority == 'High' %}
                 <span class="badge bg-danger">Priority: High</span>
                 {% elif note.priority == 'Medium' %}
                 <span class="badge bg-warning text-dark">Priority: Medium</span>
                 {% elif note.priority == 'Low' %}
                 <span class="badge bg-success">Priority: Low</span>
-                {% endif %}
-
-                {% if note.is_task %}
+                {% endif %} {% if note.is_task %}
                 <span class="badge bg-primary">
                     {% if note.is_task_source == 'AI' %}
-                    <i class="fa-solid fa-robot"></i> Task (AI)
-                    {% else %}
-                    <i class="fa-solid fa-user"></i> Task (User)
-                    {% endif %}
+                    <i class="fa-solid fa-robot"></i> Task (AI) {% else %}
+                    <i class="fa-solid fa-user"></i> Task (User) {% endif %}
                 </span>
                 {% endif %}
             </div>
@@ -216,16 +212,22 @@
                     <i class="fa-solid fa-ellipsis-vertical action-icon px-3" data-bs-toggle="dropdown"
                         title="Thêm"></i>
                     <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3">
-                        <li><a class="dropdown-item py-2 fw-medium" href="#"><i
-                                    class="fa-regular fa-pen-to-square me-2 text-secondary"></i>Sửa ghi chú</a></li>
-                        <li><a class="dropdown-item py-2 fw-medium" href="#"><i
-                                    class="fa-solid fa-tags me-2 text-secondary"></i>Thêm nhãn</a></li>
+                        <li>
+                            <a class="dropdown-item py-2 fw-medium" href="#"><i
+                                    class="fa-regular fa-pen-to-square me-2 text-secondary"></i>Sửa ghi chú</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item py-2 fw-medium" href="#">
+                                <i class="fa-solid fa-tags me-2 text-secondary"></i>Thêm nhãn</a>
+                        </li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
-                        <li><a class="dropdown-item py-2 fw-medium text-danger"
+                        <li>
+                            <a class="dropdown-item py-2 fw-medium text-danger"
                                 href="{% url 'delete_note' note.id %}"><i class="fa-regular fa-trash-can me-2"></i>Xóa
-                                ghi chú</a></li>
+                                ghi chú</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -234,15 +236,15 @@
     {% endfor %}
 </div>
 
-<h6 class="text-muted fw-bold mt-3 mb-3" style="font-size: 0.75rem; letter-spacing: 1px">KHÁC</h6>
+<h6 class="text-muted fw-bold mt-3 mb-3" style="font-size: 0.75rem; letter-spacing: 1px">
+    KHÁC
+</h6>
 {% endif %}
-
 
 <div class="row {% if not pinned_notes %}mt-4{% endif %}">
     {% for note in notes %}
     <div class="col-md-3 mb-4">
-        <div class="card bg-white border rounded-3 p-3 shadow-sm h-100 position-relative note-card d-flex flex-column">
-
+        <div class="card bg-white border rounded-3 p-3 shadow-sm position-relative note-card d-flex flex-column">
             <a href="{% url 'toggle_pin_note' note.id %}"
                 class="position-absolute top-0 end-0 mt-2 me-2 text-decoration-none">
                 <i class="fa-solid fa-thumbtack action-icon text-muted opacity-50" title="Ghim ghi chú"></i>
@@ -262,23 +264,17 @@
             <div class="d-flex flex-wrap gap-1 mb-2">
                 {% if note.category %}
                 <span class="badge bg-secondary"><i class="fa-solid fa-tag"></i> {{ note.category.name }}</span>
-                {% endif %}
-
-                {% if note.priority == 'High' %}
+                {% endif %} {% if note.priority == 'High' %}
                 <span class="badge bg-danger">Priority: High</span>
                 {% elif note.priority == 'Medium' %}
                 <span class="badge bg-warning text-dark">Priority: Medium</span>
                 {% elif note.priority == 'Low' %}
                 <span class="badge bg-success">Priority: Low</span>
-                {% endif %}
-
-                {% if note.is_task %}
+                {% endif %} {% if note.is_task %}
                 <span class="badge bg-primary">
                     {% if note.is_task_source == 'AI' %}
-                    <i class="fa-solid fa-robot"></i> Task (AI)
-                    {% else %}
-                    <i class="fa-solid fa-user"></i> Task (User)
-                    {% endif %}
+                    <i class="fa-solid fa-robot"></i> Task (AI) {% else %}
+                    <i class="fa-solid fa-user"></i> Task (User) {% endif %}
                 </span>
                 {% endif %}
             </div>
@@ -296,37 +292,75 @@
                     <i class="fa-solid fa-ellipsis-vertical action-icon px-3" data-bs-toggle="dropdown"
                         title="Thêm"></i>
                     <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3">
-                        <li><a class="dropdown-item py-2 fw-medium" href="#"><i
-                                    class="fa-regular fa-pen-to-square me-2 text-secondary"></i>Sửa ghi chú</a></li>
-                        <li><a class="dropdown-item py-2 fw-medium" href="#"><i
-                                    class="fa-solid fa-tags me-2 text-secondary"></i>Thêm nhãn</a></li>
+                        <li>
+                            <a class="dropdown-item py-2 fw-medium" href="#"><i
+                                    class="fa-regular fa-pen-to-square me-2 text-secondary"></i>Sửa ghi chú</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item py-2 fw-medium" href="#"><i
+                                    class="fa-solid fa-tags me-2 text-secondary"></i>Thêm nhãn</a>
+                        </li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
-                        <li><a class="dropdown-item py-2 fw-medium text-danger"
+                        <li>
+                            <a class="dropdown-item py-2 fw-medium text-danger"
                                 href="{% url 'delete_note' note.id %}"><i class="fa-regular fa-trash-can me-2"></i>Xóa
-                                ghi chú</a></li>
+                                ghi chú</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    {% empty %}
-    {% if not pinned_notes %}
+    {% empty %} {% if not pinned_notes %}
     <div class="col-12 text-center text-muted mt-5">
-        <i class="fa-regular fa-lightbulb mb-3" style="font-size: 5rem; opacity: 0.2;"></i>
+        <i class="fa-regular fa-lightbulb mb-3" style="font-size: 5rem; opacity: 0.2"></i>
         <h5 class="fw-normal">Ghi chú của bạn sẽ xuất hiện ở đây</h5>
+        <p style="
+        font-size: 0.85rem;
+        color: var(--text-dim);
+        max-width: 280px;
+        margin: 0 auto;
+      ">
+            Nhấn vào ô bên trên để bắt đầu ghi chú đầu tiên của bạn.
+        </p>
     </div>
-    {% endif %}
-    {% endfor %}
+    {% endif %} {% endfor %}
 </div>
 
 <script>
     function expandForm() {
         document.getElementById("noteCollapsed").style.display = "none";
         document.getElementById("noteExpanded").style.display = "block";
+        document.querySelector('#noteExpanded input[name="title"]').focus();
     }
+
+    // Staggered animation delay for note cards
+    document.querySelectorAll(".note-card").forEach(function (card) {
+        var idx = parseInt(card.getAttribute("data-index")) || 0;
+        card.style.animationDelay = idx * 60 + "ms";
+    });
+
+    // Click outside to collapse
+    document.addEventListener("click", function (e) {
+        const wrapper = document.getElementById("formWrapper");
+        const expanded = document.getElementById("noteExpanded");
+        if (expanded.style.display === "block" && !wrapper.contains(e.target)) {
+            // don't auto-collapse if has content
+            const title = document.querySelector(
+                '#noteExpanded input[name="title"]',
+            ).value;
+            const content = document.querySelector(
+                '#noteExpanded textarea[name="content"]',
+            ).value;
+            if (!title && !content) {
+                document.getElementById("noteCollapsed").style.display = "flex";
+                expanded.style.display = "none";
+            }
+        }
+    });
 </script>
 
 {% endblock %}
