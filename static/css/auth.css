@@ -1,102 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap');
+
+:root {
+    --bg: #f0f4ff;
+    --surface: #ffffff;
+    --surface-2: #f5f7ff;
+    --border: #e2e7f8;
+    --border-focus: #4a6cf7;
+    --text: #1a1d2e;
+    --text-muted: #6b7280;
+    --text-dim: #a0a8b8;
+    --accent: #4a6cf7;
+    --accent-glow: rgba(74, 108, 247, 0.15);
+    --accent-soft: rgba(74, 108, 247, 0.06);
+    --danger: #ef4444;
+    --radius: 14px;
+    --radius-sm: 10px;
+    --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
-    background-color: #f4f7f6; /* Màu nền xám cực nhẹ giống Google */
-    color: #202124;
-    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--bg);
+    background-image:
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(74,108,247,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 20%, rgba(74,108,247,0.04) 0%, transparent 60%);
+    color: var(--text);
+    font-family: 'DM Sans', system-ui, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    margin: 0;
 }
-a { text-decoration: none; transition: 0.2s; }
-a:hover { color: #1a73e8; }
 
-/* Nâng cấp Card mượt mà */
+a { color: var(--accent); text-decoration: none; transition: opacity var(--transition); }
+a:hover { opacity: 0.8; }
+
+/* ─── Card ─── */
 .auth-card {
-    border-radius: 16px;
-    border: none;
-    box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
-    background: #fff;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow:
+        0 0 0 1px rgba(74,108,247,0.06),
+        0 24px 64px rgba(74,108,247,0.1);
     overflow: hidden;
+    animation: cardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Nút Google chuẩn auth của Google */
-.btn-google {
-    background-color: #fff;
-    color: #3c4043;
-    border: 1px solid #dadce0;
-    border-radius: 8px;
-    padding: 10px 16px;
-    font-weight: 500;
-    transition: background-color 0.2s, box-shadow 0.2s;
+/* ─── Brand header strip ─── */
+.auth-brand {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+.auth-brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--text);
+    letter-spacing: 0.01em;
+}
+.auth-brand-dot { color: var(--accent); }
+
+.auth-subtitle { color: var(--text-muted); font-size: 0.9rem; }
+
+/* ─── Google Button ─── */
+.btn-google {
+    background-color: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 11px 16px;
+    font-weight: 500;
+    font-size: 0.92rem;
+    font-family: 'DM Sans', sans-serif;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    width: 100%;
 }
 .btn-google:hover {
-    background-color: #f8f9fa;
-    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
-    color: #3c4043;
+    background-color: #f0f4ff;
+    border-color: var(--border-focus);
+    color: var(--text);
+    box-shadow: 0 0 0 3px var(--accent-glow);
 }
-.btn-google img { width: 20px; margin-right: 10px; }
+.btn-google img { width: 18px; }
 
-/* Đường kẻ chữ HOẶC ở giữa */
+/* ─── Divider ─── */
 .divider {
     display: flex;
     align-items: center;
     text-align: center;
-    margin: 25px 0 20px 0;
-    color: #5f6368;
-    font-size: 0.85rem;
-    font-weight: 500;
+    margin: 24px 0 20px;
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 .divider::before, .divider::after {
     content: '';
     flex: 1;
-    border-bottom: 1px solid #dadce0;
+    border-bottom: 1px solid var(--border);
 }
-.divider:not(:empty)::before { margin-right: 1em; }
-.divider:not(:empty)::after { margin-left: 1em; }
+.divider::before { margin-right: 14px; }
+.divider::after  { margin-left: 14px; }
 
-/* Bo tròn Form mặc định của Django */
-.django-form p { margin-bottom: 1.2rem; }
-.django-form label { font-weight: 500; margin-bottom: 0.4rem; display: block; color: #3c4043; font-size: 0.95rem;}
+/* ─── Form ─── */
+.django-form p { margin-bottom: 1.1rem; }
+
+.django-form label {
+    font-weight: 500;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 6px;
+}
+
 .django-form input {
     width: 100%;
-    padding: 0.7rem 1rem;
-    border: 1px solid #dadce0;
-    border-radius: 8px;
-    transition: 0.2s ease;
-    font-size: 1rem;
+    padding: 11px 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: 'DM Sans', sans-serif;
+    transition: all var(--transition);
+    appearance: none;
+    -webkit-appearance: none;
 }
+.django-form input::placeholder { color: var(--text-dim); }
 .django-form input:focus {
-    border-color: #1a73e8;
     outline: none;
-    box-shadow: inset 0 0 0 1px #1a73e8;
+    border-color: var(--accent);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px var(--accent-glow);
 }
-.django-form ul { color: #d93025; list-style: none; padding: 0; font-size: 0.85rem; margin-top: 5px;}
-.django-form span.helptext { font-size: 0.8rem; color: #5f6368; display: block; margin-top: 5px;}
 
-/* CHECKBOX "GHI NHỚ TÔI" */
+.django-form ul {
+    color: #dc2626;
+    list-style: none;
+    padding: 0;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+.django-form span.helptext {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    display: block;
+    margin-top: 5px;
+    line-height: 1.5;
+}
+
+/* Checkbox */
 .django-form input[type="checkbox"] {
     width: auto;
+    appearance: auto;
+    -webkit-appearance: auto;
     box-shadow: none;
     cursor: pointer;
     margin-right: 8px;
-    transform: scale(1.2);
+    accent-color: var(--accent);
 }
-
 .django-form label[for="id_remember"] {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     font-weight: 400;
-    margin-bottom: 0;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
     cursor: pointer;
 }
 
-/* Nút Submit */
+/* ─── Submit button ─── */
 .btn-submit {
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     padding: 12px;
-    font-weight: 500;
-    font-size: 1.05rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.02em;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition);
+    width: 100%;
 }
+.btn-submit.btn-primary {
+    background: var(--accent);
+    color: #ffffff;
+}
+.btn-submit.btn-primary:hover {
+    background: #3a5ce6;
+    box-shadow: 0 4px 20px var(--accent-glow);
+    transform: translateY(-1px);
+}
+.btn-submit.btn-success {
+    background: #3a8f65;
+    color: #fff;
+}
+.btn-submit.btn-success:hover {
+    background: #42a374;
+    box-shadow: 0 4px 20px rgba(82,183,136,0.25);
+    transform: translateY(-1px);
+}
+
+.auth-footer-text { color: var(--text-muted); font-size: 0.88rem; }
+.auth-footer-text a { color: var(--accent); font-weight: 600; margin-left: 4px; }

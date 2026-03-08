@@ -7,85 +7,122 @@
 
 {% block content %}
 
+<!-- Note creation form -->
 <div class="note-form-wrapper" id="formWrapper">
     <div class="note-collapsed" id="noteCollapsed" onclick="expandForm()">
-        <span>Tạo ghi chú...</span>
-        <div>
-            <i class="fa-regular fa-square-check fs-5 me-3" title="Danh sách mới"></i>
-            <i class="fa-solid fa-paintbrush fs-5 me-3" title="Ghi chú có bản vẽ mới"></i>
-            <i class="fa-regular fa-image fs-5" title="Ghi chú mới có hình ảnh"></i>
+        <span>Tạo ghi chú…</span>
+        <div class="note-collapsed-icons">
+            <i class="fa-regular fa-square-check" title="Danh sách mới"></i>
+            <i class="fa-solid fa-paintbrush" title="Ghi chú có bản vẽ"></i>
+            <i class="fa-regular fa-image" title="Ghi chú có hình ảnh"></i>
         </div>
     </div>
 
     <form method="POST" action="{% url 'home' %}" class="note-expanded" id="noteExpanded">
         {% csrf_token %}
-        <input type="text" name="title" placeholder="Tiêu đề">
-        <textarea name="content" placeholder="Tạo ghi chú..."></textarea>
-        
+        <input type="text" name="title" placeholder="Tiêu đề" autofocus>
+        <hr class="note-separator">
+        <textarea name="content" placeholder="Tạo ghi chú…"></textarea>
+
         <div class="toolbar">
             <div class="toolbar-icons">
                 <i class="fa-solid fa-palette" title="Tùy chọn nền"></i>
                 <i class="fa-solid fa-image" title="Thêm hình ảnh"></i>
                 <i class="fa-regular fa-bell" title="Nhắc nhở"></i>
-                <i class="fa-solid fa-ellipsis-vertical" title="Thêm nhãn"></i>
+                <i class="fa-solid fa-tag" title="Thêm nhãn"></i>
+                <i class="fa-solid fa-ellipsis-vertical" title="Thêm tùy chọn"></i>
             </div>
-            <button type="submit" class="btn-close-note">Đóng</button>
+            <button type="submit" class="btn-close-note">Lưu & Đóng</button>
         </div>
     </form>
 </div>
 
-<div class="row mt-4">
+<!-- Notes grid -->
+{% if notes %}
+<div class="notes-section-header">
+    <h6>Ghi chú của bạn</h6>
+</div>
+
+<div class="row g-3">
     {% for note in notes %}
-    <div class="col-md-3 mb-4">
-        <div class="card bg-white border rounded-3 p-3 shadow-sm h-100 position-relative">
-            <i class="fa-solid fa-thumbtack position-absolute top-0 end-0 mt-3 me-3 text-muted" style="cursor: pointer; opacity: 0.5;"></i>
-            
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="note-card" data-index="{{ forloop.counter0 }}">
+
+            <button class="note-card-pin" title="Ghim ghi chú">
+                <i class="fa-solid fa-thumbtack"></i>
+            </button>
+
             {% if note.title %}
-                <h6 class="fw-bold mb-2 pe-3">{{ note.title }}</h6>
+                <div class="note-card-title">{{ note.title }}</div>
             {% endif %}
-            <small class="text-muted d-block mb-2" style="font-size: 0.8rem;">
-                <i class="fa-regular fa-clock"></i> {{ note.created_at|date:"d/m/Y H:i" }}
-            </small>
-            <p class="mb-3 text-dark" style="white-space: pre-wrap; font-size: 0.95rem;">{{ note.content }}</p>
-            
-            <div class="mt-auto d-flex flex-wrap gap-1">
-                
+
+            <div class="note-card-date">
+                <i class="fa-regular fa-clock"></i>
+                {{ note.created_at|date:"d/m/Y · H:i" }}
+            </div>
+
+            <p class="note-card-body">{{ note.content }}</p>
+
+            <div class="note-card-tags">
                 {% if note.category %}
-                    <span class="badge bg-secondary"><i class="fa-solid fa-tag"></i> {{ note.category.name }}</span>
+                    <span class="tag tag-category"><i class="fa-solid fa-tag"></i> {{ note.category.name }}</span>
                 {% endif %}
 
                 {% if note.priority|lower == 'high' %}
-                    <span class="badge bg-danger">Priority: High</span>
+                    <span class="tag tag-high">● High</span>
                 {% elif note.priority|lower == 'medium' %}
-                    <span class="badge bg-warning text-dark">Priority: Medium</span>
+                    <span class="tag tag-medium">● Medium</span>
                 {% elif note.priority|lower == 'low' %}
-                    <span class="badge bg-success">Priority: Low</span>
+                    <span class="tag tag-low">● Low</span>
                 {% endif %}
 
                 {% if note.is_task %}
-                    <span class="badge bg-primary">
-                        {% if note.is_task_source == 'AI' %}
-                            <i class="fa-solid fa-robot"></i> Task (AI)
-                        {% else %}
-                            <i class="fa-solid fa-user"></i> Task (User)
-                        {% endif %}
-                    </span>
+                    {% if note.is_task_source == 'AI' %}
+                        <span class="tag tag-task-ai"><i class="fa-solid fa-robot"></i> Task</span>
+                    {% else %}
+                        <span class="tag tag-task-user"><i class="fa-solid fa-user"></i> Task</span>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
     </div>
-    {% empty %}
-    <div class="col-12 text-center text-muted mt-5">
-        <i class="fa-regular fa-lightbulb mb-3" style="font-size: 5rem; opacity: 0.2;"></i>
-        <h5 class="fw-normal">Ghi chú của bạn sẽ xuất hiện ở đây</h5>
-    </div>
     {% endfor %}
 </div>
+
+{% else %}
+<div class="empty-state">
+    <i class="fa-regular fa-lightbulb empty-state-icon"></i>
+    <h5>Ghi chú của bạn sẽ xuất hiện ở đây</h5>
+    <p style="font-size:0.85rem; color: var(--text-dim); max-width:280px;">Nhấn vào ô bên trên để bắt đầu ghi chú đầu tiên của bạn.</p>
+</div>
+{% endif %}
 
 <script>
     function expandForm() {
         document.getElementById('noteCollapsed').style.display = 'none';
         document.getElementById('noteExpanded').style.display = 'block';
+        document.querySelector('#noteExpanded input[name="title"]').focus();
     }
+
+    // Staggered animation delay for note cards
+    document.querySelectorAll('.note-card').forEach(function(card) {
+        var idx = parseInt(card.getAttribute('data-index')) || 0;
+        card.style.animationDelay = (idx * 60) + 'ms';
+    });
+
+    // Click outside to collapse
+    document.addEventListener('click', function(e) {
+        const wrapper = document.getElementById('formWrapper');
+        const expanded = document.getElementById('noteExpanded');
+        if (expanded.style.display === 'block' && !wrapper.contains(e.target)) {
+            // don't auto-collapse if has content
+            const title = document.querySelector('#noteExpanded input[name="title"]').value;
+            const content = document.querySelector('#noteExpanded textarea[name="content"]').value;
+            if (!title && !content) {
+                document.getElementById('noteCollapsed').style.display = 'flex';
+                expanded.style.display = 'none';
+            }
+        }
+    });
 </script>
 {% endblock %}

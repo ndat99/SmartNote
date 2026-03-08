@@ -1,39 +1,45 @@
 {% extends "base_auth.html" %}
 {% load socialaccount %}
-{% block title %}Đăng nhập - SmartNote{% endblock %}
+{% block title %}Đăng nhập — SmartNote{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center w-100 m-0">
-    <div class="col-12 col-sm-8 col-md-6 col-lg-5">
+<div class="row justify-content-center w-100 m-0" style="min-height:100vh; align-items:center;">
+    <div class="col-12 col-sm-9 col-md-6 col-lg-4">
         <div class="card auth-card p-4 p-sm-5">
+
+            <!-- Brand -->
             <div class="text-center mb-4">
-                <i class="fa-regular fa-lightbulb text-warning" style="font-size: 3rem;"></i>
-                <h3 class="mt-3 fw-bold text-dark">Chào mừng trở lại</h3>
-                <p class="text-muted">Đăng nhập vào SmartNote</p>
+                <div class="auth-brand mb-2">
+                    <i class="fa-regular fa-lightbulb" style="color: var(--accent); font-size:1.6rem;"></i>
+                    <span class="auth-brand-name">Smart<span class="auth-brand-dot">Note</span></span>
+                </div>
+                <p class="auth-subtitle">Chào mừng trở lại</p>
             </div>
 
-            <div class="d-grid mb-3">
+            <!-- Google -->
+            <div class="mb-3">
                 <a href="{% provider_login_url 'google' %}" class="btn-google">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
                     Tiếp tục với Google
                 </a>
             </div>
 
-            <div class="divider">HOẶC DÙNG TÀI KHOẢN</div>
+            <div class="divider">hoặc dùng tài khoản</div>
 
+            <!-- Form -->
             <form method="POST" action="{% url 'account_login' %}">
                 {% csrf_token %}
                 <div class="django-form">
                     {{ form.as_p }}
                 </div>
-                <div class="d-grid mt-4">
-                    <button type="submit" class="btn btn-primary btn-submit shadow-sm">Đăng Nhập</button>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary btn-submit">Đăng Nhập</button>
                 </div>
             </form>
 
-            <div class="text-center mt-4">
-                <span class="text-muted">Chưa có tài khoản?</span>
-                <a href="{% url 'account_signup' %}" class="fw-bold text-primary ms-1">Đăng ký ngay</a>
+            <div class="text-center mt-4 auth-footer-text">
+                Chưa có tài khoản?
+                <a href="{% url 'account_signup' %}">Đăng ký ngay</a>
             </div>
         </div>
     </div>
