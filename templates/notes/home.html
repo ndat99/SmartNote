@@ -2,25 +2,130 @@
 
 {% block content %}
 <style>
+    .note-card {
+        transition: box-shadow 0.2s ease-in-out;
+    }
+
+    .note-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    /* Ẩn thanh công cụ mặc định, chỉ hiện khi hover vào thẻ Note */
+    .note-card .note-actions {
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .note-card:hover .note-actions {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Hiệu ứng bo tròn màu xám khi di chuột vào từng icon */
+    .action-icon {
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 50%;
+        transition: background-color 0.2s;
+    }
+
+    .action-icon:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+        color: #202124 !important;
+    }
+
     /* Khung tạo ghi chú Light Mode */
-    .note-form-wrapper { max-width: 600px; margin: 0 auto 40px auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15); position: relative; }
-    
+    .note-form-wrapper {
+        max-width: 600px;
+        margin: 0 auto 40px auto;
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
+        position: relative;
+    }
+
     /* Trạng thái thu gọn */
-    .note-collapsed { padding: 12px 16px; cursor: text; color: #5f6368; font-weight: 500; display: flex; align-items: center; justify-content: space-between;}
-    
+    .note-collapsed {
+        padding: 12px 16px;
+        cursor: text;
+        color: #5f6368;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
     /* Trạng thái mở rộng */
-    .note-expanded { display: none; padding: 12px 16px; }
-    .note-expanded input, .note-expanded textarea { background: transparent; border: none; color: #202124; width: 100%; outline: none; }
-    .note-expanded input::placeholder, .note-expanded textarea::placeholder { color: #5f6368; }
-    .note-expanded input { font-size: 1.1rem; font-weight: 500; margin-bottom: 10px; }
-    .note-expanded textarea { font-size: 1rem; resize: none; min-height: 80px; }
-    
+    .note-expanded {
+        display: none;
+        padding: 12px 16px;
+    }
+
+    .note-expanded input,
+    .note-expanded textarea {
+        background: transparent;
+        border: none;
+        color: #202124;
+        width: 100%;
+        outline: none;
+    }
+
+    .note-expanded input::placeholder,
+    .note-expanded textarea::placeholder {
+        color: #5f6368;
+    }
+
+    .note-expanded input {
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
+    .note-expanded textarea {
+        font-size: 1rem;
+        resize: none;
+        min-height: 80px;
+    }
+
     /* Thanh công cụ icon */
-    .toolbar { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-    .toolbar-icons i { color: #5f6368; margin-right: 18px; cursor: pointer; padding: 8px; border-radius: 50%; font-size: 1.1rem; transition: 0.2s;}
-    .toolbar-icons i:hover { background-color: rgba(60,64,67,0.08); color: #202124;}
-    .btn-close-note { background: transparent; color: #202124; border: none; font-weight: 500; cursor: pointer; padding: 8px 24px; border-radius: 4px; transition: 0.2s;}
-    .btn-close-note:hover { background-color: rgba(60,64,67,0.08); }
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .toolbar-icons i {
+        color: #5f6368;
+        margin-right: 18px;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 50%;
+        font-size: 1.1rem;
+        transition: 0.2s;
+    }
+
+    .toolbar-icons i:hover {
+        background-color: rgba(60, 64, 67, 0.08);
+        color: #202124;
+    }
+
+    .btn-close-note {
+        background: transparent;
+        color: #202124;
+        border: none;
+        font-weight: 500;
+        cursor: pointer;
+        padding: 8px 24px;
+        border-radius: 4px;
+        transition: 0.2s;
+    }
+
+    .btn-close-note:hover {
+        background-color: rgba(60, 64, 67, 0.08);
+    }
 </style>
 
 <div class="note-form-wrapper" id="formWrapper">
@@ -35,9 +140,9 @@
 
     <form method="POST" action="{% url 'home' %}" class="note-expanded" id="noteExpanded">
         {% csrf_token %}
-        <input type="text" name="title" placeholder="Tiêu đề">
+        <input type="text" name="title" placeholder="Tiêu đề" />
         <textarea name="content" placeholder="Tạo ghi chú..."></textarea>
-        
+
         <div class="toolbar">
             <div class="toolbar-icons">
                 <i class="fa-solid fa-palette" title="Tùy chọn nền"></i>
@@ -50,58 +155,178 @@
     </form>
 </div>
 
-<div class="row mt-4">
-    {% for note in notes %}
+
+{% if pinned_notes %}
+<h6 class="text-muted fw-bold mt-4 mb-3" style="font-size: 0.75rem; letter-spacing: 1px">ĐƯỢC GHIM</h6>
+<div class="row">
+    {% for note in pinned_notes %}
     <div class="col-md-3 mb-4">
-        <div class="card bg-white border rounded-3 p-3 shadow-sm h-100 position-relative">
-            <i class="fa-solid fa-thumbtack position-absolute top-0 end-0 mt-3 me-3 text-muted" style="cursor: pointer; opacity: 0.5;"></i>
-            
+        <div class="card bg-white border rounded-3 p-3 shadow-sm h-100 position-relative note-card d-flex flex-column">
+
+            <a href="{% url 'toggle_pin_note' note.id %}"
+                class="position-absolute top-0 end-0 mt-2 me-2 text-decoration-none">
+                <i class="fa-solid fa-thumbtack action-icon text-dark opacity-100" title="Bỏ ghim"></i>
+            </a>
+
             {% if note.title %}
-                <h6 class="fw-bold mb-2 pe-3">{{ note.title }}</h6>
+            <h6 class="fw-bold mb-2 pe-4">{{ note.title }}</h6>
             {% endif %}
-            <small class="text-muted d-block mb-2" style="font-size: 0.8rem;">
+
+            <small class="text-muted d-block mb-2" style="font-size: 0.8rem">
                 <i class="fa-regular fa-clock"></i> {{ note.created_at|date:"d/m/Y H:i" }}
             </small>
-            <p class="mb-3 text-dark" style="white-space: pre-wrap; font-size: 0.95rem;">{{ note.content }}</p>
-            
-            <div class="mt-auto d-flex flex-wrap gap-1">
-                
+
+            <p class="mb-3 text-dark flex-grow-1" style="white-space: pre-wrap; font-size: 0.95rem">{{ note.content }}
+            </p>
+
+            <div class="d-flex flex-wrap gap-1 mb-2">
                 {% if note.category %}
-                    <span class="badge bg-secondary"><i class="fa-solid fa-tag"></i> {{ note.category.name }}</span>
+                <span class="badge bg-secondary"><i class="fa-solid fa-tag"></i> {{ note.category.name }}</span>
                 {% endif %}
 
                 {% if note.priority == 'High' %}
-                    <span class="badge bg-danger">Priority: High</span>
+                <span class="badge bg-danger">Priority: High</span>
                 {% elif note.priority == 'Medium' %}
-                    <span class="badge bg-warning text-dark">Priority: Medium</span>
+                <span class="badge bg-warning text-dark">Priority: Medium</span>
                 {% elif note.priority == 'Low' %}
-                    <span class="badge bg-success">Priority: Low</span>
+                <span class="badge bg-success">Priority: Low</span>
                 {% endif %}
 
                 {% if note.is_task %}
-                    <span class="badge bg-primary">
-                        {% if note.is_task_source == 'AI' %}
-                            <i class="fa-solid fa-robot"></i> Task (AI)
-                        {% else %}
-                            <i class="fa-solid fa-user"></i> Task (User)
-                        {% endif %}
-                    </span>
+                <span class="badge bg-primary">
+                    {% if note.is_task_source == 'AI' %}
+                    <i class="fa-solid fa-robot"></i> Task (AI)
+                    {% else %}
+                    <i class="fa-solid fa-user"></i> Task (User)
+                    {% endif %}
+                </span>
                 {% endif %}
+            </div>
+
+            <div
+                class="note-actions d-flex justify-content-between align-items-center mt-auto text-muted pt-2 border-top">
+                <div class="d-flex gap-1">
+                    <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền"></i>
+                    <i class="fa-regular fa-bell action-icon" title="Nhắc nhở"></i>
+                    <i class="fa-regular fa-image action-icon" title="Thêm hình ảnh"></i>
+                    <i class="fa-solid fa-box-archive action-icon" title="Lưu trữ"></i>
+                </div>
+
+                <div class="dropdown">
+                    <i class="fa-solid fa-ellipsis-vertical action-icon px-3" data-bs-toggle="dropdown"
+                        title="Thêm"></i>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3">
+                        <li><a class="dropdown-item py-2 fw-medium" href="#"><i
+                                    class="fa-regular fa-pen-to-square me-2 text-secondary"></i>Sửa ghi chú</a></li>
+                        <li><a class="dropdown-item py-2 fw-medium" href="#"><i
+                                    class="fa-solid fa-tags me-2 text-secondary"></i>Thêm nhãn</a></li>
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <li><a class="dropdown-item py-2 fw-medium text-danger"
+                                href="{% url 'delete_note' note.id %}"><i class="fa-regular fa-trash-can me-2"></i>Xóa
+                                ghi chú</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
+    {% endfor %}
+</div>
+
+<h6 class="text-muted fw-bold mt-3 mb-3" style="font-size: 0.75rem; letter-spacing: 1px">KHÁC</h6>
+{% endif %}
+
+
+<div class="row {% if not pinned_notes %}mt-4{% endif %}">
+    {% for note in notes %}
+    <div class="col-md-3 mb-4">
+        <div class="card bg-white border rounded-3 p-3 shadow-sm h-100 position-relative note-card d-flex flex-column">
+
+            <a href="{% url 'toggle_pin_note' note.id %}"
+                class="position-absolute top-0 end-0 mt-2 me-2 text-decoration-none">
+                <i class="fa-solid fa-thumbtack action-icon text-muted opacity-50" title="Ghim ghi chú"></i>
+            </a>
+
+            {% if note.title %}
+            <h6 class="fw-bold mb-2 pe-4">{{ note.title }}</h6>
+            {% endif %}
+
+            <small class="text-muted d-block mb-2" style="font-size: 0.8rem">
+                <i class="fa-regular fa-clock"></i> {{ note.created_at|date:"d/m/Y H:i" }}
+            </small>
+
+            <p class="mb-3 text-dark flex-grow-1" style="white-space: pre-wrap; font-size: 0.95rem">{{ note.content }}
+            </p>
+
+            <div class="d-flex flex-wrap gap-1 mb-2">
+                {% if note.category %}
+                <span class="badge bg-secondary"><i class="fa-solid fa-tag"></i> {{ note.category.name }}</span>
+                {% endif %}
+
+                {% if note.priority == 'High' %}
+                <span class="badge bg-danger">Priority: High</span>
+                {% elif note.priority == 'Medium' %}
+                <span class="badge bg-warning text-dark">Priority: Medium</span>
+                {% elif note.priority == 'Low' %}
+                <span class="badge bg-success">Priority: Low</span>
+                {% endif %}
+
+                {% if note.is_task %}
+                <span class="badge bg-primary">
+                    {% if note.is_task_source == 'AI' %}
+                    <i class="fa-solid fa-robot"></i> Task (AI)
+                    {% else %}
+                    <i class="fa-solid fa-user"></i> Task (User)
+                    {% endif %}
+                </span>
+                {% endif %}
+            </div>
+
+            <div
+                class="note-actions d-flex justify-content-between align-items-center mt-auto text-muted pt-2 border-top">
+                <div class="d-flex gap-1">
+                    <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền"></i>
+                    <i class="fa-regular fa-bell action-icon" title="Nhắc nhở"></i>
+                    <i class="fa-regular fa-image action-icon" title="Thêm hình ảnh"></i>
+                    <i class="fa-solid fa-box-archive action-icon" title="Lưu trữ"></i>
+                </div>
+
+                <div class="dropdown">
+                    <i class="fa-solid fa-ellipsis-vertical action-icon px-3" data-bs-toggle="dropdown"
+                        title="Thêm"></i>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3">
+                        <li><a class="dropdown-item py-2 fw-medium" href="#"><i
+                                    class="fa-regular fa-pen-to-square me-2 text-secondary"></i>Sửa ghi chú</a></li>
+                        <li><a class="dropdown-item py-2 fw-medium" href="#"><i
+                                    class="fa-solid fa-tags me-2 text-secondary"></i>Thêm nhãn</a></li>
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <li><a class="dropdown-item py-2 fw-medium text-danger"
+                                href="{% url 'delete_note' note.id %}"><i class="fa-regular fa-trash-can me-2"></i>Xóa
+                                ghi chú</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% empty %}
+    {% if not pinned_notes %}
     <div class="col-12 text-center text-muted mt-5">
         <i class="fa-regular fa-lightbulb mb-3" style="font-size: 5rem; opacity: 0.2;"></i>
         <h5 class="fw-normal">Ghi chú của bạn sẽ xuất hiện ở đây</h5>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 
 <script>
     function expandForm() {
-        document.getElementById('noteCollapsed').style.display = 'none';
-        document.getElementById('noteExpanded').style.display = 'block';
+        document.getElementById("noteCollapsed").style.display = "none";
+        document.getElementById("noteExpanded").style.display = "block";
     }
 </script>
+
 {% endblock %}
