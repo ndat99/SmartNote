@@ -1,163 +1,10 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}SmartNote{% endblock %}</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-
-    <style>
-      /* Tông màu Light Mode chuẩn Google Keep */
-      body {
-        background-color: #ffffff;
-        color: #202124;
-        font-family: "Roboto", Arial, sans-serif;
-        overflow-x: hidden;
-      }
-
-      /* Navbar */
-      .navbar {
-        background-color: #ffffff;
-        border-bottom: 1px solid #e0e0e0;
-        padding: 8px 16px;
-        height: 64px;
-      }
-      .menu-btn {
-        color: #5f6368;
-        font-size: 1.2rem;
-        cursor: pointer;
-        padding: 12px;
-        border-radius: 50%;
-        transition: 0.2s;
-      }
-      .menu-btn:hover {
-        background-color: rgba(60, 64, 67, 0.08);
-      }
-      .search-container {
-        max-width: 720px;
-        width: 100%;
-        margin: 0 auto;
-        position: relative;
-      }
-      .search-bar {
-        background-color: #f1f3f4;
-        border-radius: 8px;
-        border: 1px solid transparent;
-        color: #202124;
-        padding: 10px 10px 10px 50px;
-        width: 100%;
-        transition: 0.2s;
-      }
-      .search-bar:focus {
-        outline: none;
-        background-color: #ffffff;
-        border-color: transparent;
-        box-shadow:
-          0 1px 1px 0 rgba(65, 69, 73, 0.3),
-          0 1px 3px 1px rgba(65, 69, 73, 0.15);
-      }
-      .search-icon {
-        position: absolute;
-        left: 15px;
-        top: 12px;
-        color: #5f6368;
-      }
-
-      /* Sidebar bên trái */
-      .sidebar {
-        width: 280px;
-        transition: 0.2s;
-        position: fixed;
-        height: calc(100vh - 64px);
-        padding-top: 10px;
-        border-right: 1px solid transparent;
-      }
-      .sidebar.collapsed {
-        width: 70px;
-      }
-      .nav-item-custom {
-        border-radius: 0 25px 25px 0;
-        padding: 12px 24px;
-        color: #202124;
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        margin-bottom: 5px;
-        cursor: pointer;
-      }
-      .nav-item-custom:hover {
-        background-color: #f1f3f4;
-      }
-      .nav-item-custom.active {
-        background-color: #feefc3;
-        color: #202124;
-        font-weight: bold;
-      }
-      .nav-icon {
-        width: 24px;
-        margin-right: 20px;
-        text-align: center;
-        font-size: 1.1rem;
-        color: #5f6368;
-      }
-      .nav-item-custom.active .nav-icon {
-        color: #202124;
-      }
-      .nav-text {
-        white-space: nowrap;
-        opacity: 1;
-        transition: 0.2s;
-        font-weight: 500;
-      }
-      .sidebar.collapsed .nav-text {
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      /* Khu vực chính */
-      .main-content {
-        margin-left: 280px;
-        transition: 0.2s;
-        /* Đẩy nội dung xuống đúng dưới navbar, không chừa khoảng trắng lớn */
-        padding: 80px 30px 30px;
-      }
-      .main-content.expanded {
-        margin-left: 70px;
-      }
-    </style>
-  </head>
-  <body>
-    <nav
-      class="navbar d-flex align-items-center justify-content-between fixed-top"
-    >
-      <div class="d-flex align-items-center">
-        <i class="fa-solid fa-bars menu-btn me-2" onclick="toggleSidebar()"></i>
-        <a
-          class="navbar-brand text-secondary d-flex align-items-center"
-          href="{% url 'home' %}"
-        >
-          <img
-            src="{% static 'images/logo.png' %}"
-            alt="Logo"
-            width="40"
-            class="me-2"
-          />
-          <b class="fs-5 text-dark">Smart Note</b>
-        </a>
-      </div>
-
-      <div class="search-container d-none d-md-block">
-        <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        <input type="text" class="search-bar" placeholder="Tìm kiếm" />
-      </div>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -165,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block extra_css %}{% endblock %}
-    <!-- Chạy TRƯỚC khi render để tránh flash trắng/đen -->
     <script>
         (function() {
             var t = localStorage.getItem('sn-theme');
@@ -175,7 +21,6 @@
 </head>
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar d-flex align-items-center justify-content-between fixed-top">
         <div class="d-flex align-items-center gap-2">
             <div class="menu-btn" onclick="toggleSidebar()">
@@ -196,7 +41,6 @@
             <div class="menu-btn d-none d-sm-flex" title="Làm mới">
                 <i class="fa-solid fa-rotate-right" style="font-size:0.95rem;"></i>
             </div>
-            <!-- Theme toggle -->
             <div class="menu-btn theme-toggle-btn d-none d-sm-flex" onclick="toggleTheme()" title="Đổi theme" id="themeToggleBtn">
                 <i class="fa-solid fa-sun"  id="icon-light" style="font-size:0.95rem;"></i>
                 <i class="fa-solid fa-moon" id="icon-dark"  style="font-size:0.95rem; display:none;"></i>
@@ -226,11 +70,9 @@
         </div>
     </nav>
 
-    <!-- Sidebar -->
-    <div class="sidebar mt-5" id="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-section-label">Menu</div>
-
-        <a href="#" class="nav-item-custom active">
+        <a href="{% url 'home' %}" class="nav-item-custom {% block nav_home %}{% endblock %}">
             <i class="fa-regular fa-lightbulb nav-icon"></i>
             <span class="nav-text">Ghi chú</span>
         </a>
@@ -242,22 +84,19 @@
             <i class="fa-solid fa-pen nav-icon"></i>
             <span class="nav-text">Chỉnh sửa nhãn</span>
         </a>
-
         <div class="sidebar-section-label" style="margin-top:12px;">Kho lưu trữ</div>
-
         <a href="#" class="nav-item-custom">
             <i class="fa-solid fa-box-archive nav-icon"></i>
             <span class="nav-text">Lưu trữ</span>
         </a>
-        <a href="trash" class="nav-item-custom">
+        <a href="{% url 'trash' %}" class="nav-item-custom {% block nav_trash %}{% endblock %}">
             <i class="fa-regular fa-trash-can nav-icon"></i>
             <span class="nav-text">Thùng rác</span>
         </a>
     </div>
 
-    <!-- Main -->
     <div class="main-content" id="mainContent">
-      {% block content %}{% endblock %}
+        {% block content %}{% endblock %}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -268,7 +107,7 @@
         }
 
         var AVATAR_LIGHT = 'background=e8eeff&color=4a6cf7';
-        var AVATAR_DARK  = 'background=2a2a2a&color=6b9fff';
+        var AVATAR_DARK  = 'background=2e3140&color=7b9fff';
 
         function updateAvatar(isDark) {
             var av = document.getElementById('defaultAvatar');
@@ -292,12 +131,11 @@
             updateAvatar(next === 'dark');
         }
 
-        // Sync khi load
         (function() {
             var isDark = localStorage.getItem('sn-theme') === 'dark';
             setThemeIcons(isDark);
             updateAvatar(isDark);
         })();
     </script>
-  </body>
+</body>
 </html>
