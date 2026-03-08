@@ -153,6 +153,8 @@
     flex-direction: column;
     gap: 8px;
     animation: noteIn 0.4s cubic-bezier(0.16,1,0.3,1) both;
+    /* Đảm bảo dropdown bên trong luôn nổi trên các thẻ bên dưới */
+    z-index: 1;
 }
 @keyframes noteIn {
     from { opacity: 0; transform: translateY(12px); }
@@ -216,6 +218,11 @@
     flex-wrap: wrap;
     gap: 6px;
     margin-top: 4px;
+}
+
+/* Dropdown trong thẻ note nổi trên các thẻ khác */
+.note-card .dropdown-menu {
+    z-index: 2000;
 }
 
 .tag {
