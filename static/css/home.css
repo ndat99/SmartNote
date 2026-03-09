@@ -146,13 +146,12 @@
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 16px;
-    height: 100%;
+    height: 260px; /* Chiều cao cố định */
     position: relative;
     transition: all 0.22s ease;
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    gap: 8px;
     animation: noteIn 0.4s cubic-bezier(0.16,1,0.3,1) both;
 }
 @keyframes noteIn {
@@ -190,6 +189,7 @@
     color: var(--text);
     padding-right: 20px;
     line-height: 1.4;
+    margin-bottom: 8px;
 }
 
 .note-card-date {
@@ -198,6 +198,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    margin-bottom: 8px;
 }
 
 .note-card-body {
@@ -205,10 +206,10 @@
     color: var(--text-muted);
     line-height: 1.65;
     white-space: pre-wrap;
-    flex: 1;
-    /* max 4 lines */
+    flex: 1 1 0;       /* Chiếm khoảng trống nhưng KHÔNG vượt quá */
+    min-height: 0;     /* Cho phép shrink — bắt buộc để clamp hoạt động trong flex */
     display: -webkit-box;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -217,7 +218,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin-top: 4px;
+    margin-top: 8px;
+    margin-bottom: 12px;
 }
 
 .tag {
@@ -370,4 +372,95 @@
 }
 [data-theme="dark"] .trash-btn-delete {
     background: rgba(239,68,68,0.1);
+}
+
+/* ─── MODAL GOOGLE KEEP STYLE ─── */
+.keep-modal {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1050; 
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    /* Dùng đường cong cubic-bezier cho mượt */
+    transition: opacity 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity; /* Bật tăng tốc phần cứng */
+}
+
+.keep-modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.keep-modal-content {
+    background: var(--surface);
+    width: 100%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    padding: 24px;
+    
+    /* Bắt đầu từ 0.85 để lúc nở ra nhìn sâu hơn */
+    transform: scale(0.85);
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform; /* Bật tăng tốc phần cứng */
+    
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.keep-modal.show .keep-modal-content {
+    transform: scale(1);
+}
+
+.keep-modal-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text);
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+}
+
+.keep-modal-body {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    overflow-y: auto;
+    border: none;
+    background: transparent;
+    outline: none;
+    resize: none;
+    min-height: 150px;
+    width: 100%;
+}
+
+.keep-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+}
+
+.btn-keep-close {
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-keep-close:hover {
+    background: var(--surface-2);
 }
