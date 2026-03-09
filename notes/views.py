@@ -136,3 +136,29 @@ def toggle_pin_note(request, note_id):
     note.save()
 
     return redirect('home')
+
+def set_note_color(request, note_id):
+    if request.method != 'POST':
+        from django.http import JsonResponse
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+    from django.http import JsonResponse
+    import json
+
+    note = get_object_or_404(Note, id=note_id, user=request.user)
+
+    try:
+        data = json.loads(request.body)
+        color = data.get('color', '')
+    except Exception:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    # Chỉ cho phép các giá trị hợp lệ
+    VALID_COLORS = {'', 'berry', 'red', 'orange', 'yellow', 'teal', 'blue', 'indigo', 'purple', 'pink', 'brown'}
+    if color not in VALID_COLORS:
+        return JsonResponse({'error': 'Invalid color'}, status=400)
+
+    note.background_color = color
+    note.save(update_fields=['background_color'])
+
+    return JsonResponse({'ok': True, 'color': color})

@@ -210,6 +210,7 @@
     min-height: 0;     /* Cho phép shrink — bắt buộc để clamp hoạt động trong flex */
     display: -webkit-box;
     -webkit-line-clamp: 5;
+    line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -374,25 +375,28 @@
     background: rgba(239,68,68,0.1);
 }
 
+
 /* ─── MODAL GOOGLE KEEP STYLE ─── */
 .keep-modal {
-    display: none; 
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 1050; 
+    z-index: 1050;
+    display: flex;
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(2px);
     opacity: 0;
-    /* Dùng đường cong cubic-bezier cho mượt */
-    transition: opacity 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-    will-change: opacity; /* Bật tăng tốc phần cứng */
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+                visibility 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .keep-modal.show {
-    display: flex;
     opacity: 1;
+    visibility: visible;
+    pointer-events: all;
 }
 
 .keep-modal-content {
@@ -402,15 +406,23 @@
     border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     padding: 24px;
-    
-    /* Bắt đầu từ 0.85 để lúc nở ra nhìn sâu hơn */
     transform: scale(0.85);
     transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-    will-change: transform; /* Bật tăng tốc phần cứng */
-    
+    will-change: transform;
     max-height: 85vh;
     display: flex;
     flex-direction: column;
+    overflow: visible;
+}
+
+/* Riêng textarea body vẫn scroll được */
+.keep-modal-body {
+    overflow-y: auto;
+}
+
+/* Color picker trong modal cần z-index cao hơn modal */
+.keep-modal-content .color-picker-popup {
+    z-index: 1100;
 }
 
 .keep-modal.show .keep-modal-content {

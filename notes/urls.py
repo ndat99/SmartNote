@@ -7,7 +7,7 @@ urlpatterns = [
     path('restore/<int:note_id>/', views.restore_note, name='restore_note'),
     path('hard-delete/<int:note_id>/', views.hard_delete_note, name='hard_delete_note'),
     path('pin/<int:note_id>/', views.toggle_pin_note, name='toggle_pin_note'),
-
+    path('set-color/<int:note_id>/', views.set_note_color, name='set_note_color'),
 
     path('trash/', views.trash, name='trash'),
 ]

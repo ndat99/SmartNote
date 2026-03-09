@@ -5,6 +5,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/colors.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -25,8 +26,22 @@
         <hr class="note-separator">
         <textarea name="content" placeholder="Tạo ghi chú…"></textarea>
         <div class="toolbar">
-            <div class="toolbar-icons">
-                <i class="fa-solid fa-palette" title="Tùy chọn nền"></i>
+            <div class="toolbar-icons" style="position:relative;">
+                <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền" onclick="toggleColorPicker('formColorPicker', event)"></i>
+                <div class="color-picker-popup" id="formColorPicker">
+                    <div class="color-swatch swatch-none active" data-color="" title="Mặc định" onclick="applyFormColor('', this)"></div>
+                    <div class="color-swatch" data-color="berry"  title="Đỏ tía"    onclick="applyFormColor('berry', this)"></div>
+                    <div class="color-swatch" data-color="red"    title="Đỏ"        onclick="applyFormColor('red', this)"></div>
+                    <div class="color-swatch" data-color="orange" title="Cam"       onclick="applyFormColor('orange', this)"></div>
+                    <div class="color-swatch" data-color="yellow" title="Vàng"      onclick="applyFormColor('yellow', this)"></div>
+                    <div class="color-swatch" data-color="teal"   title="Ngọc"      onclick="applyFormColor('teal', this)"></div>
+                    <div class="color-swatch" data-color="blue"   title="Xanh"      onclick="applyFormColor('blue', this)"></div>
+                    <div class="color-swatch" data-color="indigo" title="Chàm"      onclick="applyFormColor('indigo', this)"></div>
+                    <div class="color-swatch" data-color="purple" title="Tím"       onclick="applyFormColor('purple', this)"></div>
+                    <div class="color-swatch" data-color="pink"   title="Hồng"      onclick="applyFormColor('pink', this)"></div>
+                    <div class="color-swatch" data-color="brown"  title="Nâu"       onclick="applyFormColor('brown', this)"></div>
+                </div>
+                <input type="hidden" name="background_color" id="formBgColor" value="">
                 <i class="fa-solid fa-image" title="Thêm hình ảnh"></i>
                 <i class="fa-regular fa-bell" title="Nhắc nhở"></i>
                 <i class="fa-solid fa-tag" title="Thêm nhãn"></i>
@@ -44,7 +59,7 @@
 <div class="row g-3 mb-2">
     {% for note in pinned_notes %}
     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <div class="note-card" data-index="{{ forloop.counter0 }}" onclick="openKeepModal(this)">
+        <div class="note-card" data-index="{{ forloop.counter0 }}" data-note-id="{{ note.id }}" {% if note.background_color %}data-color="{{ note.background_color }}"{% endif %} onclick="openKeepModal(this)">
             <a href="{% url 'toggle_pin_note' note.id %}" class="note-card-pin pinned text-decoration-none" title="Bỏ ghim" onclick="event.stopPropagation();">
                 <i class="fa-solid fa-thumbtack"></i>
             </a>
@@ -62,8 +77,21 @@
                 {% endif %}
             </div>
             <div class="note-actions" onclick="event.stopPropagation();">
-                <div class="note-actions-left">
-                    <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền"></i>
+                <div class="note-actions-left" style="position:relative;">
+                    <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền" onclick="toggleCardColorPicker(this, event)"></i>
+                    <div class="color-picker-popup card-color-picker">
+                        <div class="color-swatch swatch-none" data-color="" title="Mặc định"></div>
+                        <div class="color-swatch" data-color="berry"  title="Đỏ tía"></div>
+                        <div class="color-swatch" data-color="red"    title="Đỏ"></div>
+                        <div class="color-swatch" data-color="orange" title="Cam"></div>
+                        <div class="color-swatch" data-color="yellow" title="Vàng"></div>
+                        <div class="color-swatch" data-color="teal"   title="Ngọc"></div>
+                        <div class="color-swatch" data-color="blue"   title="Xanh"></div>
+                        <div class="color-swatch" data-color="indigo" title="Chàm"></div>
+                        <div class="color-swatch" data-color="purple" title="Tím"></div>
+                        <div class="color-swatch" data-color="pink"   title="Hồng"></div>
+                        <div class="color-swatch" data-color="brown"  title="Nâu"></div>
+                    </div>
                     <i class="fa-regular fa-bell action-icon" title="Nhắc nhở"></i>
                     <i class="fa-solid fa-box-archive action-icon" title="Lưu trữ"></i>
                 </div>
@@ -92,7 +120,7 @@
 <div class="row g-3">
     {% for note in notes %}
     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <div class="note-card" data-index="{{ forloop.counter0 }}" onclick="openKeepModal(this)">
+        <div class="note-card" data-index="{{ forloop.counter0 }}" data-note-id="{{ note.id }}" {% if note.background_color %}data-color="{{ note.background_color }}"{% endif %} onclick="openKeepModal(this)">
             <a href="{% url 'toggle_pin_note' note.id %}" class="note-card-pin text-decoration-none" title="Ghim ghi chú" onclick="event.stopPropagation();">
                 <i class="fa-solid fa-thumbtack"></i>
             </a>
@@ -110,8 +138,21 @@
                 {% endif %}
             </div>
             <div class="note-actions" onclick="event.stopPropagation();">
-                <div class="note-actions-left">
-                    <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền"></i>
+                <div class="note-actions-left" style="position:relative;">
+                    <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền" onclick="toggleCardColorPicker(this, event)"></i>
+                    <div class="color-picker-popup card-color-picker">
+                        <div class="color-swatch swatch-none" data-color="" title="Mặc định"></div>
+                        <div class="color-swatch" data-color="berry"  title="Đỏ tía"></div>
+                        <div class="color-swatch" data-color="red"    title="Đỏ"></div>
+                        <div class="color-swatch" data-color="orange" title="Cam"></div>
+                        <div class="color-swatch" data-color="yellow" title="Vàng"></div>
+                        <div class="color-swatch" data-color="teal"   title="Ngọc"></div>
+                        <div class="color-swatch" data-color="blue"   title="Xanh"></div>
+                        <div class="color-swatch" data-color="indigo" title="Chàm"></div>
+                        <div class="color-swatch" data-color="purple" title="Tím"></div>
+                        <div class="color-swatch" data-color="pink"   title="Hồng"></div>
+                        <div class="color-swatch" data-color="brown"  title="Nâu"></div>
+                    </div>
                     <i class="fa-regular fa-bell action-icon" title="Nhắc nhở"></i>
                     <i class="fa-solid fa-box-archive action-icon" title="Lưu trữ"></i>
                 </div>
@@ -146,8 +187,21 @@
         <textarea id="modalContent" class="keep-modal-body" placeholder="Nội dung ghi chú..."></textarea>
         
         <div class="keep-modal-footer">
-            <div class="note-actions-left">
-                <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền"></i>
+            <div class="note-actions-left" style="position:relative;">
+                <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền" onclick="toggleCardColorPicker(this, event)"></i>
+                <div class="color-picker-popup card-color-picker">
+                    <div class="color-swatch swatch-none" data-color="" title="Mặc định"></div>
+                    <div class="color-swatch" data-color="berry"  title="Đỏ tía"></div>
+                    <div class="color-swatch" data-color="red"    title="Đỏ"></div>
+                    <div class="color-swatch" data-color="orange" title="Cam"></div>
+                    <div class="color-swatch" data-color="yellow" title="Vàng"></div>
+                    <div class="color-swatch" data-color="teal"   title="Ngọc"></div>
+                    <div class="color-swatch" data-color="blue"   title="Xanh"></div>
+                    <div class="color-swatch" data-color="indigo" title="Chàm"></div>
+                    <div class="color-swatch" data-color="purple" title="Tím"></div>
+                    <div class="color-swatch" data-color="pink"   title="Hồng"></div>
+                    <div class="color-swatch" data-color="brown"  title="Nâu"></div>
+                </div>
                 <i class="fa-regular fa-bell action-icon" title="Nhắc nhở"></i>
                 <i class="fa-solid fa-box-archive action-icon" title="Lưu trữ"></i>
             </div>
@@ -190,41 +244,175 @@
                 expanded.style.display = 'none';
             }
         }
+        // Đóng tất cả color picker khi click ra ngoài
+        if (!e.target.closest('.color-picker-popup') && !e.target.closest('.action-icon[title="Tùy chọn nền"]')) {
+            document.querySelectorAll('.color-picker-popup.visible').forEach(p => p.classList.remove('visible'));
+        }
     });
 
-    // Hàm mở Modal
+    // ─── COLOR PICKER: Form tạo note mới ───
+    function toggleColorPicker(pickerId, event) {
+        event.stopPropagation();
+        const picker = document.getElementById(pickerId);
+        const isOpen = picker.classList.contains('visible');
+        // Đóng tất cả trước
+        document.querySelectorAll('.color-picker-popup.visible').forEach(p => p.classList.remove('visible'));
+        if (!isOpen) picker.classList.add('visible');
+    }
+
+    function applyFormColor(color, swatchEl) {
+        // Cập nhật hidden input
+        document.getElementById('formBgColor').value = color;
+        // Cập nhật active swatch
+        document.querySelectorAll('#formColorPicker .color-swatch').forEach(s => s.classList.remove('active'));
+        swatchEl.classList.add('active');
+        // Preview màu nền cho form wrapper
+        const form = document.getElementById('noteExpanded');
+        const wrapper = document.getElementById('formWrapper');
+        if (color) {
+            wrapper.setAttribute('data-color', color);
+        } else {
+            wrapper.removeAttribute('data-color');
+        }
+    }
+
+    // ─── COLOR PICKER: Note card + Modal ───
+    function toggleCardColorPicker(iconEl, event) {
+        event.stopPropagation();
+
+        // Tìm picker: ưu tiên nextElementSibling (card), fallback querySelector trong parent (modal)
+        let picker = iconEl.nextElementSibling;
+        if (!picker || !picker.classList.contains('color-picker-popup')) {
+            picker = iconEl.parentElement.querySelector('.color-picker-popup');
+        }
+        if (!picker) return;
+
+        const isOpen = picker.classList.contains('visible');
+        document.querySelectorAll('.color-picker-popup.visible').forEach(p => p.classList.remove('visible'));
+
+        if (!isOpen) {
+            picker.classList.add('visible');
+
+            // Xác định context: note-card hoặc keep-modal
+            const card    = iconEl.closest('.note-card');
+            const modal   = iconEl.closest('.keep-modal-content');
+            const noteId  = card  ? card.getAttribute('data-note-id')
+                          : modal ? modal.getAttribute('data-note-id')
+                          : null;
+            const currentColor = card  ? (card.getAttribute('data-color')  || '')
+                                : modal ? (modal.getAttribute('data-color') || '')
+                                : '';
+
+            picker.querySelectorAll('.color-swatch').forEach(swatch => {
+                swatch.onclick = function(e) {
+                    e.stopPropagation();
+                    applyColor(noteId, swatch.dataset.color, picker, card, modal);
+                };
+                swatch.classList.toggle('active', swatch.dataset.color === currentColor);
+            });
+
+            // Căn chỉnh vị trí popup để không bị cắt ở cạnh màn hình
+            positionPicker(picker, iconEl);
+        }
+    }
+
+    // Căn popup: mặc định hiện lên trên icon, nếu bị tràn trên thì hiện xuống dưới
+    function positionPicker(picker, iconEl) {
+        picker.style.bottom = '';
+        picker.style.top = '';
+        picker.style.left = '';
+
+        const rect   = iconEl.getBoundingClientRect();
+        const ph     = 48; // chiều cao popup ước tính
+        const margin = 8;
+
+        if (rect.top - ph - margin < 0) {
+            // Không đủ chỗ trên → hiện xuống dưới
+            picker.style.bottom = 'auto';
+            picker.style.top    = 'calc(100% + 8px)';
+        } else {
+            picker.style.top    = 'auto';
+            picker.style.bottom = 'calc(100% + 8px)';
+        }
+
+        // Tránh tràn bên phải màn hình
+        requestAnimationFrame(() => {
+            const pr = picker.getBoundingClientRect();
+            if (pr.right > window.innerWidth - 8) {
+                picker.style.left = 'auto';
+                picker.style.right = '0';
+            }
+        });
+    }
+
+    function applyColor(noteId, color, picker, card, modal) {
+        // Cập nhật visual ngay (optimistic)
+        const target = card || modal;
+        if (target) {
+            if (color) target.setAttribute('data-color', color);
+            else       target.removeAttribute('data-color');
+        }
+        // Sync giữa card và modal nếu cả 2 đang hiển thị cùng note
+        if (noteId) {
+            document.querySelectorAll(`.note-card[data-note-id="${noteId}"]`).forEach(c => {
+                if (color) c.setAttribute('data-color', color);
+                else       c.removeAttribute('data-color');
+            });
+            const mc = document.querySelector('.keep-modal-content');
+            if (mc && mc.getAttribute('data-note-id') === noteId) {
+                if (color) mc.setAttribute('data-color', color);
+                else       mc.removeAttribute('data-color');
+            }
+        }
+        // Active swatch
+        picker.querySelectorAll('.color-swatch').forEach(s => {
+            s.classList.toggle('active', s.dataset.color === color);
+        });
+        // Lưu DB
+        if (noteId) {
+            fetch(`/set-color/${noteId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCsrfToken(),
+                },
+                body: JSON.stringify({ color: color }),
+            }).catch(err => console.error('[Color] Lưu thất bại:', err));
+        }
+        setTimeout(() => picker.classList.remove('visible'), 300);
+    }
+
+    function getCsrfToken() {
+        const el = document.querySelector('[name=csrfmiddlewaretoken]');
+        if (el) return el.value;
+        // Fallback: đọc từ cookie
+        const match = document.cookie.match(/csrftoken=([^;]+)/);
+        return match ? match[1] : '';
+    }
+
+    // ─── KEEP MODAL ───
     function openKeepModal(cardElement) {
-        const titleEl = cardElement.querySelector('.note-card-title');
+        const titleEl   = cardElement.querySelector('.note-card-title');
         const contentEl = cardElement.querySelector('.note-card-body');
-        
-        const title = titleEl ? titleEl.innerText : '';
-        const content = contentEl ? contentEl.innerText : '';
-        
-        document.getElementById('modalTitle').value = title;
-        document.getElementById('modalContent').value = content;
-        
-        const modal = document.getElementById('keepModal');
-        modal.style.display = 'flex';
-        
-        // TRICK CHỐNG LAG: Ép trình duyệt render lại (Force Reflow)
-        // Dòng này bắt buộc trình duyệt nhận diện display:flex trước khi thêm class show
-        void modal.offsetWidth; 
-        
-        modal.classList.add('show');
+
+        document.getElementById('modalTitle').value   = titleEl   ? titleEl.innerText   : '';
+        document.getElementById('modalContent').value = contentEl ? contentEl.innerText : '';
+
+        // Truyền note-id và màu sang modal content để color picker hoạt động
+        const noteId = cardElement.getAttribute('data-note-id') || '';
+        const color  = cardElement.getAttribute('data-color')   || '';
+        const mc = document.querySelector('.keep-modal-content');
+        mc.setAttribute('data-note-id', noteId);
+        if (color) mc.setAttribute('data-color', color);
+        else       mc.removeAttribute('data-color');
+
+        document.getElementById('keepModal').classList.add('show');
     }
 
-    // Hàm đóng Modal
     function closeKeepModal() {
-        const modal = document.getElementById('keepModal');
-        modal.classList.remove('show');
-        
-        // Chờ đúng 250ms (bằng thời gian transition trong CSS) rồi mới ẩn hẳn
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 250);
+        document.getElementById('keepModal').classList.remove('show');
     }
 
-    // Bấm ra ngoài vùng tối để đóng Modal
     document.getElementById('keepModal').addEventListener('click', closeKeepModal);
 </script>
 {% endblock %}
