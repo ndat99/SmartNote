@@ -71,7 +71,6 @@
 .note-expanded input::placeholder,
 .note-expanded textarea::placeholder { color: var(--text-dim); }
 
-/* Separator line inside expanded */
 .note-separator {
     border: none;
     border-top: 1px solid var(--border);
@@ -142,12 +141,13 @@
 /* ─── Note Cards ─── */
 .note-card {
     z-index: 1;
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: #f8f9fe;
+    border: 1px solid #eaecf5;
     border-radius: 14px;
     padding: 16px;
-    height: 260px; /* Chiều cao cố định */
+    height: 260px;
     position: relative;
+    overflow: visible;
     transition: all 0.22s ease;
     cursor: pointer;
     display: flex;
@@ -206,8 +206,8 @@
     color: var(--text-muted);
     line-height: 1.65;
     white-space: pre-wrap;
-    flex: 1 1 0;       /* Chiếm khoảng trống nhưng KHÔNG vượt quá */
-    min-height: 0;     /* Cho phép shrink — bắt buộc để clamp hoạt động trong flex */
+    flex: 1 1 0;
+    min-height: 0;
     display: -webkit-box;
     -webkit-line-clamp: 5;
     line-clamp: 5;
@@ -302,6 +302,33 @@
     visibility: visible;
 }
 .note-actions-left { display: flex; gap: 2px; }
+.note-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+.note-actions-right .action-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all var(--transition);
+}
+.note-actions-right .action-icon:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+.note-actions-right .text-danger { color: var(--text-muted); }
+.note-actions-right .text-danger:hover {
+    background: rgba(239,68,68,0.1) !important;
+    color: var(--danger) !important;
+}
+.note-actions-right .text-accent { color: var(--accent) !important; }
 .action-icon {
     color: var(--text-muted);
     padding: 7px;
@@ -315,16 +342,11 @@
     color: var(--accent);
 }
 
-/* Pin active (đang ghim) */
 .note-card-pin.pinned {
     opacity: 1 !important;
     color: var(--accent) !important;
 }
-
-/* Dark mode note-actions border */
-[data-theme="dark"] .note-actions {
-    border-top-color: var(--border);
-}
+[data-theme="dark"] .note-actions { border-top-color: var(--border); }
 
 /* ─── Trash card buttons ─── */
 .trash-card { cursor: default; }
@@ -352,35 +374,21 @@
     color: var(--accent);
     border: 1px solid rgba(74,108,247,0.2);
 }
-.trash-btn-restore:hover {
-    background: var(--accent);
-    color: #fff;
-}
+.trash-btn-restore:hover { background: var(--accent); color: #fff; }
 .trash-btn-delete {
     background: rgba(239,68,68,0.08);
     color: var(--danger);
     border: 1px solid rgba(239,68,68,0.2);
 }
-.trash-btn-delete:hover {
-    background: var(--danger);
-    color: #fff;
-}
-
-[data-theme="dark"] .trash-btn-restore {
-    background: rgba(123,159,255,0.1);
-    border-color: rgba(123,159,255,0.2);
-    color: #7b9fff;
-}
-[data-theme="dark"] .trash-btn-delete {
-    background: rgba(239,68,68,0.1);
-}
-
+.trash-btn-delete:hover { background: var(--danger); color: #fff; }
+[data-theme="dark"] .trash-btn-restore { background: rgba(123,159,255,0.1); border-color: rgba(123,159,255,0.2); color: #7b9fff; }
+[data-theme="dark"] .trash-btn-delete  { background: rgba(239,68,68,0.1); }
 
 /* ─── MODAL GOOGLE KEEP STYLE ─── */
 .keep-modal {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0,0,0,0.5);
     z-index: 1050;
     display: flex;
     align-items: center;
@@ -389,16 +397,13 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
-                visibility 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: opacity 0.25s cubic-bezier(0.2,0.8,0.2,1), visibility 0.25s cubic-bezier(0.2,0.8,0.2,1);
 }
-
 .keep-modal.show {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
 }
-
 .keep-modal-content {
     background: var(--surface);
     width: 100%;
@@ -407,28 +412,16 @@
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     padding: 24px;
     transform: scale(0.85);
-    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: transform 0.25s cubic-bezier(0.2,0.8,0.2,1);
     will-change: transform;
     max-height: 85vh;
     display: flex;
     flex-direction: column;
     overflow: visible;
 }
-
-/* Riêng textarea body vẫn scroll được */
-.keep-modal-body {
-    overflow-y: auto;
-}
-
-/* Color picker trong modal cần z-index cao hơn modal */
-.keep-modal-content .color-picker-popup {
-    z-index: 1100;
-}
-
-.keep-modal.show .keep-modal-content {
-    transform: scale(1);
-}
-
+.keep-modal-body { overflow-y: auto; }
+.keep-modal-content .color-picker-popup { z-index: 1100; }
+.keep-modal.show .keep-modal-content { transform: scale(1); }
 .keep-modal-title {
     font-size: 1.3rem;
     font-weight: 600;
@@ -439,7 +432,6 @@
     outline: none;
     width: 100%;
 }
-
 .keep-modal-body {
     font-size: 1rem;
     color: var(--text-muted);
@@ -452,7 +444,6 @@
     min-height: 150px;
     width: 100%;
 }
-
 .keep-modal-footer {
     display: flex;
     justify-content: space-between;
@@ -461,7 +452,6 @@
     padding-top: 10px;
     border-top: 1px solid var(--border);
 }
-
 .btn-keep-close {
     background: transparent;
     border: none;
@@ -472,7 +462,280 @@
     cursor: pointer;
     transition: background 0.2s;
 }
+.btn-keep-close:hover { background: var(--surface-2); }
 
-.btn-keep-close:hover {
-    background: var(--surface-2);
+
+/* ═══════════════════════════════════════════
+   CHECKLIST FORM (Create new checklist)
+   ═══════════════════════════════════════════ */
+
+.checklist-input-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 4px;
 }
+
+.checklist-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 6px;
+    border-radius: 8px;
+    transition: background var(--transition);
+}
+.checklist-input-row:hover { background: var(--surface-2); }
+
+.checklist-row-icon {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+}
+
+.checklist-item-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-size: 0.92rem;
+    font-family: 'DM Sans', sans-serif;
+    caret-color: var(--accent);
+    padding: 2px 0;
+}
+.checklist-item-input::placeholder { color: var(--text-dim); }
+
+.checklist-row-delete {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+.checklist-input-row:hover .checklist-row-delete { opacity: 1; }
+.checklist-row-delete:hover { color: var(--danger); background: rgba(239,68,68,0.1); opacity: 1; }
+
+.checklist-add-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 6px;
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all var(--transition);
+    margin-bottom: 6px;
+    user-select: none;
+}
+.checklist-add-row:hover { background: var(--surface-2); color: var(--text-muted); }
+
+
+/* ═══════════════════════════════════════════
+   CHECKLIST CARD PREVIEW
+   ═══════════════════════════════════════════ */
+
+.checklist-card-preview {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.checklist-preview-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+    overflow: hidden;
+}
+.checklist-preview-item .check-icon {
+    font-size: 0.7rem;
+    flex-shrink: 0;
+    color: var(--text-dim);
+    transition: color var(--transition);
+}
+.checklist-preview-item.item-checked .check-icon { color: var(--success); }
+.checklist-preview-item span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.checklist-preview-item.item-checked span {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.checklist-preview-empty {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+.checklist-more {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 2px;
+}
+
+/* Progress bar */
+.checklist-progress-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+.checklist-progress-fill {
+    height: 100%;
+    background: var(--success);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+    min-width: 0;
+}
+
+
+/* ═══════════════════════════════════════════
+   CHECKLIST MODAL
+   ═══════════════════════════════════════════ */
+
+.modal-checklist-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 8px 0 4px;
+    max-height: 340px;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.modal-checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    transition: background var(--transition);
+    cursor: default;
+    user-select: none;
+}
+.modal-checklist-item:hover { background: var(--surface-2); }
+
+.checklist-drag-handle {
+    color: var(--text-dim);
+    cursor: grab;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity var(--transition);
+    width: 14px;
+}
+.modal-checklist-item:hover .checklist-drag-handle { opacity: 1; }
+.checklist-drag-handle:active { cursor: grabbing; }
+
+.checklist-checkbox {
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: color var(--transition), transform var(--transition);
+    width: 22px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.checklist-checkbox:hover { color: var(--accent); transform: scale(1.1); }
+.modal-checklist-item.item-checked .checklist-checkbox { color: var(--success); }
+
+.modal-item-text {
+    flex: 1;
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.4;
+    word-break: break-word;
+}
+.modal-item-text.checked-text {
+    text-decoration: line-through;
+    opacity: 0.5;
+    color: var(--text-muted);
+}
+
+.modal-item-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-size: 0.92rem;
+    font-family: 'DM Sans', sans-serif;
+    caret-color: var(--accent);
+}
+.modal-item-input::placeholder { color: var(--text-dim); }
+
+.checklist-item-delete {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    font-size: 0.78rem;
+    flex-shrink: 0;
+}
+.modal-checklist-item:hover .checklist-item-delete { opacity: 1; }
+.checklist-item-delete:hover { color: var(--danger); background: rgba(239,68,68,0.1); opacity: 1 !important; }
+
+/* "Add item" row in modal */
+.modal-checklist-add {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    transition: all var(--transition);
+    user-select: none;
+}
+.modal-checklist-add:hover { background: var(--surface-2); color: var(--text-muted); }
+
+/* Sortable ghost */
+.sortable-ghost {
+    opacity: 0.35;
+    background: var(--accent-soft) !important;
+    border-radius: 8px;
+}
+
+/* ─── Dark mode additions ─── */
+[data-theme="dark"] .checklist-item-input,
+[data-theme="dark"] .modal-item-input { color: var(--text); }
+[data-theme="dark"] .checklist-add-row:hover { background: var(--surface); }
+[data-theme="dark"] .modal-checklist-item:hover { background: var(--surface); }
+[data-theme="dark"] .modal-checklist-add:hover  { background: var(--surface); }
+[data-theme="dark"] .checklist-progress-bar { background: var(--border); }
