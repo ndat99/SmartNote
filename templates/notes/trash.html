@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Thùng rác — SmartNote{% endblock %}
+{% block nav_trash %}active{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h5 class="fw-semibold mb-0" style="color:var(--text);">
+        <i class="fa-regular fa-trash-can me-2" style="color:var(--text-muted);"></i>Thùng rác
+    </h5>
+    <small style="color:var(--text-dim); font-size:0.8rem; font-style:italic;">
+        Ghi chú sẽ tự động xóa vĩnh viễn sau 7 ngày.
+    </small>
+</div>
+
+<div class="row g-3">
+    {% for note in notes %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="note-card trash-card">
+
+            {% if note.title %}
+            <div class="note-card-title">{{ note.title }}</div>
+            {% endif %}
+
+            <div class="note-card-date" style="color:var(--danger); opacity:0.85;">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                Đã xóa: {{ note.deleted_at|date:"d/m/Y · H:i" }}
+            </div>
+
+            <p class="note-card-body">{{ note.content }}</p>
+
+            <div class="trash-actions">
+                <a href="{% url 'restore_note' note.id %}" class="trash-btn trash-btn-restore">
+                    <i class="fa-solid fa-trash-arrow-up me-1"></i>Khôi phục
+                </a>
+                <a href="{% url 'hard_delete_note' note.id %}" class="trash-btn trash-btn-delete">
+                    <i class="fa-solid fa-xmark me-1"></i>Xóa vĩnh viễn
+                </a>
+            </div>
+
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="empty-state">
+            <i class="fa-regular fa-face-smile empty-state-icon"></i>
+            <h5>Thùng rác đang trống</h5>
+            <p style="font-size:0.85rem; color:var(--text-dim); max-width:280px; margin:0 auto;">
+                Chúc bạn một ngày tốt lành!
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

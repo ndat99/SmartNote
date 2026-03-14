@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block extra_css %}{% endblock %}
-    <!-- Chạy TRƯỚC khi render để tránh flash trắng/đen -->
     <script>
         (function() {
             var t = localStorage.getItem('sn-theme');
@@ -22,7 +21,6 @@
 </head>
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar d-flex align-items-center justify-content-between fixed-top">
         <div class="d-flex align-items-center gap-2">
             <div class="menu-btn" onclick="toggleSidebar()">
@@ -43,7 +41,6 @@
             <div class="menu-btn d-none d-sm-flex" title="Làm mới">
                 <i class="fa-solid fa-rotate-right" style="font-size:0.95rem;"></i>
             </div>
-            <!-- Theme toggle -->
             <div class="menu-btn theme-toggle-btn d-none d-sm-flex" onclick="toggleTheme()" title="Đổi theme" id="themeToggleBtn">
                 <i class="fa-solid fa-sun"  id="icon-light" style="font-size:0.95rem;"></i>
                 <i class="fa-solid fa-moon" id="icon-dark"  style="font-size:0.95rem; display:none;"></i>
@@ -73,11 +70,9 @@
         </div>
     </nav>
 
-    <!-- Sidebar -->
-    <div class="sidebar mt-5" id="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-section-label">Menu</div>
-
-        <a href="#" class="nav-item-custom active">
+        <a href="{% url 'home' %}" class="nav-item-custom {% block nav_home %}{% endblock %}">
             <i class="fa-regular fa-lightbulb nav-icon"></i>
             <span class="nav-text">Ghi chú</span>
         </a>
@@ -89,21 +84,18 @@
             <i class="fa-solid fa-pen nav-icon"></i>
             <span class="nav-text">Chỉnh sửa nhãn</span>
         </a>
-
         <div class="sidebar-section-label" style="margin-top:12px;">Kho lưu trữ</div>
-
         <a href="#" class="nav-item-custom">
             <i class="fa-solid fa-box-archive nav-icon"></i>
             <span class="nav-text">Lưu trữ</span>
         </a>
-        <a href="#" class="nav-item-custom">
+        <a href="{% url 'trash' %}" class="nav-item-custom {% block nav_trash %}{% endblock %}">
             <i class="fa-regular fa-trash-can nav-icon"></i>
             <span class="nav-text">Thùng rác</span>
         </a>
     </div>
 
-    <!-- Main -->
-    <div class="main-content mt-5" id="mainContent">
+    <div class="main-content" id="mainContent">
         {% block content %}{% endblock %}
     </div>
 
@@ -115,7 +107,7 @@
         }
 
         var AVATAR_LIGHT = 'background=e8eeff&color=4a6cf7';
-        var AVATAR_DARK  = 'background=2a2a2a&color=6b9fff';
+        var AVATAR_DARK  = 'background=2e3140&color=7b9fff';
 
         function updateAvatar(isDark) {
             var av = document.getElementById('defaultAvatar');
@@ -139,7 +131,6 @@
             updateAvatar(next === 'dark');
         }
 
-        // Sync khi load
         (function() {
             var isDark = localStorage.getItem('sn-theme') === 'dark';
             setThemeIcons(isDark);

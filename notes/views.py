@@ -1,5 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from datetime import timedelta
 from .models import Note, Category
+from django.utils import timezone
 import threading
 
 try:
@@ -12,7 +14,7 @@ except ImportError:
 def run_ai_background(note_id, text):
     try:
         ai_result = analyze_note_with_ai(text)
-        print('AI_RESULT', ai_result)
+        print("AI RESULT: ", ai_result)
         if ai_result:
             note = Note.objects.get(id=note_id)
             
@@ -63,6 +65,9 @@ def home(request):
     if not request.user.is_authenticated:
         return render(request, 'notes/home.html', {'notes': []})
     
+    seven_days_ago = timezone.now() - timedelta(days=7)
+    Note.objects.filter(user=request.user, is_deleted=True, deleted_at__lte=seven_days_ago).delete()
+
     if request.method == 'POST':
         title = request.POST.get('title', '')
         content = request.POST.get('content', '')
@@ -86,6 +91,74 @@ def home(request):
         return redirect('home')
 
     # Lấy danh sách note để hiển thị
-    notes = Note.objects.filter(user=request.user, is_deleted=False).order_by('-created_at')
+    notes = Note.objects.filter(user=request.user, is_deleted=False, is_pinned=False).order_by('-created_at')
+    pinned_notes = Note.objects.filter(user=request.user, is_deleted=False, is_pinned=True).order_by('-created_at')
 
-    return render(request, 'notes/home.html', {'notes': notes})
+    return render(request, 'notes/home.html', {'notes': notes, 'pinned_notes': pinned_notes})
+
+# Hàm xoá
+def delete_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id, user=request.user)
+
+    # Cho vao thung rac
+    note.is_deleted = True
+    note.deleted_at = timezone.now()
+    note.save()
+
+    return redirect('home')
+
+def trash(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    
+    deleted_note = Note.objects.filter(user=request.user, is_deleted=True).order_by('-deleted_at')
+    print("===== CÓ TÌM THẤY RÁC KHÔNG? =====", deleted_note)
+    return render(request, 'notes/trash.html', {'notes': deleted_note})
+
+def  restore_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id, user=request.user)
+
+    note.is_deleted = False
+    note.deleted_at = None
+    note.save()
+
+    return redirect('trash')
+
+def hard_delete_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id, user=request.user)
+
+    note.delete()
+    return redirect('trash')
+
+def toggle_pin_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id, user=request.user)
+    note.is_pinned = not note.is_pinned
+    note.save()
+
+    return redirect('home')
+
+def set_note_color(request, note_id):
+    if request.method != 'POST':
+        from django.http import JsonResponse
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+    from django.http import JsonResponse
+    import json
+
+    note = get_object_or_404(Note, id=note_id, user=request.user)
+
+    try:
+        data = json.loads(request.body)
+        color = data.get('color', '')
+    except Exception:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    # Chỉ cho phép các giá trị hợp lệ
+    VALID_COLORS = {'', 'berry', 'red', 'orange', 'yellow', 'teal', 'blue', 'indigo', 'purple', 'pink', 'brown'}
+    if color not in VALID_COLORS:
+        return JsonResponse({'error': 'Invalid color'}, status=400)
+
+    note.background_color = color
+    note.save(update_fields=['background_color'])
+
+    return JsonResponse({'ok': True, 'color': color})

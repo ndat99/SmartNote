@@ -47,6 +47,7 @@ class Note(models.Model):
     is_pinned = models.BooleanField(default=False)
     is_archived = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False) # Soft delete (Thùng rác)
+    deleted_at = models.DateTimeField(null=True, blank=True)
     
     reminder_at = models.DateTimeField(null=True, blank=True)
 
