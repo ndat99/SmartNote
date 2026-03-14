@@ -1,0 +1,45 @@
+<div class="keep-modal" id="keepModal">
+    <div class="keep-modal-content" onclick="event.stopPropagation();">
+
+        <input type="text" id="modalTitle" class="keep-modal-title" placeholder="Tiêu đề">
+
+        <textarea id="modalContent" class="keep-modal-body" placeholder="Nội dung ghi chú..."></textarea>
+
+        <div id="modalChecklist" style="display:none;">
+            <div id="modalChecklistItems" class="modal-checklist-list"></div>
+            <div class="modal-checklist-add" onclick="addModalChecklistItem()">
+                <i class="fa-solid fa-plus" style="font-size:0.8rem;"></i>
+                <span>Thêm mục</span>
+            </div>
+        </div>
+
+        <div class="keep-modal-footer">
+            <div class="note-actions-left" style="position:relative;">
+                <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền"
+                   onclick="toggleCardColorPicker(this, event)"></i>
+                <div class="color-picker-popup card-color-picker">
+                    <div class="color-swatch swatch-none" data-color=""></div>
+                    <div class="color-swatch" data-color="berry"></div>
+                    <div class="color-swatch" data-color="red"></div>
+                    <div class="color-swatch" data-color="orange"></div>
+                    <div class="color-swatch" data-color="yellow"></div>
+                    <div class="color-swatch" data-color="teal"></div>
+                    <div class="color-swatch" data-color="blue"></div>
+                    <div class="color-swatch" data-color="indigo"></div>
+                    <div class="color-swatch" data-color="purple"></div>
+                    <div class="color-swatch" data-color="pink"></div>
+                    <div class="color-swatch" data-color="brown"></div>
+                </div>
+                <i class="fa-regular fa-bell      action-icon" title="Nhắc nhở"></i>
+                <i class="fa-solid fa-box-archive action-icon" title="Lưu trữ"></i>
+                <i class="fa-regular fa-trash-can action-icon" id="modalDeleteIcon"
+                   title="Xóa ghi chú" style="color:var(--danger);"
+                   onclick="window.location.href=document.getElementById('modalDeleteBtn').href"></i>
+            </div>
+            <button class="btn-keep-close" onclick="closeKeepModal()">Đóng</button>
+        </div>
+
+        {# Hidden anchor dùng để giữ URL xóa — JS set href khi mở modal #}
+        <a id="modalDeleteBtn" href="#" style="display:none;"></a>
+    </div>
+</div>

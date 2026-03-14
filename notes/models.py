@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User # Lấy bảng User có sẵn của Django
+from django.contrib.auth.models import User
 
 PRIORITY_CHOICES = [
     ('low', 'Low'),
@@ -12,10 +12,14 @@ SOURCE_CHOICES = [
     ('AI', 'AI'),
 ]
 
+NOTE_TYPE_CHOICES = [
+    ('note', 'Note'),
+    ('checklist', 'Checklist'),
+]
+
 # CATEGORIES
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    # user = null tức là category mặc định của hệ thống
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -39,35 +43,46 @@ class Category(models.Model):
 class Note(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
-    
+
+    note_type = models.CharField(max_length=20, choices=NOTE_TYPE_CHOICES, default='note')
+
     title = models.CharField(max_length=255, blank=True)
-    content = models.TextField(blank=True) # Để trống nếu là To-do list
+    content = models.TextField(blank=True)
     background_color = models.CharField(max_length=20, default='#FFFFFF')
-    
+
     is_pinned = models.BooleanField(default=False)
     is_archived = models.BooleanField(default=False)
-    is_deleted = models.BooleanField(default=False) # Soft delete (Thùng rác)
+    is_deleted = models.BooleanField(default=False)
     deleted_at = models.DateTimeField(null=True, blank=True)
-    
+
     reminder_at = models.DateTimeField(null=True, blank=True)
 
-    # --- CÁC FIELD DÀNH CHO AI ---
+    # AI fields
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, null=True, blank=True)
     priority_source = models.CharField(max_length=10, choices=SOURCE_CHOICES, null=True, blank=True)
-    
+
     due_date = models.DateTimeField(null=True, blank=True)
     due_date_source = models.CharField(max_length=10, choices=SOURCE_CHOICES, null=True, blank=True)
-    
+
     is_task = models.BooleanField(null=True, blank=True)
     is_task_source = models.CharField(max_length=10, choices=SOURCE_CHOICES, null=True, blank=True)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title if self.title else f"Note ID: {self.id}"
 
-# CHECKLIST (CHO TODO LIST)
+    @property
+    def checklist_stats(self):
+        """Returns (checked, total) using prefetch cache — no extra query."""
+        items = list(self.checklists.all())
+        total = len(items)
+        checked = sum(1 for i in items if i.is_checked)
+        return checked, total
+
+
+# CHECKLIST
 class ChecklistItem(models.Model):
     note = models.ForeignKey(Note, on_delete=models.CASCADE, related_name='checklists')
     content = models.CharField(max_length=255)
@@ -76,11 +91,12 @@ class ChecklistItem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['position'] # Tự động sắp xếp theo thứ tự kéo thả
+        ordering = ['position']
+
 
 # IMAGE
 class NoteImage(models.Model):
     note = models.ForeignKey(Note, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='note_images/')
-    ocr_text = models.TextField(blank=True, null=True, db_index=True) # db_index để search siêu tốc
+    ocr_text = models.TextField(blank=True, null=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
