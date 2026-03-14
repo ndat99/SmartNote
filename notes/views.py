@@ -88,11 +88,11 @@ def home(request):
         return redirect('home')
 
     notes = Note.objects.filter(
-        user=request.user, is_deleted=False, is_pinned=False
+        user=request.user, is_deleted=False, is_pinned=False, is_archived=False
     ).prefetch_related(_checklist_prefetch()).order_by('-created_at')
 
     pinned_notes = Note.objects.filter(
-        user=request.user, is_deleted=False, is_pinned=True
+        user=request.user, is_deleted=False, is_pinned=True, is_archived=False
     ).prefetch_related(_checklist_prefetch()).order_by('-created_at')
 
     return render(request, 'notes/home.html', {'notes': notes, 'pinned_notes': pinned_notes})
@@ -351,5 +351,24 @@ def reorder_checklist_items(request, note_id):
     order = data.get('order', [])
     for i, item_id in enumerate(order):
         ChecklistItem.objects.filter(id=item_id, note=note).update(position=i)
-
     return JsonResponse({'ok': True})
+
+
+def toggle_archive_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id, user=request.user)
+    note.is_archived = not note.is_archived
+    note.save()
+
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+def archive(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    
+    archived_notes = Note.objects.filter(
+        user=request.user,
+        is_archived=True,
+        is_deleted=False
+    ).prefetch_related(_checklist_prefetch()).order_by('-created_at')
+
+    return render(request, 'notes/archive.html', {'notes': archived_notes})

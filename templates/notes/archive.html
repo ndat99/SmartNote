@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Lưu trữ — SmartNote{% endblock %}
+{% block nav_archive %}active{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/colors.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h5 class="fw-semibold mb-0" style="color:var(--text);">
+        <i class="fa-solid fa-box-archive me-2" style="color:var(--text-muted);"></i>Lưu trữ
+    </h5>
+</div>
+
+<div class="row g-3">
+    {% for note in notes %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        {% include 'notes/components/_note_card.html' with note=note card_index=forloop.counter0 only %}
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="empty-state">
+            <i class="fa-solid fa-box-archive empty-state-icon"></i>
+            <h5>Chưa có ghi chú nào được lưu trữ</h5>
+            <p style="font-size:0.85rem; color:var(--text-dim); max-width:280px; margin:0 auto;">
+                Nhấn icon 📦 trên ghi chú để lưu trữ.
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% include 'notes/components/_keep_modal.html' %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+<script src="{% static 'js/color-picker.js' %}"></script>
+<script src="{% static 'js/keep-modal.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.note-card').forEach(function (card) {
+            card.style.animationDelay = (parseInt(card.dataset.index) * 60) + 'ms';
+        });
+        document.querySelectorAll('.checklist-progress-fill[data-progress]').forEach(function (el) {
+            el.style.width = el.dataset.progress + '%';
+        });
+        document.getElementById('keepModal').addEventListener('click', closeKeepModal);
+    });
+</script>
+{% endblock %}
+
+{% endblock %}
