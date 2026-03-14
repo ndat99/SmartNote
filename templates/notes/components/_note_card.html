@@ -1,71 +1,79 @@
-{% url 'toggle_pin_note' note.id as pin_url %}
+{% url 'toggle_pin_note' note.id as pin_url %} 
 {% url 'delete_note' note.id as delete_url %}
-<div class="note-card"
-     data-index="{{ card_index|default:0 }}"
-     data-note-id="{{ note.id }}"
-     data-note-type="{{ note.note_type }}"
-     {% if note.background_color %}data-color="{{ note.background_color }}"{% endif %}
-     onclick="openKeepModal(this)">
+<div class="note-card" data-index="{{ card_index|default:0 }}" data-note-id="{{ note.id }}"
+    data-note-type="{{ note.note_type }}" {% if note.background_color %}data-color="{{ note.background_color }}" 
 
-    <a href="{{ pin_url }}"
-       class="note-card-pin {% if note.is_pinned %}pinned{% endif %} text-decoration-none"
-       title="{% if note.is_pinned %}Bỏ ghim{% else %}Ghim{% endif %}"
-       onclick="event.stopPropagation();">
+    {% endif %} onclick="openKeepModal(this)">
+    <a href="{{ pin_url }}" class="note-card-pin {% if note.is_pinned %}pinned{% endif %} text-decoration-none"
+        title="{% if note.is_pinned %}Bỏ ghim{% else %}Ghim{% endif %}" onclick="event.stopPropagation()">
         <i class="fa-solid fa-thumbtack"></i>
     </a>
 
-    {% if note.title %}<div class="note-card-title">{{ note.title }}</div>{% endif %}
+    {% if note.title %}
+    <div class="note-card-title">{{ note.title }}</div>
+    {% endif %}
 
     <div class="note-card-date">
         <i class="fa-regular fa-clock"></i> {{ note.created_at|date:"d/m/Y · H:i" }}
         {% if note.note_type == 'checklist' %}
-        <i class="fa-regular fa-square-check ms-1" style="opacity:0.6;"></i>
+        <i class="fa-regular fa-square-check ms-1" style="opacity: 0.6"></i>
         {% endif %}
     </div>
 
     {% if note.note_type == 'checklist' %}
-        <div class="checklist-card-preview">
-            {% for item in note.checklists.all|slice:":6" %}
-            <div class="checklist-preview-item{% if item.is_checked %} item-checked{% endif %}">
-                <i class="fa-solid {% if item.is_checked %}fa-circle-check{% else %}fa-circle{% endif %} check-icon"></i>
-                <span>{{ item.content }}</span>
-            </div>
-            {% empty %}
-            <div class="checklist-preview-empty">Danh sách trống</div>
-            {% endfor %}
-            {% if note.checklists.count > 6 %}
-            <div class="checklist-more">+{{ note.checklists.count|add:"-6" }} mục nữa</div>
-            {% endif %}
+    <div class="checklist-card-preview">
+        {% for item in note.checklists.all|slice:":6" %}
+        <div class="checklist-preview-item{% if item.is_checked %} item-checked{% endif %}">
+            <i class="fa-solid {% if item.is_checked %}fa-circle-check{% else %}fa-circle{% endif %} check-icon"></i>
+            <span>{{ item.content }}</span>
         </div>
-        {% if note.checklist_stats.1 > 0 %}
-        <div class="checklist-progress-bar">
-            <div class="checklist-progress-fill"
-                 data-progress="{% widthratio note.checklist_stats.0 note.checklist_stats.1 100 %}"></div>
+        {% empty %}
+        <div class="checklist-preview-empty">Danh sách trống</div>
+        {% endfor %} {% if note.checklists.count > 6 %}
+        <div class="checklist-more">
+            +{{ note.checklists.count|add:"-6" }} mục nữa
         </div>
         {% endif %}
-        <script type="application/json" class="note-checklist-data">
-[{% for item in note.checklists.all %}{"id":{{ item.id }},"content":"{{ item.content|escapejs }}","is_checked":{% if item.is_checked %}true{% else %}false{% endif %}}{% if not forloop.last %},{% endif %}{% endfor %}]
-        </script>
+    </div>
+    {% if note.checklist_stats.1 > 0 %}
+    <div class="checklist-progress-bar">
+        <div class="checklist-progress-fill"
+            data-progress="{% widthratio note.checklist_stats.0 note.checklist_stats.1 100 %}"></div>
+    </div>
+    {% endif %}
+    <script type="application/json" class="note-checklist-data">
+    [{% for item in note.checklists.all %}{"id":{{ item.id }},"content":"{{ item.content|escapejs }}","is_checked":{% if item.is_checked %}true{% else %}false{% endif %}}{% if not forloop.last %},{% endif %}{% endfor %}]
+  </script>
     {% else %}
-        <p class="note-card-body">{{ note.content }}</p>
+    <p class="note-card-body">{{ note.content }}</p>
     {% endif %}
 
     <div class="note-card-tags">
-        {% if note.category %}<span class="tag tag-category"><i class="fa-solid fa-tag"></i> {{ note.category.name }}</span>{% endif %}
-        {% if note.priority == 'High' %}<span class="tag tag-high">● High</span>
-        {% elif note.priority == 'Medium' %}<span class="tag tag-medium">● Medium</span>
-        {% elif note.priority == 'Low' %}<span class="tag tag-low">● Low</span>{% endif %}
-        {% if note.is_task %}
-            {% if note.is_task_source == 'AI' %}<span class="tag tag-task-ai"><i class="fa-solid fa-robot"></i> AI Task</span>
-            {% else %}<span class="tag tag-task-user"><i class="fa-solid fa-user"></i> Task</span>{% endif %}
+        {% if note.category %}
+            <span class="tag tag-category"><i class="fa-solid fa-tag"></i> {{ note.category.name}}</span>
+        {% endif %} 
+        
+        {% if note.priority == 'High' %}
+            <span class="tag tag-high">● High</span>
+        {% elif note.priority == 'Medium' %}
+            <span class="tag tag-medium">● Medium</span>
+        {% elif note.priority == 'Low' %}
+            <span class="tag tag-low">● Low</span>
+        {%endif %} 
+        
+        {% if note.is_task %} 
+            {% if note.is_task_source == 'AI' %}
+                <span class="tag tag-task-ai"><i class="fa-solid fa-robot"></i> AI Task</span>
+            {% else %}
+                <span class="tag tag-task-user"><i class="fa-solid fa-user"></i> Task</span>
+            {% endif %} 
         {% endif %}
     </div>
 
     {# Actions — tất cả nằm thẳng, không dùng dropdown #}
-    <div class="note-actions" onclick="event.stopPropagation();">
-        <div class="note-actions-left" style="position:relative;">
-            <i class="fa-solid fa-palette action-icon" title="Đổi màu"
-               onclick="toggleCardColorPicker(this, event)"></i>
+    <div class="note-actions" onclick="event.stopPropagation()">
+        <div class="note-actions-left" style="position: relative">
+            <i class="fa-solid fa-palette action-icon" title="Đổi màu" onclick="toggleCardColorPicker(this, event)"></i>
             <div class="color-picker-popup card-color-picker">
                 <div class="color-swatch swatch-none" data-color=""></div>
                 <div class="color-swatch" data-color="berry"></div>
@@ -79,15 +87,16 @@
                 <div class="color-swatch" data-color="pink"></div>
                 <div class="color-swatch" data-color="brown"></div>
             </div>
-            <i class="fa-regular fa-bell      action-icon" title="Nhắc nhở"></i>
-            <i class="fa-solid fa-box-archive action-icon" title="Lưu trữ"></i>
+            <i class="fa-regular fa-bell action-icon" title="Nhắc nhở"></i>
+            <a href="{% url 'toggle_archive_note' note.id %}" class="action-icon" title="Lưu trữ"
+                onclick="event.stopPropagation()">
+                <i class="fa-solid fa-box-archive"></i>
+            </a>
         </div>
         <div class="note-actions-right">
-            <a href="{{ delete_url }}" class="action-icon text-danger" title="Xóa"
-               onclick="event.stopPropagation();">
+            <a href="{{ delete_url }}" class="action-icon text-danger" title="Xóa" onclick="event.stopPropagation()">
                 <i class="fa-regular fa-trash-can"></i>
             </a>
         </div>
     </div>
-
 </div>

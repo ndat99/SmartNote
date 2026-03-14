@@ -12,6 +12,9 @@ urlpatterns = [
 
     path('trash/', views.trash, name='trash'),
 
+    path('archive/', views.archive, name='archive'),
+    path('archive/<int:note_id>/', views.toggle_archive_note, name='toggle_archive_note'),
+
     # Checklist endpoints
     path('checklist/create/', views.create_checklist, name='create_checklist'),
     path('checklist/item/toggle/<int:item_id>/', views.toggle_checklist_item, name='toggle_checklist_item'),
