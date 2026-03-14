@@ -6,14 +6,20 @@ from datetime import datetime
 # Cấu hình API Key
 genai.configure(api_key=settings.GEMINI_API_KEY)
 
-def analyze_note_with_ai(content):
-    if not content:
+def analyze_note_with_ai(title, content):
+    if not title and not content:
         return None
     model = genai.GenerativeModel('gemini-2.5-flash')
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    note_text = ""
+    if title:
+        note_text += f"Tiêu đề: {title}\n"
+    if content:
+        note_text += f"Nội dung: {content}"
 
     prompt = f"""
-    Bạn là một trợ lý ảo phân tích ghi chú. Hãy đọc đoạn văn bản sau: "{content}"
+    Bạn là một trợ lý ảo phân tích ghi chú. Hãy đọc ghi chú sau:\n\n{note_text}
     
     Nhiệm vụ của bạn là phân tích và trả về KẾT QUẢ DUY NHẤT DƯỚI DẠNG CHUẨN JSON.
     Cấu trúc JSON bắt buộc: 

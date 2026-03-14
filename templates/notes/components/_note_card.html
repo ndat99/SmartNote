@@ -51,7 +51,7 @@
     {% endif %}
 
     <div class="note-card-tags">
-        {% if note.category %}<span class="tag tag-category"><i class="fa-solid fa-tag"></i> {{ note.category.name }}</span>{% endif %}
+        {% if note.category %}<span class="tag tag-category" data-category-id="{{ note.category.id }}"><i class="fa-solid fa-tag"></i> {{ note.category.name }}</span>{% endif %}
         {% if note.priority == 'High' %}<span class="tag tag-high">● High</span>
         {% elif note.priority == 'Medium' %}<span class="tag tag-medium">● Medium</span>
         {% elif note.priority == 'Low' %}<span class="tag tag-low">● Low</span>{% endif %}
@@ -81,6 +81,10 @@
             </div>
             <i class="fa-regular fa-bell      action-icon" title="Nhắc nhở"></i>
             <i class="fa-solid fa-box-archive action-icon" title="Lưu trữ"></i>
+            {# Nút toggle is_task — trạng thái dựa vào data attribute của card #}
+            <i class="{% if note.is_task %}fa-solid{% else %}fa-regular{% endif %} fa-circle-check action-icon card-task-btn {% if note.is_task %}task-active{% endif %}"
+               title="{% if note.is_task %}Bỏ đánh dấu nhiệm vụ{% else %}Đánh dấu là nhiệm vụ{% endif %}"
+               onclick="toggleCardTask(this, '{{ note.id }}', event)"></i>
         </div>
         <div class="note-actions-right">
             <a href="{{ delete_url }}" class="action-icon text-danger" title="Xóa"
