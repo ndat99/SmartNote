@@ -9,6 +9,8 @@ urlpatterns = [
     path('pin/<int:note_id>/', views.toggle_pin_note, name='toggle_pin_note'),
     path('set-color/<int:note_id>/', views.set_note_color, name='set_note_color'),
     path('update/<int:note_id>/', views.update_note, name='update_note'),
+    path('update-meta/<int:note_id>/', views.update_note_meta, name='update_note_meta'),
+    path('categories/', views.get_categories, name='get_categories'),
 
     path('trash/', views.trash, name='trash'),
 
