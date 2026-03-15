@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 from datetime import timedelta
 from .models import Note, Category, ChecklistItem
 from django.db.models import Prefetch, Q
 from django.utils import timezone
 import threading
 import json
+import time
 
 try:
     from .ai_helper import analyze_note_with_ai
@@ -62,9 +64,12 @@ def home(request):
     if not request.user.is_authenticated:
         return render(request, 'notes/home.html', {'notes': []})
 
-    # Auto-clean trash older than 7 days
-    seven_days_ago = timezone.now() - timedelta(days=7)
-    Note.objects.filter(user=request.user, is_deleted=True, deleted_at__lte=seven_days_ago).delete()
+    # Auto-clean trash: tối đa 1 lần/giờ/session, tránh chạy mỗi request
+    last_clean = request.session.get('last_trash_clean', 0)
+    if time.time() - last_clean > 3600:
+        seven_days_ago = timezone.now() - timedelta(days=7)
+        Note.objects.filter(user=request.user, is_deleted=True, deleted_at__lte=seven_days_ago).delete()
+        request.session['last_trash_clean'] = time.time()
 
     if request.method == 'POST':
         title            = request.POST.get('title', '')
@@ -136,10 +141,13 @@ def update_note_meta(request, note_id):
     except Exception:
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
+    update_fields = []
+
     # ── is_task ──
     if 'is_task' in data:
         note.is_task        = data['is_task']
         note.is_task_source = 'USER'
+        update_fields.extend(['is_task', 'is_task_source'])
 
     # ── category theo id ──
     if 'category_id' in data:
@@ -154,6 +162,7 @@ def update_note_meta(request, note_id):
             ).first()
             if cat:
                 note.category = cat
+        update_fields.append('category')
 
     # ── tạo category mới ──
     if 'new_category' in data:
@@ -165,8 +174,10 @@ def update_note_meta(request, note_id):
                 defaults={'name': name.capitalize()}
             )
             note.category = cat
+        update_fields.append('category')
 
-    note.save()
+    if update_fields:
+        note.save(update_fields=update_fields)
     return JsonResponse({
         'ok': True,
         'is_task':        note.is_task,
@@ -211,14 +222,18 @@ def delete_note(request, note_id):
     note = get_object_or_404(Note, id=note_id, user=request.user)
     note.is_deleted = True
     note.deleted_at = timezone.now()
-    note.save()
+    note.save(update_fields=['is_deleted', 'deleted_at'])
+    if request.method == 'POST':
+        return JsonResponse({'ok': True})
     return redirect('home')
 
 
 def toggle_pin_note(request, note_id):
     note = get_object_or_404(Note, id=note_id, user=request.user)
     note.is_pinned = not note.is_pinned
-    note.save()
+    note.save(update_fields=['is_pinned'])
+    if request.method == 'POST':
+        return JsonResponse({'ok': True, 'is_pinned': note.is_pinned})
     return redirect('home')
 
 
@@ -287,7 +302,16 @@ def create_checklist(request):
     thread = threading.Thread(target=run_ai_background, args=(note.id, title, items_text))
     thread.start()
 
-    return JsonResponse({'ok': True, 'note_id': note.id})
+    # Render card HTML để client inject trực tiếp, tránh reload trang
+    note_refreshed = Note.objects.prefetch_related(
+        Prefetch('checklists', queryset=ChecklistItem.objects.order_by('position'))
+    ).get(id=note.id)
+    card_html = render_to_string(
+        'notes/components/_note_card.html',
+        {'note': note_refreshed, 'card_index': 0},
+        request=request,
+    )
+    return JsonResponse({'ok': True, 'note_id': note.id, 'card_html': card_html})
 
 
 def toggle_checklist_item(request, item_id):
@@ -349,16 +373,26 @@ def reorder_checklist_items(request, note_id):
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
     order = data.get('order', [])
-    for i, item_id in enumerate(order):
-        ChecklistItem.objects.filter(id=item_id, note=note).update(position=i)
+    if order:
+        items_map = {
+            item.id: item
+            for item in ChecklistItem.objects.filter(note=note, id__in=order)
+        }
+        to_update = []
+        for i, item_id in enumerate(order):
+            item = items_map.get(int(item_id))
+            if item:
+                item.position = i
+                to_update.append(item)
+        if to_update:
+            ChecklistItem.objects.bulk_update(to_update, ['position'])
     return JsonResponse({'ok': True})
 
 
 def toggle_archive_note(request, note_id):
     note = get_object_or_404(Note, id=note_id, user=request.user)
     note.is_archived = not note.is_archived
-    note.save()
-
+    note.save(update_fields=['is_archived'])
     return redirect(request.META.get('HTTP_REFERER', 'home'))
 
 def archive(request):

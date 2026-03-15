@@ -11,6 +11,128 @@ function _csrf() {
 }
 
 // ════════════════════════════════════════
+//  AJAX DELETE NOTE
+// ════════════════════════════════════════
+async function deleteNote(noteId, triggerEl) {
+    const card = document.querySelector(`.note-card[data-note-id="${noteId}"]`);
+    const cardWrapper = card?.closest('[class*="col-"]') || card;
+
+    // Fade out ngay lập tức (optimistic)
+    if (card) {
+        card.style.transition = 'opacity 0.18s, transform 0.18s';
+        card.style.opacity    = '0';
+        card.style.transform  = 'scale(0.95)';
+    }
+
+    try {
+        const res  = await fetch(`/delete/${noteId}/`, {
+            method:  'POST',
+            headers: { 'X-CSRFToken': _csrf() },
+        });
+        const data = await res.json();
+        if (data.ok) {
+            setTimeout(() => {
+                cardWrapper?.remove();
+                _cleanEmptySections();
+            }, 200);
+        } else {
+            if (card) { card.style.opacity = ''; card.style.transform = ''; }
+        }
+    } catch (err) {
+        console.error('[Delete] Thất bại:', err);
+        if (card) { card.style.opacity = ''; card.style.transform = ''; }
+    }
+}
+
+// Gọi từ nút xóa trong modal
+function deleteNoteFromModal() {
+    const mc     = document.querySelector('.keep-modal-content');
+    const noteId = mc?.getAttribute('data-note-id');
+    if (!noteId) return;
+    document.getElementById('keepModal').classList.remove('show');
+    if (_sortable) { _sortable.destroy(); _sortable = null; }
+    deleteNote(noteId, null);
+}
+
+// ════════════════════════════════════════
+//  AJAX PIN NOTE
+// ════════════════════════════════════════
+async function pinNote(noteId, btnEl) {
+    const isPinned = btnEl.classList.contains('pinned');
+    const next     = !isPinned;
+
+    // Optimistic UI
+    btnEl.classList.toggle('pinned', next);
+    btnEl.title = next ? 'Bỏ ghim' : 'Ghim';
+
+    try {
+        const res  = await fetch(`/pin/${noteId}/`, {
+            method:  'POST',
+            headers: { 'X-CSRFToken': _csrf() },
+        });
+        const data = await res.json();
+        if (data.ok) {
+            const card = document.querySelector(`.note-card[data-note-id="${noteId}"]`);
+            _movePinnedCard(card, data.is_pinned);
+        } else {
+            // Revert
+            btnEl.classList.toggle('pinned', isPinned);
+            btnEl.title = isPinned ? 'Bỏ ghim' : 'Ghim';
+        }
+    } catch (err) {
+        console.error('[Pin] Thất bại:', err);
+        btnEl.classList.toggle('pinned', isPinned);
+        btnEl.title = isPinned ? 'Bỏ ghim' : 'Ghim';
+    }
+}
+
+function _movePinnedCard(card, isPinned) {
+    const cardWrapper = card?.closest('[class*="col-"]') || card;
+    if (!cardWrapper) return;
+
+    if (isPinned) {
+        let pinnedGrid = document.getElementById('pinned-grid');
+        if (!pinnedGrid) {
+            // Tạo section ghim nếu chưa có
+            const formWrapper = document.getElementById('formWrapper');
+            const header = document.createElement('div');
+            header.id        = 'pinned-header';
+            header.className = 'notes-section-header';
+            header.innerHTML = '<h6><i class="fa-solid fa-thumbtack me-1" style="font-size:0.65rem;"></i> Được ghim</h6>';
+            pinnedGrid = document.createElement('div');
+            pinnedGrid.id        = 'pinned-grid';
+            pinnedGrid.className = 'row g-3 mb-2';
+            formWrapper.insertAdjacentElement('afterend', header);
+            header.insertAdjacentElement('afterend', pinnedGrid);
+        }
+        pinnedGrid.prepend(cardWrapper);
+
+        // Cập nhật label section "Khác"
+        const notesHeader = document.getElementById('notes-header');
+        if (notesHeader) notesHeader.querySelector('h6').textContent = 'Khác';
+    } else {
+        const notesGrid = document.getElementById('notes-grid');
+        if (notesGrid) notesGrid.prepend(cardWrapper);
+        _cleanEmptySections();
+
+        // Nếu không còn note ghim → section "Ghi chú của bạn"
+        const pinnedGrid = document.getElementById('pinned-grid');
+        if (!pinnedGrid || !pinnedGrid.querySelector('.note-card')) {
+            const notesHeader = document.getElementById('notes-header');
+            if (notesHeader) notesHeader.querySelector('h6').textContent = 'Ghi chú của bạn';
+        }
+    }
+}
+
+function _cleanEmptySections() {
+    const pinnedGrid = document.getElementById('pinned-grid');
+    if (pinnedGrid && !pinnedGrid.querySelector('.note-card')) {
+        document.getElementById('pinned-header')?.remove();
+        pinnedGrid.remove();
+    }
+}
+
+// ════════════════════════════════════════
 //  OPEN / CLOSE
 // ════════════════════════════════════════
 function openKeepModal(cardEl) {

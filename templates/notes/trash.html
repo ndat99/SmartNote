@@ -6,6 +6,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/colors.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -22,7 +23,7 @@
 <div class="row g-3">
     {% for note in notes %}
     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <div class="note-card trash-card">
+        <div class="note-card trash-card" {% if note.background_color %}data-color="{{ note.background_color }}"{% endif %}>
 
             {% if note.title %}
             <div class="note-card-title">{{ note.title }}</div>
