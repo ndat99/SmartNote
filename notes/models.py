@@ -70,6 +70,25 @@ class Note(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        indexes = [
+            # Index chính cho trang home: lọc theo user + trạng thái + sắp xếp
+            models.Index(
+                fields=['user', 'is_deleted', 'is_archived', 'is_pinned', '-created_at'],
+                name='note_home_list_idx',
+            ),
+            # Index cho trang trash
+            models.Index(
+                fields=['user', 'is_deleted', 'deleted_at'],
+                name='note_trash_idx',
+            ),
+            # Index cho trang archive
+            models.Index(
+                fields=['user', 'is_archived', 'is_deleted', '-created_at'],
+                name='note_archive_idx',
+            ),
+        ]
+
     def __str__(self):
         return self.title if self.title else f"Note ID: {self.id}"
 

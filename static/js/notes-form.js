@@ -92,8 +92,30 @@ async function submitChecklist() {
             body:    JSON.stringify({ title, items, color: window._checklistColor }),
         });
         const data = await res.json();
-        if (data.ok && !data.skipped) window.location.reload();
-        else collapseChecklistForm();
+        if (data.ok && !data.skipped) {
+            collapseChecklistForm();
+            // Inject card vào DOM, không cần reload trang
+            if (data.card_html) {
+                const grid = document.getElementById('notes-grid');
+                if (grid) {
+                    const col = document.createElement('div');
+                    col.className = 'col-12 col-sm-6 col-md-4 col-lg-3';
+                    col.innerHTML = data.card_html;
+                    grid.prepend(col);
+                    // Khởi tạo progress bar và animation cho card mới
+                    const card = col.querySelector('.note-card');
+                    if (card) {
+                        card.style.animationDelay = '0ms';
+                        const fill = card.querySelector('.checklist-progress-fill[data-progress]');
+                        if (fill) fill.style.width = fill.dataset.progress + '%';
+                    }
+                    // Xóa empty state nếu có
+                    document.getElementById('empty-state-col')?.remove();
+                }
+            }
+        } else {
+            collapseChecklistForm();
+        }
     } catch (err) {
         console.error('[Checklist] Tạo thất bại:', err);
         btn.textContent = 'Lưu & Đóng';

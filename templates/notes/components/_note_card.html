@@ -5,7 +5,8 @@
 
     {% endif %} onclick="openKeepModal(this)">
     <a href="{{ pin_url }}" class="note-card-pin {% if note.is_pinned %}pinned{% endif %} text-decoration-none"
-        title="{% if note.is_pinned %}Bỏ ghim{% else %}Ghim{% endif %}" onclick="event.stopPropagation()">
+        title="{% if note.is_pinned %}Bỏ ghim{% else %}Ghim{% endif %}"
+        onclick="event.preventDefault(); event.stopPropagation(); pinNote('{{ note.id }}', this)">
         <i class="fa-solid fa-thumbtack"></i>
     </a>
 
@@ -21,6 +22,7 @@
     </div>
 
     {% if note.note_type == 'checklist' %}
+    {% with stats=note.checklist_stats %}
     <div class="checklist-card-preview">
         {% for item in note.checklists.all|slice:":6" %}
         <div class="checklist-preview-item{% if item.is_checked %} item-checked{% endif %}">
@@ -29,18 +31,18 @@
         </div>
         {% empty %}
         <div class="checklist-preview-empty">Danh sách trống</div>
-        {% endfor %} {% if note.checklists.count > 6 %}
-        <div class="checklist-more">
-            +{{ note.checklists.count|add:"-6" }} mục nữa
-        </div>
+        {% endfor %}
+        {% if stats.1 > 6 %}
+        <div class="checklist-more">+{{ stats.1|add:"-6" }} mục nữa</div>
         {% endif %}
     </div>
-    {% if note.checklist_stats.1 > 0 %}
+    {% if stats.1 > 0 %}
     <div class="checklist-progress-bar">
         <div class="checklist-progress-fill"
-            data-progress="{% widthratio note.checklist_stats.0 note.checklist_stats.1 100 %}"></div>
+            data-progress="{% widthratio stats.0 stats.1 100 %}"></div>
     </div>
     {% endif %}
+    {% endwith %}
     <script type="application/json" class="note-checklist-data">
     [{% for item in note.checklists.all %}{"id":{{ item.id }},"content":"{{ item.content|escapejs }}","is_checked":{% if item.is_checked %}true{% else %}false{% endif %}}{% if not forloop.last %},{% endif %}{% endfor %}]
   </script>
@@ -59,35 +61,22 @@
         {% endif %}
     </div>
 
-    {# Actions — tất cả nằm thẳng, không dùng dropdown #}
+    {# Actions #}
     <div class="note-actions" onclick="event.stopPropagation()">
         <div class="note-actions-left" style="position: relative">
             <i class="fa-solid fa-palette action-icon" title="Đổi màu" onclick="toggleCardColorPicker(this, event)"></i>
-            <div class="color-picker-popup card-color-picker">
-                <div class="color-swatch swatch-none" data-color=""></div>
-                <div class="color-swatch" data-color="berry"></div>
-                <div class="color-swatch" data-color="red"></div>
-                <div class="color-swatch" data-color="orange"></div>
-                <div class="color-swatch" data-color="yellow"></div>
-                <div class="color-swatch" data-color="teal"></div>
-                <div class="color-swatch" data-color="blue"></div>
-                <div class="color-swatch" data-color="indigo"></div>
-                <div class="color-swatch" data-color="purple"></div>
-                <div class="color-swatch" data-color="pink"></div>
-                <div class="color-swatch" data-color="brown"></div>
-            </div>
             <i class="fa-regular fa-bell      action-icon" title="Nhắc nhở"></i>
             <a href="{% url 'toggle_archive_note' note.id %}" class="action-icon" title="Lưu trữ"
                 onclick="event.stopPropagation()">
                 <i class="fa-solid fa-box-archive"></i>
             </a>
-            {# Nút toggle is_task — trạng thái dựa vào data attribute của card #}
             <i class="{% if note.is_task %}fa-solid{% else %}fa-regular{% endif %} fa-circle-check action-icon card-task-btn {% if note.is_task %}task-active{% endif %}"
                title="{% if note.is_task %}Bỏ đánh dấu nhiệm vụ{% else %}Đánh dấu là nhiệm vụ{% endif %}"
                onclick="toggleCardTask(this, '{{ note.id }}', event)"></i>
         </div>
         <div class="note-actions-right">
-            <a href="{{ delete_url }}" class="action-icon text-danger" title="Xóa" onclick="event.stopPropagation()">
+            <a href="{{ delete_url }}" class="action-icon text-danger" title="Xóa"
+               onclick="event.preventDefault(); event.stopPropagation(); deleteNote('{{ note.id }}', this)">
                 <i class="fa-regular fa-trash-can"></i>
             </a>
         </div>

@@ -32,13 +32,38 @@ function applyChecklistColor(color, swatchEl) {
     _setElemColor(document.getElementById('formWrapper'), color);
 }
 
-// Mở/đóng picker gắn vào card hoặc modal (picker là sibling tiếp theo)
+// Lấy hoặc tạo shared picker dùng chung cho tất cả card
+function _getSharedCardPicker() {
+    let picker = document.getElementById('sharedCardColorPicker');
+    if (!picker) {
+        picker = document.createElement('div');
+        picker.id = 'sharedCardColorPicker';
+        picker.className = 'color-picker-popup';
+        picker.style.position = 'fixed';
+        picker.style.zIndex = '9999';
+        const colors = ['', 'berry', 'red', 'orange', 'yellow', 'teal', 'blue', 'indigo', 'purple', 'pink', 'brown'];
+        colors.forEach(c => {
+            const sw = document.createElement('div');
+            sw.className = 'color-swatch' + (c === '' ? ' swatch-none' : '');
+            sw.dataset.color = c;
+            picker.appendChild(sw);
+        });
+        document.body.appendChild(picker);
+    }
+    return picker;
+}
+
+// Mở/đóng picker gắn vào card (shared) hoặc modal (nextElementSibling)
 function toggleCardColorPicker(iconEl, event) {
     event.stopPropagation();
-    const picker = iconEl.nextElementSibling;
+
+    const isModal = !!iconEl.closest('.keep-modal-content');
+
+    // Modal giữ picker của chính nó (chỉ có 1 modal trong DOM)
+    const picker = isModal ? iconEl.nextElementSibling : _getSharedCardPicker();
     if (!picker || !picker.classList.contains('color-picker-popup')) return;
 
-    const wasOpen = picker.classList.contains('visible');
+    const wasOpen = picker.classList.contains('visible') && picker._anchor === iconEl;
     closeAllColorPickers();
     if (wasOpen) return;
 
@@ -57,8 +82,9 @@ function toggleCardColorPicker(iconEl, event) {
         sw.classList.toggle('active', sw.dataset.color === current);
     });
 
+    picker._anchor = iconEl;
     picker.classList.add('visible');
-    _positionPicker(picker, iconEl);
+    _positionPicker(picker, iconEl, isModal);
 }
 
 // Áp màu lên DOM + gọi API lưu
@@ -100,21 +126,42 @@ function _activateSwatch(pickerSelector, color) {
             .forEach(s => s.classList.toggle('active', s.dataset.color === color));
 }
 
-function _positionPicker(picker, anchor) {
-    picker.style.cssText = '';
-    const rect = anchor.getBoundingClientRect();
-    if (rect.top < 60) {
-        picker.style.top    = 'calc(100% + 8px)';
-        picker.style.bottom = 'auto';
-    } else {
-        picker.style.bottom = 'calc(100% + 8px)';
-        picker.style.top    = 'auto';
+function _positionPicker(picker, anchor, useAbsolute) {
+    if (useAbsolute) {
+        // Modal: dùng absolute positioning như cũ
+        picker.style.cssText = '';
+        const rect = anchor.getBoundingClientRect();
+        if (rect.top < 60) {
+            picker.style.top    = 'calc(100% + 8px)';
+            picker.style.bottom = 'auto';
+        } else {
+            picker.style.bottom = 'calc(100% + 8px)';
+            picker.style.top    = 'auto';
+        }
+        requestAnimationFrame(() => {
+            const pr = picker.getBoundingClientRect();
+            if (pr.right > window.innerWidth - 8) {
+                picker.style.left  = 'auto';
+                picker.style.right = '0';
+            }
+        });
+        return;
     }
+
+    // Card: shared picker fixed positioning
+    const rect = anchor.getBoundingClientRect();
+    picker.style.left   = rect.left + 'px';
+    picker.style.top    = (rect.bottom + 8) + 'px';
+    picker.style.bottom = 'auto';
+    picker.style.right  = 'auto';
+
     requestAnimationFrame(() => {
         const pr = picker.getBoundingClientRect();
         if (pr.right > window.innerWidth - 8) {
-            picker.style.left  = 'auto';
-            picker.style.right = '0';
+            picker.style.left = (window.innerWidth - pr.width - 8) + 'px';
+        }
+        if (pr.bottom > window.innerHeight - 8) {
+            picker.style.top = (rect.top - pr.height - 8) + 'px';
         }
     });
 }
