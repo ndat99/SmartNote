@@ -13,7 +13,7 @@
     align-items: center;
     gap: 6px;
     box-shadow: 0 8px 28px rgba(0,0,0,0.15);
-    z-index: 200;
+    z-index: 999;
     opacity: 0;
     transform: translateY(6px) scale(0.96);
     pointer-events: none;
@@ -24,6 +24,10 @@
     opacity: 1;
     transform: translateY(0) scale(1);
     pointer-events: all;
+}
+/* Card chứa picker đang mở nổi lên trên card kề bên */
+.note-card:has(.color-picker-popup.visible) {
+    z-index: 100 !important;
 }
 
 /* Popup gắn vào toolbar (form) thì dùng fixed pos */
@@ -217,14 +221,19 @@
 .note-card[data-color] .note-actions      { border-top-color: var(--nc-border) !important; }
 
 /* ── Action icons ── */
-/* Light: tối trên nền pastel */
-.note-card[data-color] .action-icon { color: var(--nc-muted) !important; }
-.note-card[data-color] .action-icon:hover {
+/* Light: tối trên nền pastel — bỏ qua .text-danger để giữ màu đỏ */
+.note-card[data-color] .action-icon:not(.text-danger) { color: var(--nc-muted) !important; }
+.note-card[data-color] .action-icon:not(.text-danger):hover {
     color: var(--nc-text) !important;
     background: rgba(0,0,0,0.07) !important;
 }
+/* Nút xóa luôn đỏ dù card có màu gì */
+.note-card[data-color] .action-icon.text-danger { color: var(--danger) !important; }
+.note-card[data-color] .action-icon.text-danger:hover {
+    background: rgba(239,68,68,0.12) !important;
+}
 /* Dark: sáng trên nền đậm */
-[data-theme="dark"] .note-card[data-color] .action-icon:hover {
+[data-theme="dark"] .note-card[data-color] .action-icon:not(.text-danger):hover {
     background: rgba(255,255,255,0.12) !important;
 }
 
@@ -249,7 +258,10 @@
 
 /* ─── Modal + Form wrapper color theming ─── */
 .keep-modal-content[data-color],
-.note-form-wrapper[data-color] { transition: background 0.2s ease; }
+.note-form-wrapper[data-color] { transition: background 0.2s ease, border-color 0.2s ease; }
+
+/* Khi form có màu, bo border cho khớp tông */
+.note-form-wrapper[data-color] { border-color: transparent !important; }
 
 /* Light: pastel */
 .keep-modal-content[data-color="berry"],  .note-form-wrapper[data-color="berry"]  { background: #f9e4ec !important; }

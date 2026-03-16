@@ -1,0 +1,77 @@
+<div class="keep-modal" id="keepModal">
+    <div class="keep-modal-content" onclick="event.stopPropagation();">
+
+        <input type="text" id="modalTitle" class="keep-modal-title" placeholder="Tiêu đề">
+
+        <!-- Body: note thường -->
+        <textarea id="modalContent" class="keep-modal-body" placeholder="Nội dung ghi chú..."></textarea>
+
+        <!-- Body: checklist -->
+        <div id="modalChecklist" style="display:none;">
+            <div id="modalChecklistItems" class="modal-checklist-list"></div>
+            <div class="modal-checklist-add" onclick="addModalChecklistItem()">
+                <i class="fa-solid fa-plus" style="font-size:0.8rem;"></i>
+                <span>Thêm mục</span>
+            </div>
+        </div>
+
+        <!-- Tags hiện tại -->
+        <div id="modalTags" class="modal-tags-row"></div>
+
+        <!-- Tag editor (ẩn mặc định) -->
+        <div id="modalTagEditor" class="modal-tag-editor" style="display:none;">
+            <div class="tag-editor-search-row">
+                <input type="text" id="tagSearchInput" class="tag-search-input"
+                       placeholder="Tìm hoặc tạo danh mục…"
+                       oninput="filterCategories(this.value)">
+            </div>
+            <div id="tagCategoryList" class="tag-category-list"></div>
+            <div id="tagNewRow" class="tag-new-row" style="display:none;"
+                 onclick="createAndApplyCategory()">
+                <i class="fa-solid fa-plus" style="font-size:0.75rem;"></i>
+                <span id="tagNewLabel">Tạo danh mục mới</span>
+            </div>
+        </div>
+
+        <div class="keep-modal-footer">
+            <div class="note-actions-left" style="position:relative;">
+                <!-- Color picker -->
+                <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền"
+                   onclick="toggleCardColorPicker(this, event)"></i>
+                <div class="color-picker-popup card-color-picker">
+                    <div class="color-swatch swatch-none" data-color=""></div>
+                    <div class="color-swatch" data-color="berry"></div>
+                    <div class="color-swatch" data-color="red"></div>
+                    <div class="color-swatch" data-color="orange"></div>
+                    <div class="color-swatch" data-color="yellow"></div>
+                    <div class="color-swatch" data-color="teal"></div>
+                    <div class="color-swatch" data-color="blue"></div>
+                    <div class="color-swatch" data-color="indigo"></div>
+                    <div class="color-swatch" data-color="purple"></div>
+                    <div class="color-swatch" data-color="pink"></div>
+                    <div class="color-swatch" data-color="brown"></div>
+                </div>
+
+                <!-- Sửa nhãn -->
+                <i class="fa-solid fa-tag action-icon" id="modalTagBtn"
+                   title="Sửa nhãn" onclick="toggleTagEditor()"></i>
+
+                <!-- Toggle is_task -->
+                <i class="fa-regular fa-circle-check action-icon" id="modalTaskBtn"
+                   title="Đánh dấu là nhiệm vụ" onclick="toggleModalTask()"></i>
+
+                <i class="fa-regular fa-bell      action-icon" title="Nhắc nhở"></i>
+                <i class="fa-solid fa-box-archive action-icon" title="Lưu trữ"></i>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <i class="fa-regular fa-trash-can action-icon" id="modalDeleteIcon"
+                   title="Xóa ghi chú" style="color:var(--danger);"
+                   onclick="deleteNoteFromModal()"></i>
+                <button class="btn-keep-close" onclick="closeKeepModal()">Đóng</button>
+            </div>
+        </div>
+
+        <a id="modalDeleteBtn" href="#" style="display:none;"></a>
+    </div>
+</div>

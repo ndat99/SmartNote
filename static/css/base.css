@@ -102,7 +102,7 @@ a { text-decoration: none; color: inherit; transition: color var(--transition); 
     border-bottom: 1px solid var(--border);
     padding: 0 20px;
     height: var(--nav-h);
-    z-index: 100;
+    z-index: 200;
 }
 
 .menu-btn {
