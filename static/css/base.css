@@ -142,7 +142,7 @@ a { text-decoration: none; color: inherit; transition: color var(--transition); 
 .search-bar {
     background-color: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 99px;
+    border-radius: 2px;
     color: var(--text);
     padding: 9px 16px 9px 44px;
     width: 100%;
