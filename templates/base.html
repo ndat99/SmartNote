@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}SmartNote{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
 <nav class="navbar d-flex align-items-center justify-content-between fixed-top">
     <div class="d-flex align-items-center gap-2">
         <div class="menu-btn" onclick="toggleSidebar()">
-            <i class="fa-solid fa-bars"></i>
+            <i class="ph ph-list" style="font-size: 1.2rem;"></i>
         </div>
         <a class="navbar-brand" href="{% url 'home' %}">
             <img src="{% static 'images/logo.png' %}" alt="Logo" width="28">
@@ -35,17 +35,17 @@
     </div>
 
     <div class="search-container d-none d-md-block">
-        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <i class="ph ph-magnifying-glass search-icon" style="font-size: 1.1rem;"></i>
         <input type="text" class="search-bar" placeholder="Tìm kiếm ghi chú…">
     </div>
 
     <div class="d-flex align-items-center gap-2">
         <div class="menu-btn d-none d-sm-flex" title="Làm mới">
-            <i class="fa-solid fa-rotate-right" style="font-size:0.95rem;"></i>
+            <i class="ph ph-arrows-clockwise" style="font-size:1.1rem;"></i>
         </div>
         <div class="menu-btn theme-toggle-btn d-none d-sm-flex" onclick="toggleTheme()" title="Đổi theme">
-            <i class="fa-solid fa-sun"  id="icon-light" style="font-size:0.95rem;"></i>
-            <i class="fa-solid fa-moon" id="icon-dark"  style="font-size:0.95rem; display:none;"></i>
+            <i class="ph-fill ph-sun"  id="icon-light" style="font-size:1.1rem;"></i>
+            <i class="ph-fill ph-moon" id="icon-dark"  style="font-size:1.1rem; display:none;"></i>
         </div>
 
         {% if user.is_authenticated %}
@@ -62,8 +62,8 @@
             <ul class="dropdown-menu dropdown-menu-end">
                 <li><span class="dropdown-item-text">{{ user.get_full_name|default:user.username }}</span></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-user me-2" style="opacity:.5"></i>Hồ sơ</a></li>
-                <li><a class="dropdown-item text-danger" href="{% url 'account_logout' %}"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Đăng xuất</a></li>
+                <li><a class="dropdown-item" href="#"><i class="ph ph-user me-2" style="font-size: 1.05rem; opacity:.7"></i>Hồ sơ</a></li>
+                <li><a class="dropdown-item text-danger" href="{% url 'account_logout' %}"><i class="ph ph-sign-out me-2" style="font-size: 1.05rem;"></i>Đăng xuất</a></li>
             </ul>
         </div>
         {% else %}
@@ -76,24 +76,24 @@
 <div class="sidebar" id="sidebar">
     <div class="sidebar-section-label">Menu</div>
     <a href="{% url 'home' %}" class="nav-item-custom {% block nav_home %}{% endblock %}">
-        <i class="fa-regular fa-lightbulb nav-icon"></i>
+        <i class="ph ph-lightbulb nav-icon" style="font-size: 1.25rem;"></i>
         <span class="nav-text">Ghi chú</span>
     </a>
     <a href="#" class="nav-item-custom">
-        <i class="fa-regular fa-bell nav-icon"></i>
+        <i class="ph ph-bell nav-icon" style="font-size: 1.25rem;"></i>
         <span class="nav-text">Lời nhắc</span>
     </a>
     <a href="#" class="nav-item-custom">
-        <i class="fa-solid fa-pen nav-icon"></i>
+        <i class="ph ph-pencil-simple nav-icon" style="font-size: 1.25rem;"></i>
         <span class="nav-text">Chỉnh sửa nhãn</span>
     </a>
     <div class="sidebar-section-label" style="margin-top:12px;">Kho lưu trữ</div>
     <a href="{% url 'archive' %}" class="nav-item-custom {% block nav_archive %}{% endblock %}">
-        <i class="fa-solid fa-box-archive nav-icon"></i>
+        <i class="ph ph-archive nav-icon" style="font-size: 1.25rem;"></i>
         <span class="nav-text">Lưu trữ</span>
     </a>
     <a href="{% url 'trash' %}" class="nav-item-custom {% block nav_trash %}{% endblock %}">
-        <i class="fa-regular fa-trash-can nav-icon"></i>
+        <i class="ph ph-trash nav-icon" style="font-size: 1.25rem;"></i>
         <span class="nav-text">Thùng rác</span>
     </a>
 </div>

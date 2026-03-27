@@ -238,9 +238,10 @@
 }
 
 .note-card-pin {
-    position: absolute;
+    position: absolute !important;
     top: 12px;
     right: 12px;
+    z-index: 10;
     color: var(--text-dim);
     font-size: 0.85rem;
     padding: 4px;
@@ -368,7 +369,6 @@ font-size: 0.72rem;
     justify-content: space-between;
     align-items: center;
     padding-top: 10px;
-    border-top: 1px solid var(--border);
     margin-top: auto;
     opacity: 0;
     visibility: hidden;
@@ -485,7 +485,7 @@ font-size: 0.72rem;
     background: var(--surface);
     width: 100%;
     max-width: 600px;
-    border-radius: 12px;
+    border-radius: 4px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     padding: 24px;
     transform: scale(0.85);
