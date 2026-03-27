@@ -2,9 +2,9 @@
 //  NOTE FORM (tạo ghi chú thường)
 // ═══════════════════════════════════════
 function expandForm() {
-    document.getElementById('noteCollapsed').style.display    = 'none';
+    document.getElementById('noteCollapsed').style.display = 'none';
     document.getElementById('checklistExpanded').style.display = 'none';
-    document.getElementById('noteExpanded').style.display     = 'block';
+    document.getElementById('noteExpanded').style.display = 'block';
     document.querySelector('#noteExpanded input[name="title"]').focus();
 }
 
@@ -14,8 +14,8 @@ function expandForm() {
 window._checklistColor = '';
 
 function expandChecklistForm() {
-    document.getElementById('noteCollapsed').style.display     = 'none';
-    document.getElementById('noteExpanded').style.display      = 'none';
+    document.getElementById('noteCollapsed').style.display = 'none';
+    document.getElementById('noteExpanded').style.display = 'none';
     document.getElementById('checklistExpanded').style.display = 'block';
     if (!document.querySelector('#checklistItemList .checklist-input-row')) {
         addChecklistInputItem();
@@ -25,7 +25,7 @@ function expandChecklistForm() {
 
 function collapseChecklistForm() {
     document.getElementById('checklistExpanded').style.display = 'none';
-    document.getElementById('noteCollapsed').style.display     = 'flex';
+    document.getElementById('noteCollapsed').style.display = 'flex';
     document.getElementById('checklistTitle').value = '';
     document.getElementById('checklistItemList').innerHTML = '';
     window._checklistColor = '';
@@ -34,7 +34,7 @@ function collapseChecklistForm() {
     const none = document.querySelector('#checklistColorPicker .swatch-none');
     if (none) {
         document.querySelectorAll('#checklistColorPicker .color-swatch')
-                .forEach(s => s.classList.remove('active'));
+            .forEach(s => s.classList.remove('active'));
         none.classList.add('active');
     }
 }
@@ -46,19 +46,19 @@ function focusFirstChecklistItem() {
 
 function addChecklistInputItem(afterRow) {
     const list = document.getElementById('checklistItemList');
-    const row  = document.createElement('div');
+    const row = document.createElement('div');
     row.className = 'checklist-input-row';
     row.innerHTML = `
-        <span class="checklist-row-icon"><i class="fa-regular fa-circle" style="font-size:.78rem"></i></span>
+        <span class="checklist-row-icon"><i class="ph ph-circle" style="font-size:.78rem"></i></span>
         <input type="text" class="checklist-item-input" placeholder="Thêm mục…">
         <button type="button" class="checklist-row-delete" tabindex="-1">
-            <i class="fa-solid fa-xmark"></i>
+            <i class="ph ph-x"></i>
         </button>`;
 
     const input = row.querySelector('input');
     row.querySelector('.checklist-row-delete').addEventListener('click', () => _removeRow(row));
     input.addEventListener('keydown', e => {
-        if (e.key === 'Enter')                        { e.preventDefault(); addChecklistInputItem(row); }
+        if (e.key === 'Enter') { e.preventDefault(); addChecklistInputItem(row); }
         else if (e.key === 'Backspace' && !input.value) { e.preventDefault(); _removeRow(row); }
     });
 
@@ -77,19 +77,19 @@ function _removeRow(row) {
 async function submitChecklist() {
     const title = document.getElementById('checklistTitle').value.trim();
     const items = [...document.querySelectorAll('#checklistItemList .checklist-item-input')]
-                    .map(i => i.value.trim()).filter(Boolean);
+        .map(i => i.value.trim()).filter(Boolean);
 
     if (!title && !items.length) { collapseChecklistForm(); return; }
 
     const btn = document.querySelector('#checklistExpanded .btn-close-note');
     btn.textContent = 'Đang lưu…';
-    btn.disabled    = true;
+    btn.disabled = true;
 
     try {
-        const res  = await fetch('/checklist/create/', {
-            method:  'POST',
+        const res = await fetch('/checklist/create/', {
+            method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-CSRFToken': (document.querySelector('[name=csrfmiddlewaretoken]')?.value || document.cookie.match(/csrftoken=([^;]+)/)?.[1] || '') },
-            body:    JSON.stringify({ title, items, color: window._checklistColor }),
+            body: JSON.stringify({ title, items, color: window._checklistColor }),
         });
         const data = await res.json();
         if (data.ok && !data.skipped) {
@@ -119,6 +119,6 @@ async function submitChecklist() {
     } catch (err) {
         console.error('[Checklist] Tạo thất bại:', err);
         btn.textContent = 'Lưu & Đóng';
-        btn.disabled    = false;
+        btn.disabled = false;
     }
 }
