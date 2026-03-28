@@ -1,5 +1,8 @@
 <div class="keep-modal" id="keepModal">
     <div class="keep-modal-content" onclick="event.stopPropagation();">
+    
+        <!-- Image Slider Header -->
+        <div id="modalImageSlider" class="modal-image-slider"></div>
 
         <input type="text" id="modalTitle" class="keep-modal-title" placeholder="Tiêu đề">
 
@@ -59,6 +62,11 @@
                 <!-- Toggle is_task -->
                 <i class="ph ph-check-circle action-icon" style="font-size: 1.15rem;" id="modalTaskBtn"
                    title="Đánh dấu là nhiệm vụ" onclick="toggleModalTask()"></i>
+
+                <!-- Thêm ảnh -->
+                <input type="file" multiple id="modalImageInput" accept="image/*" style="display:none;" onchange="uploadModalImages(this)">
+                <i class="ph ph-image action-icon" style="font-size: 1.15rem;" title="Thêm hình ảnh"
+                   onclick="document.getElementById('modalImageInput').click()"></i>
 
                 <i class="ph ph-bell action-icon" style="font-size: 1.15rem;" title="Nhắc nhở"></i>
                 <i class="ph ph-archive action-icon" style="font-size: 1.15rem;" title="Lưu trữ"></i>

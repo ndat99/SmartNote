@@ -145,7 +145,7 @@
     border: 1px solid #eaecf5;
     border-radius: 2px;
     padding: 16px 10px 0px 40px ;
-    height: 260px;
+    height: 310px;
     position: relative;
     overflow: visible;
     transition: all 0.22s ease;
@@ -291,8 +291,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin-top: 8px;
-    margin-bottom: 12px;
+    margin-top: auto;
+    margin-bottom: 4px;
     position: relative;
     z-index: 2;
 }
@@ -369,7 +369,7 @@ font-size: 0.72rem;
     justify-content: space-between;
     align-items: center;
     padding-top: 10px;
-    margin-top: auto;
+    margin-top: 4px;
     opacity: 0;
     visibility: hidden;
     transition: all 0.2s ease;
@@ -968,3 +968,126 @@ font-size: 0.72rem;
 
 [data-theme="dark"] .modal-tag-editor { background: var(--surface); }
 [data-theme="dark"] .tag-search-input { background: var(--surface-2); }
+
+/* ─── Image Grids & Stamps ─── */
+.note-card-images {
+    display: flex;
+    padding: 12px 12px 0 12px;
+    gap: 4px;
+    border-radius: 6px 6px 0 0;
+    pointer-events: none; /* Let card handle clicks */
+}
+
+.note-card-img-wrap {
+    flex: 1;
+    height: 75px;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 2px solid var(--surface);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    background: #fff;
+    transition: transform 0.2s ease;
+}
+.note-card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.note-card-img-wrap.extra-images .extra-images-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+}
+
+[data-theme="dark"] .note-card-img-wrap {
+    border-color: #2e3140;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* ─── Modal Image Slider ─── */
+.modal-image-slider {
+    width: calc(100% + 48px);
+    margin: -24px -24px 16px -24px;
+    min-height: 100px;
+    background: var(--surface-2);
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+}
+
+.modal-image-slider.grid-mode {
+    display: flex;
+    gap: 2px;
+}
+.modal-image-slider.grid-mode .modal-img-wrap {
+    flex: 1;
+    position: relative;
+    height: 250px;
+}
+.modal-image-slider.grid-mode .modal-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-image-slider.slider-mode {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 8px;
+    padding: 16px;
+    background: #111;
+}
+.modal-image-slider.slider-mode::-webkit-scrollbar { height: 6px; }
+.modal-image-slider.slider-mode::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
+
+.modal-img-slide {
+    flex: 0 0 auto;
+    width: 80%;
+    max-width: 400px;
+    height: 300px;
+    scroll-snap-align: center;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+.modal-img-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.delete-img-btn {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 32px; height: 32px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+}
+.modal-img-wrap:hover .delete-img-btn, 
+.modal-img-slide:hover .delete-img-btn {
+    opacity: 1;
+}
+.delete-img-btn:hover {
+    background: var(--danger);
+    transform: scale(1.1);
+}

@@ -12,6 +12,10 @@ urlpatterns = [
     path('update-meta/<int:note_id>/', views.update_note_meta, name='update_note_meta'),
     path('categories/', views.get_categories, name='get_categories'),
 
+    # Image endpoints
+    path('image/add/<int:note_id>/', views.add_note_images, name='add_note_images'),
+    path('image/delete/<int:image_id>/', views.delete_note_image, name='delete_note_image'),
+
     path('trash/', views.trash, name='trash'),
 
     path('archive/', views.archive, name='archive'),

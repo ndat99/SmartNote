@@ -1,13 +1,29 @@
 {% url 'toggle_pin_note' note.id as pin_url %}
 {% url 'delete_note' note.id as delete_url %}
 <div class="note-card" data-index="{{ card_index|default:0 }}" data-note-id="{{ note.id }}"
-    data-note-type="{{ note.note_type }}" {% if note.background_color %}data-color="{{ note.background_color }}" {%
-    endif %} onclick="openKeepModal(this)">
+    data-note-type="{{ note.note_type }}" {% if note.background_color %} data-color="{{ note.background_color }}" {%endif %} 
+    onclick="openKeepModal(this)">
     <a href="{{ pin_url }}" class="note-card-pin {% if note.is_pinned %}pinned{% endif %} text-decoration-none"
         title="{% if note.is_pinned %}Bỏ ghim{% else %}Ghim{% endif %}"
         onclick="event.preventDefault(); event.stopPropagation(); pinNote('{{ note.id }}', this)">
         <i class="ph-fill ph-push-pin"></i>
     </a>
+
+    {% if note.images.all %}
+    <div class="note-card-images len-{{ note.images.count|default:1 }}">
+        {% for img in note.images.all|slice:":3" %}
+        <div class="note-card-img-wrap {% if forloop.counter == 3 and note.images.count > 3 %}extra-images{% endif %}">
+            <img src="{{ img.image.url }}" alt="Note Image">
+            {% if forloop.counter == 3 and note.images.count > 3 %}
+            <div class="extra-images-overlay">+{{ note.images.count|add:"-2" }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    <script type="application/json" class="note-image-data">
+        [{% for img in note.images.all %}{"id": {{ img.id }}, "url": "{{ img.image.url }}"}{% if not forloop.last %},{% endif %}{% endfor %}]
+    </script>
+    {% endif %}
 
     {% if note.title %}
     <div class="note-card-title">{{ note.title }}</div>
