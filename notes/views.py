@@ -80,13 +80,20 @@ def home(request):
         if background_color not in VALID_COLORS:
             background_color = ''
 
-        if title.strip() or content.strip():
+        if title.strip() or content.strip() or request.FILES.getlist('images'):
             note = Note.objects.create(
                 user=request.user,
                 title=title,
                 content=content,
                 background_color=background_color,
             )
+            
+            # Xử lý upload ảnh
+            images = request.FILES.getlist('images')
+            for img in images:
+                from .models import NoteImage
+                NoteImage.objects.create(note=note, image=img)
+
             thread = threading.Thread(target=run_ai_background, args=(note.id, title, content))
             thread.start()
 
@@ -94,11 +101,11 @@ def home(request):
 
     notes = Note.objects.filter(
         user=request.user, is_deleted=False, is_pinned=False, is_archived=False
-    ).prefetch_related(_checklist_prefetch()).order_by('-created_at')
+    ).prefetch_related(_checklist_prefetch(), 'images').order_by('-created_at')
 
     pinned_notes = Note.objects.filter(
         user=request.user, is_deleted=False, is_pinned=True, is_archived=False
-    ).prefetch_related(_checklist_prefetch()).order_by('-created_at')
+    ).prefetch_related(_checklist_prefetch(), 'images').order_by('-created_at')
 
     return render(request, 'notes/home.html', {'notes': notes, 'pinned_notes': pinned_notes})
 
@@ -238,13 +245,47 @@ def toggle_pin_note(request, note_id):
 
 
 # ──────────────────────────────────────────────
+#  IMAGE ENDPOINTS
+# ──────────────────────────────────────────────
+
+def add_note_images(request, note_id):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+        
+    note = get_object_or_404(Note, id=note_id, user=request.user)
+    images = request.FILES.getlist('images')
+    
+    from .models import NoteImage
+    uploaded_data = []
+    for img in images:
+        n_img = NoteImage.objects.create(note=note, image=img)
+        uploaded_data.append({'id': n_img.id, 'url': n_img.image.url})
+        
+    return JsonResponse({'ok': True, 'images': uploaded_data})
+    
+def delete_note_image(request, image_id):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+        
+    from .models import NoteImage
+    img = get_object_or_404(NoteImage, id=image_id, note__user=request.user)
+    img_id = img.id
+    img.delete()
+    return JsonResponse({'ok': True, 'deleted_id': img_id})
+
+
+# ──────────────────────────────────────────────
 #  TRASH
 # ──────────────────────────────────────────────
 
 def trash(request):
     if not request.user.is_authenticated:
         return redirect('home')
-    deleted_note = Note.objects.filter(user=request.user, is_deleted=True).order_by('-deleted_at')
+    deleted_note = Note.objects.filter(user=request.user, is_deleted=True).prefetch_related('images').order_by('-deleted_at')
     return render(request, 'notes/trash.html', {'notes': deleted_note})
 
 
@@ -403,6 +444,6 @@ def archive(request):
         user=request.user,
         is_archived=True,
         is_deleted=False
-    ).prefetch_related(_checklist_prefetch()).order_by('-created_at')
+    ).prefetch_related(_checklist_prefetch(), 'images').order_by('-created_at')
 
     return render(request, 'notes/archive.html', {'notes': archived_notes})

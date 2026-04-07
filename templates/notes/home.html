@@ -4,7 +4,7 @@
 {% block nav_home %}active{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}?v=1.4">
 <link rel="stylesheet" href="{% static 'css/colors.css' %}">
 {% endblock %}
 
@@ -17,21 +17,24 @@
     <div class="note-collapsed" id="noteCollapsed" onclick="expandForm()">
         <span>Tạo ghi chú…</span>
         <div class="note-collapsed-icons">
-            <i class="fa-regular fa-square-check" title="Tạo danh sách việc cần làm"
+            <i class="ph ph-check-square" title="Tạo danh sách việc cần làm" style="font-size: 1.25rem;"
                onclick="event.stopPropagation(); expandChecklistForm();"></i>
-            <i class="fa-solid fa-paintbrush" title="Ghi chú có bản vẽ"></i>
-            <i class="fa-regular fa-image"    title="Ghi chú có hình ảnh"></i>
+            <i class="ph ph-paint-brush" title="Ghi chú có bản vẽ" style="font-size: 1.25rem;"></i>
+            <i class="ph ph-image" title="Ghi chú có hình ảnh" style="font-size: 1.25rem;"
+               onclick="event.stopPropagation(); expandForm(); document.getElementById('formImageInput').click();"></i>
         </div>
     </div>
 
-    <form method="POST" action="{% url 'home' %}" class="note-expanded" id="noteExpanded">
+    <form method="POST" action="{% url 'home' %}" class="note-expanded" id="noteExpanded" enctype="multipart/form-data">
         {% csrf_token %}
+        <input type="file" multiple name="images" id="formImageInput" accept="image/*" style="display:none;" onchange="handleFormImages(this)">
+        <div id="formImagePreview" class="form-image-preview-container"></div>
         <input type="text" name="title" placeholder="Tiêu đề">
         <hr class="note-separator">
         <textarea name="content" placeholder="Tạo ghi chú…"></textarea>
         <div class="toolbar">
             <div class="toolbar-icons" style="position:relative;">
-                <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền"
+                <i class="ph ph-palette action-icon" title="Tùy chọn nền" style="font-size: 1.15rem;"
                    onclick="toggleColorPicker('formColorPicker', event)"></i>
                 <div class="color-picker-popup" id="formColorPicker">
                     <div class="color-swatch swatch-none active" data-color="" onclick="applyFormColor('', this)"></div>
@@ -47,25 +50,29 @@
                     <div class="color-swatch" data-color="brown"  onclick="applyFormColor('brown',  this)"></div>
                 </div>
                 <input type="hidden" name="background_color" id="formBgColor" value="">
-                <i class="fa-regular fa-bell action-icon" title="Nhắc nhở"></i>
-                <i class="fa-solid fa-tag    action-icon" title="Thêm nhãn"></i>
+                <i class="ph ph-image action-icon" title="Thêm hình ảnh" style="font-size: 1.15rem;"
+                   onclick="document.getElementById('formImageInput').click()"></i>
+                <i class="ph ph-bell action-icon" title="Nhắc nhở" style="font-size: 1.15rem;"></i>
+                <i class="ph ph-tag action-icon" title="Thêm nhãn" style="font-size: 1.15rem;"></i>
             </div>
             <button type="submit" class="btn-close-note">Lưu & Đóng</button>
         </div>
     </form>
 
     <div class="note-expanded" id="checklistExpanded" style="display:none;">
+        <input type="file" multiple id="checklistImageInput" accept="image/*" style="display:none;" onchange="handleChecklistImages(this)">
+        <div id="checklistImagePreview" class="form-image-preview-container"></div>
         <input type="text" id="checklistTitle" placeholder="Tiêu đề danh sách"
                onkeydown="if(event.key==='Enter'){event.preventDefault(); focusFirstChecklistItem();}">
         <hr class="note-separator">
         <div id="checklistItemList" class="checklist-input-list"></div>
         <div class="checklist-add-row" onclick="addChecklistInputItem()">
-            <i class="fa-regular fa-square" style="font-size:0.85rem;"></i>
+            <i class="ph ph-square" style="font-size:1.1rem; margin-right: 4px;"></i>
             <span>Thêm mục</span>
         </div>
         <div class="toolbar">
             <div class="toolbar-icons" style="position:relative;">
-                <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền"
+                <i class="ph ph-palette action-icon" title="Tùy chọn nền" style="font-size: 1.15rem;"
                    onclick="toggleColorPicker('checklistColorPicker', event)"></i>
                 <div class="color-picker-popup" id="checklistColorPicker">
                     <div class="color-swatch swatch-none active" data-color="" onclick="applyChecklistColor('', this)"></div>
@@ -80,8 +87,11 @@
                     <div class="color-swatch" data-color="pink"   onclick="applyChecklistColor('pink',   this)"></div>
                     <div class="color-swatch" data-color="brown"  onclick="applyChecklistColor('brown',  this)"></div>
                 </div>
-                <i class="fa-regular fa-bell action-icon" title="Nhắc nhở"></i>
-                <i class="fa-solid fa-tag    action-icon" title="Thêm nhãn"></i>
+                <!-- Image for checklist -->
+                <i class="ph ph-image action-icon" title="Thêm hình ảnh" style="font-size: 1.15rem;"
+                   onclick="document.getElementById('checklistImageInput').click()"></i>
+                <i class="ph ph-bell action-icon" title="Nhắc nhở" style="font-size: 1.15rem;"></i>
+                <i class="ph ph-tag action-icon" title="Thêm nhãn" style="font-size: 1.15rem;"></i>
             </div>
             <button type="button" class="btn-close-note" onclick="submitChecklist()">Lưu & Đóng</button>
         </div>
@@ -93,7 +103,7 @@
 <!-- ═══════════════ GHI CHÚ ĐƯỢC GHIM ═══════════════ -->
 {% if pinned_notes %}
 <div class="notes-section-header" id="pinned-header">
-    <h6><i class="fa-solid fa-thumbtack me-1" style="font-size:0.65rem;"></i> Được ghim</h6>
+    <h6><i class="ph-fill ph-push-pin me-1" style="font-size:0.85rem;"></i> Được ghim</h6>
 </div>
 <div class="row g-3 mb-2" id="pinned-grid">
     {% for note in pinned_notes %}
@@ -122,7 +132,7 @@
     {% if not pinned_notes %}
     <div class="col-12" id="empty-state-col">
         <div class="empty-state">
-            <i class="fa-regular fa-lightbulb empty-state-icon"></i>
+            <i class="ph ph-lightbulb empty-state-icon" style="font-size:3rem; margin-bottom:12px; display:block; color:var(--text-dim);"></i>
             <h5>Ghi chú của bạn sẽ xuất hiện ở đây</h5>
             <p style="font-size:0.85rem; color:var(--text-dim); max-width:280px; margin:0 auto;">
                 Nhấn vào ô bên trên để bắt đầu ghi chú đầu tiên của bạn.
@@ -143,8 +153,8 @@
 {% block extra_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
 <script src="{% static 'js/color-picker.js' %}"></script>
-<script src="{% static 'js/notes-form.js' %}"></script>
-<script src="{% static 'js/keep-modal.js' %}"></script>
+<script src="{% static 'js/notes-form.js' %}?v=1.4"></script>
+<script src="{% static 'js/keep-modal.js' %}?v=1.3"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // Animation delay theo thứ tự card
@@ -166,10 +176,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const noteExp = document.getElementById('noteExpanded');
         if (noteExp.style.display === 'block' && !wrapper.contains(e.target)) {
-            if (!noteExp.querySelector('[name=title]').value &&
-                !noteExp.querySelector('[name=content]').value) {
+            const hasTitle = noteExp.querySelector('[name=title]').value.trim();
+            const hasContent = noteExp.querySelector('[name=content]').value.trim();
+            const hasImages = document.getElementById('formImageInput').files.length > 0;
+            if (!hasTitle && !hasContent && !hasImages) {
                 document.getElementById('noteCollapsed').style.display = 'flex';
                 noteExp.style.display = 'none';
+            } else if (!e.target.closest('.keep-modal')) {
+                // Tự động submit nếu click ra ngoài (giống Google Keep) hoặc giữ form
+                // Tạm thời giữ form mở nếu có ảnh để user bấm Nút Lưu.
             }
         }
 

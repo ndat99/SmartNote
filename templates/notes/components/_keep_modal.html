@@ -1,5 +1,8 @@
 <div class="keep-modal" id="keepModal">
     <div class="keep-modal-content" onclick="event.stopPropagation();">
+    
+        <!-- Image Slider Header -->
+        <div id="modalImageSlider" class="modal-image-slider"></div>
 
         <input type="text" id="modalTitle" class="keep-modal-title" placeholder="Tiêu đề">
 
@@ -10,7 +13,7 @@
         <div id="modalChecklist" style="display:none;">
             <div id="modalChecklistItems" class="modal-checklist-list"></div>
             <div class="modal-checklist-add" onclick="addModalChecklistItem()">
-                <i class="fa-solid fa-plus" style="font-size:0.8rem;"></i>
+                <i class="ph ph-plus" style="font-size:1rem; margin-right:4px;"></i>
                 <span>Thêm mục</span>
             </div>
         </div>
@@ -28,7 +31,7 @@
             <div id="tagCategoryList" class="tag-category-list"></div>
             <div id="tagNewRow" class="tag-new-row" style="display:none;"
                  onclick="createAndApplyCategory()">
-                <i class="fa-solid fa-plus" style="font-size:0.75rem;"></i>
+                <i class="ph ph-plus" style="font-size:0.95rem;"></i>
                 <span id="tagNewLabel">Tạo danh mục mới</span>
             </div>
         </div>
@@ -36,7 +39,7 @@
         <div class="keep-modal-footer">
             <div class="note-actions-left" style="position:relative;">
                 <!-- Color picker -->
-                <i class="fa-solid fa-palette action-icon" title="Tùy chọn nền"
+                <i class="ph ph-palette action-icon" style="font-size: 1.15rem;" title="Tùy chọn nền"
                    onclick="toggleCardColorPicker(this, event)"></i>
                 <div class="color-picker-popup card-color-picker">
                     <div class="color-swatch swatch-none" data-color=""></div>
@@ -53,20 +56,25 @@
                 </div>
 
                 <!-- Sửa nhãn -->
-                <i class="fa-solid fa-tag action-icon" id="modalTagBtn"
+                <i class="ph ph-tag action-icon" style="font-size: 1.15rem;" id="modalTagBtn"
                    title="Sửa nhãn" onclick="toggleTagEditor()"></i>
 
                 <!-- Toggle is_task -->
-                <i class="fa-regular fa-circle-check action-icon" id="modalTaskBtn"
+                <i class="ph ph-check-circle action-icon" style="font-size: 1.15rem;" id="modalTaskBtn"
                    title="Đánh dấu là nhiệm vụ" onclick="toggleModalTask()"></i>
 
-                <i class="fa-regular fa-bell      action-icon" title="Nhắc nhở"></i>
-                <i class="fa-solid fa-box-archive action-icon" title="Lưu trữ"></i>
+                <!-- Thêm ảnh -->
+                <input type="file" multiple id="modalImageInput" accept="image/*" style="display:none;" onchange="uploadModalImages(this)">
+                <i class="ph ph-image action-icon" style="font-size: 1.15rem;" title="Thêm hình ảnh"
+                   onclick="document.getElementById('modalImageInput').click()"></i>
+
+                <i class="ph ph-bell action-icon" style="font-size: 1.15rem;" title="Nhắc nhở"></i>
+                <i class="ph ph-archive action-icon" style="font-size: 1.15rem;" title="Lưu trữ"></i>
             </div>
 
             <div class="d-flex align-items-center gap-2">
-                <i class="fa-regular fa-trash-can action-icon" id="modalDeleteIcon"
-                   title="Xóa ghi chú" style="color:var(--danger);"
+                <i class="ph ph-trash action-icon" id="modalDeleteIcon"
+                   title="Xóa ghi chú" style="font-size: 1.25rem; color:var(--danger);"
                    onclick="deleteNoteFromModal()"></i>
                 <button class="btn-keep-close" onclick="closeKeepModal()">Đóng</button>
             </div>
