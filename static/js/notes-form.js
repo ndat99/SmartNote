@@ -28,6 +28,13 @@ function collapseChecklistForm() {
     document.getElementById('noteCollapsed').style.display = 'flex';
     document.getElementById('checklistTitle').value = '';
     document.getElementById('checklistItemList').innerHTML = '';
+    
+    // Clear images
+    if (window._checklistImageDT) window._checklistImageDT = new DataTransfer();
+    const ckImgInput = document.getElementById('checklistImageInput');
+    if (ckImgInput) ckImgInput.value = '';
+    handleChecklistImages(ckImgInput);
+    
     window._checklistColor = '';
     const fw = document.getElementById('formWrapper');
     fw ? fw.removeAttribute('data-color') : null;
@@ -120,5 +127,96 @@ async function submitChecklist() {
         console.error('[Checklist] Tạo thất bại:', err);
         btn.textContent = 'Lưu & Đóng';
         btn.disabled = false;
+    }
+}
+
+// ═══════════════════════════════════════
+//  IMAGE PREVIEW
+// ═══════════════════════════════════════
+
+window._formImageDT = new DataTransfer();
+window._checklistImageDT = new DataTransfer();
+
+function handleFormImages(input) {
+    _mergeFiles(input, window._formImageDT);
+    _renderImagePreview(input, document.getElementById('formImagePreview'));
+}
+
+function handleChecklistImages(input) {
+    _mergeFiles(input, window._checklistImageDT);
+    _renderImagePreview(input, document.getElementById('checklistImagePreview'));
+}
+
+function _mergeFiles(input, dt) {
+    if (input.files.length > 0) {
+        for (let file of input.files) {
+            let exists = false;
+            for(let old of dt.files) {
+                if(old.name === file.name && old.size === file.size) exists = true;
+            }
+            if (!exists) dt.items.add(file);
+        }
+    }
+    input.files = dt.files;
+}
+
+function _renderImagePreview(input, container) {
+    container.innerHTML = '';
+    const files = input.files;
+    if (!files || files.length === 0) {
+        container.style.display = 'none';
+        return;
+    }
+    
+    container.style.display = 'flex';
+    container.style.flexWrap = 'nowrap';
+    container.style.overflowX = 'auto';
+    container.style.gap = '8px';
+    container.style.padding = '12px 16px 0';
+    
+    // Đọc URL tạm cho các ảnh
+    Array.from(files).forEach((file, index) => {
+        const url = URL.createObjectURL(file);
+        const imgWrap = document.createElement('div');
+        imgWrap.className = 'modal-img-wrap'; // tận dụng css hover
+        imgWrap.style.position = 'relative';
+        imgWrap.style.flex = '0 0 auto';
+        imgWrap.style.width = files.length === 1 ? '100%' : (files.length === 2 ? 'calc(50% - 4px)' : '100px');
+        imgWrap.style.height = files.length === 1 ? '200px' : (files.length === 2 ? '150px' : '100px');
+        imgWrap.style.borderRadius = '8px';
+        imgWrap.style.overflow = 'hidden';
+        
+        imgWrap.innerHTML = `
+            <img src="${url}" style="width:100%; height:100%; object-fit:cover; display:block;">
+            <button type="button" class="delete-img-btn" style="top:5px; right:5px; width:26px; height:26px; font-size:0.85rem;" onclick="removeDraftImage('${input.id}', ${index}, event)"><i class="ph ph-trash"></i></button>
+        `;
+        container.appendChild(imgWrap);
+    });
+}
+
+function removeDraftImage(inputId, index, event) {
+    event.stopPropagation();
+    event.preventDefault();
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    
+    // DataTransfer API allows mutating FileList
+    const dt = new DataTransfer();
+    const files = input.files;
+    for (let i = 0; i < files.length; i++) {
+        if (i !== index) {
+            dt.items.add(files[i]);
+        }
+    }
+    input.files = dt.files; // Reset inner files
+    
+    // Update global state
+    if (inputId === 'formImageInput') {
+        window._formImageDT = dt;
+        handleFormImages(input);
+    }
+    else if (inputId === 'checklistImageInput') {
+        window._checklistImageDT = dt;
+        handleChecklistImages(input);
     }
 }

@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 PRIORITY_CHOICES = [
     ('low', 'Low'),
@@ -119,3 +121,9 @@ class NoteImage(models.Model):
     image = models.ImageField(upload_to='note_images/')
     ocr_text = models.TextField(blank=True, null=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+@receiver(post_delete, sender=NoteImage)
+def delete_note_image_file(sender, instance, **kwargs):
+    """Automatically delete the physical file from storage when the NoteImage is deleted"""
+    if instance.image:
+        instance.image.delete(save=False)

@@ -4,7 +4,7 @@
 {% block nav_home %}active{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}?v=1.4">
 <link rel="stylesheet" href="{% static 'css/colors.css' %}">
 {% endblock %}
 
@@ -20,12 +20,15 @@
             <i class="ph ph-check-square" title="Tạo danh sách việc cần làm" style="font-size: 1.25rem;"
                onclick="event.stopPropagation(); expandChecklistForm();"></i>
             <i class="ph ph-paint-brush" title="Ghi chú có bản vẽ" style="font-size: 1.25rem;"></i>
-            <i class="ph ph-image" title="Ghi chú có hình ảnh" style="font-size: 1.25rem;"></i>
+            <i class="ph ph-image" title="Ghi chú có hình ảnh" style="font-size: 1.25rem;"
+               onclick="event.stopPropagation(); expandForm(); document.getElementById('formImageInput').click();"></i>
         </div>
     </div>
 
-    <form method="POST" action="{% url 'home' %}" class="note-expanded" id="noteExpanded">
+    <form method="POST" action="{% url 'home' %}" class="note-expanded" id="noteExpanded" enctype="multipart/form-data">
         {% csrf_token %}
+        <input type="file" multiple name="images" id="formImageInput" accept="image/*" style="display:none;" onchange="handleFormImages(this)">
+        <div id="formImagePreview" class="form-image-preview-container"></div>
         <input type="text" name="title" placeholder="Tiêu đề">
         <hr class="note-separator">
         <textarea name="content" placeholder="Tạo ghi chú…"></textarea>
@@ -47,6 +50,8 @@
                     <div class="color-swatch" data-color="brown"  onclick="applyFormColor('brown',  this)"></div>
                 </div>
                 <input type="hidden" name="background_color" id="formBgColor" value="">
+                <i class="ph ph-image action-icon" title="Thêm hình ảnh" style="font-size: 1.15rem;"
+                   onclick="document.getElementById('formImageInput').click()"></i>
                 <i class="ph ph-bell action-icon" title="Nhắc nhở" style="font-size: 1.15rem;"></i>
                 <i class="ph ph-tag action-icon" title="Thêm nhãn" style="font-size: 1.15rem;"></i>
             </div>
@@ -55,6 +60,8 @@
     </form>
 
     <div class="note-expanded" id="checklistExpanded" style="display:none;">
+        <input type="file" multiple id="checklistImageInput" accept="image/*" style="display:none;" onchange="handleChecklistImages(this)">
+        <div id="checklistImagePreview" class="form-image-preview-container"></div>
         <input type="text" id="checklistTitle" placeholder="Tiêu đề danh sách"
                onkeydown="if(event.key==='Enter'){event.preventDefault(); focusFirstChecklistItem();}">
         <hr class="note-separator">
@@ -80,6 +87,9 @@
                     <div class="color-swatch" data-color="pink"   onclick="applyChecklistColor('pink',   this)"></div>
                     <div class="color-swatch" data-color="brown"  onclick="applyChecklistColor('brown',  this)"></div>
                 </div>
+                <!-- Image for checklist -->
+                <i class="ph ph-image action-icon" title="Thêm hình ảnh" style="font-size: 1.15rem;"
+                   onclick="document.getElementById('checklistImageInput').click()"></i>
                 <i class="ph ph-bell action-icon" title="Nhắc nhở" style="font-size: 1.15rem;"></i>
                 <i class="ph ph-tag action-icon" title="Thêm nhãn" style="font-size: 1.15rem;"></i>
             </div>
@@ -143,8 +153,8 @@
 {% block extra_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
 <script src="{% static 'js/color-picker.js' %}"></script>
-<script src="{% static 'js/notes-form.js' %}"></script>
-<script src="{% static 'js/keep-modal.js' %}"></script>
+<script src="{% static 'js/notes-form.js' %}?v=1.4"></script>
+<script src="{% static 'js/keep-modal.js' %}?v=1.3"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // Animation delay theo thứ tự card
@@ -166,10 +176,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const noteExp = document.getElementById('noteExpanded');
         if (noteExp.style.display === 'block' && !wrapper.contains(e.target)) {
-            if (!noteExp.querySelector('[name=title]').value &&
-                !noteExp.querySelector('[name=content]').value) {
+            const hasTitle = noteExp.querySelector('[name=title]').value.trim();
+            const hasContent = noteExp.querySelector('[name=content]').value.trim();
+            const hasImages = document.getElementById('formImageInput').files.length > 0;
+            if (!hasTitle && !hasContent && !hasImages) {
                 document.getElementById('noteCollapsed').style.display = 'flex';
                 noteExp.style.display = 'none';
+            } else if (!e.target.closest('.keep-modal')) {
+                // Tự động submit nếu click ra ngoài (giống Google Keep) hoặc giữ form
+                // Tạm thời giữ form mở nếu có ảnh để user bấm Nút Lưu.
             }
         }
 
