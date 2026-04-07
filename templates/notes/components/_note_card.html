@@ -1,8 +1,12 @@
 {% url 'toggle_pin_note' note.id as pin_url %}
 {% url 'delete_note' note.id as delete_url %}
-<div class="note-card" data-index="{{ card_index|default:0 }}" data-note-id="{{ note.id }}"
-    data-note-type="{{ note.note_type }}" {% if note.background_color %} data-color="{{ note.background_color }}" {%endif %} 
-    onclick="openKeepModal(this)">
+<div class="note-card{% if is_trash %} trash-card{% endif %}" data-index="{{ card_index|default:0 }}" data-note-id="{{ note.id }}"
+    data-note-type="{{ note.note_type }}"
+    data-priority="{{ note.priority|default:''|lower }}"
+    data-category-id="{{ note.category.id|default:'' }}"
+    data-has-images="{% if note.images.all %}1{% else %}0{% endif %}"
+    {% if note.background_color %} data-color="{{ note.background_color }}" {%endif %}
+    {% if not is_trash %}onclick="openKeepModal(this)"{% endif %}>
     <a href="{{ pin_url }}" class="note-card-pin {% if note.is_pinned %}pinned{% endif %} text-decoration-none"
         title="{% if note.is_pinned %}Bỏ ghim{% else %}Ghim{% endif %}"
         onclick="event.preventDefault(); event.stopPropagation(); pinNote('{{ note.id }}', this)">
@@ -35,6 +39,11 @@
         <i class="ph ph-check-square ms-1" style="opacity: 0.6"></i>
         {% endif %}
     </div>
+    {% if is_trash and note.deleted_at %}
+    <div class="note-card-date" style="color:var(--danger); opacity:0.85;">
+        <i class="ph ph-clock-counter-clockwise"></i> Đã xóa: {{ note.deleted_at|date:"d/m/Y · H:i" }}
+    </div>
+    {% endif %}
 
     {% if note.note_type == 'checklist' %}
     {% with stats=note.checklist_stats %}
@@ -67,9 +76,9 @@
     <div class="note-card-tags">
         {% if note.category %}<span class="tag tag-category" data-category-id="{{ note.category.id }}"><i
                 class="ph ph-tag"></i> {{ note.category.name }}</span>{% endif %}
-        {% if note.priority == 'High' %}<span class="tag tag-high">● High</span>
-        {% elif note.priority == 'Medium' %}<span class="tag tag-medium">● Medium</span>
-        {% elif note.priority == 'Low' %}<span class="tag tag-low">● Low</span>{% endif %}
+        {% if note.priority|lower == 'high' %}<span class="tag tag-high">● High</span>
+        {% elif note.priority|lower == 'medium' %}<span class="tag tag-medium">● Medium</span>
+        {% elif note.priority|lower == 'low' %}<span class="tag tag-low">● Low</span>{% endif %}
         {% if note.is_task %}
         {% if note.is_task_source == 'AI' %}<span class="tag tag-task-ai"><i class="ph-fill ph-robot"></i> Task</span>
         {% else %}<span class="tag tag-task-user"><i class="ph-fill ph-user"></i> Task</span>{% endif %}
@@ -77,10 +86,22 @@
     </div>
 
     {# Actions #}
+    {% if is_trash %}
+    <div class="trash-actions">
+        <a href="{% url 'restore_note' note.id %}" class="trash-btn trash-btn-restore">
+            <i class="ph ph-arrow-counter-clockwise me-1" style="font-size:1.1rem;"></i>Khôi phục
+        </a>
+        <a href="{% url 'hard_delete_note' note.id %}" class="trash-btn trash-btn-delete">
+            <i class="ph ph-x me-1" style="font-size:1.1rem;"></i>Xóa vĩnh viễn
+        </a>
+    </div>
+    {% else %}
     <div class="note-actions" onclick="event.stopPropagation()">
         <div class="note-actions-left" style="position: relative">
             <i class="ph ph-palette action-icon" style="font-size: 1.15rem;" title="Đổi màu"
                 onclick="toggleCardColorPicker(this, event)"></i>
+            <i class="ph ph-flag action-icon" style="font-size: 1.15rem;" title="Độ ưu tiên"
+                onclick="toggleCardPriorityPicker(this, event)"></i>
             <i class="ph ph-bell action-icon" style="font-size: 1.15rem;" title="Nhắc nhở"></i>
             <a href="{% url 'toggle_archive_note' note.id %}" class="action-icon" title="Lưu trữ"
                 onclick="event.stopPropagation()">
@@ -98,4 +119,5 @@
             </a>
         </div>
     </div>
+    {% endif %}
 </div>

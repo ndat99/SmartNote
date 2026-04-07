@@ -55,6 +55,28 @@
                     <div class="color-swatch" data-color="brown"></div>
                 </div>
 
+                <!-- Priority — picker nằm TRONG note-actions-left (position:relative) để absolute hoạt động đúng -->
+                <i class="ph ph-flag action-icon" style="font-size: 1.15rem;" id="modalPriorityBtn"
+                   title="Độ ưu tiên" onclick="toggleModalPriorityPicker(event)"></i>
+                <div id="modalPriorityPicker" class="priority-picker-popup modal-priority-picker" style="display:none;">
+                    <div class="priority-option" data-value="" onclick="applyModalPriority('')">
+                        <i class="ph ph-minus-circle" style="color:var(--text-dim)"></i>
+                        <span>Không có</span>
+                    </div>
+                    <div class="priority-option" data-value="high" onclick="applyModalPriority('high')">
+                        <i class="ph ph-flag" style="color:#dc2626"></i>
+                        <span>High</span>
+                    </div>
+                    <div class="priority-option" data-value="medium" onclick="applyModalPriority('medium')">
+                        <i class="ph ph-flag" style="color:#b45309"></i>
+                        <span>Medium</span>
+                    </div>
+                    <div class="priority-option" data-value="low" onclick="applyModalPriority('low')">
+                        <i class="ph ph-flag" style="color:#16a34a"></i>
+                        <span>Low</span>
+                    </div>
+                </div>
+
                 <!-- Sửa nhãn -->
                 <i class="ph ph-tag action-icon" style="font-size: 1.15rem;" id="modalTagBtn"
                    title="Sửa nhãn" onclick="toggleTagEditor()"></i>

@@ -156,6 +156,17 @@ def update_note_meta(request, note_id):
         note.is_task_source = 'USER'
         update_fields.extend(['is_task', 'is_task_source'])
 
+    # ── priority (user-set) ──
+    if 'priority' in data:
+        raw = data['priority']
+        if raw in ('high', 'medium', 'low'):
+            note.priority        = raw
+            note.priority_source = 'USER'
+        else:
+            note.priority        = None
+            note.priority_source = None
+        update_fields.extend(['priority', 'priority_source'])
+
     # ── category theo id ──
     if 'category_id' in data:
         cat_id = data['category_id']
@@ -189,6 +200,7 @@ def update_note_meta(request, note_id):
         'ok': True,
         'is_task':        note.is_task,
         'is_task_source': note.is_task_source,
+        'priority':       note.priority,
         'category': {'id': note.category.id, 'name': note.category.name} if note.category else None,
     })
 
