@@ -23,42 +23,7 @@
 <div class="row g-3">
     {% for note in notes %}
     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <div class="note-card trash-card" {% if note.background_color %}data-color="{{ note.background_color }}"{% endif %}>
-
-            {% if note.images.all %}
-            <div class="note-card-images len-{{ note.images.count|default:1 }}">
-                {% for img in note.images.all|slice:":3" %}
-                <div class="note-card-img-wrap {% if forloop.counter == 3 and note.images.count > 3 %}extra-images{% endif %}">
-                    <img src="{{ img.image.url }}" alt="Note Image">
-                    {% if forloop.counter == 3 and note.images.count > 3 %}
-                    <div class="extra-images-overlay">+{{ note.images.count|add:"-2" }}</div>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            {% if note.title %}
-            <div class="note-card-title">{{ note.title }}</div>
-            {% endif %}
-
-            <div class="note-card-date" style="color:var(--danger); opacity:0.85;">
-                <i class="ph ph-clock-counter-clockwise"></i>
-                Đã xóa: {{ note.deleted_at|date:"d/m/Y · H:i" }}
-            </div>
-
-            <p class="note-card-body">{{ note.content }}</p>
-
-            <div class="trash-actions">
-                <a href="{% url 'restore_note' note.id %}" class="trash-btn trash-btn-restore">
-                    <i class="ph ph-arrow-counter-clockwise me-1" style="font-size:1.1rem;"></i>Khôi phục
-                </a>
-                <a href="{% url 'hard_delete_note' note.id %}" class="trash-btn trash-btn-delete">
-                    <i class="ph ph-x me-1" style="font-size:1.1rem;"></i>Xóa vĩnh viễn
-                </a>
-            </div>
-
-        </div>
+        {% include 'notes/components/_note_card.html' with note=note card_index=forloop.counter0 is_trash=True only %}
     </div>
     {% empty %}
     <div class="col-12">

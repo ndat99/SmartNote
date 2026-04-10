@@ -24,22 +24,40 @@
 <body>
 
 <nav class="navbar d-flex align-items-center justify-content-between fixed-top">
-    <div class="d-flex align-items-center gap-2">
-        <div class="menu-btn" onclick="toggleSidebar()">
-            <i class="ph ph-list" style="font-size: 1.2rem;"></i>
-        </div>
+    <!-- Logo bên trái -->
+    <div class="d-flex align-items-center gap-2" style="min-width:180px;">
         <a class="navbar-brand" href="{% url 'home' %}">
             <img src="{% static 'images/logo.png' %}" alt="Logo" width="28">
             Smart<span class="brand-dot">Note</span>
         </a>
     </div>
 
-    <div class="search-container d-none d-md-block">
-        <i class="ph ph-magnifying-glass search-icon" style="font-size: 1.1rem;"></i>
-        <input type="text" class="search-bar" placeholder="Tìm kiếm ghi chú…">
+    <!-- Tab điều hướng ở giữa -->
+    <div class="nav-tabs-center">
+        <a href="{% url 'home' %}" class="nav-tab-item {% block nav_home %}{% endblock %}" id="navTabHome">
+            <i class="ph ph-lightbulb"></i>
+            <span>Ghi chú</span>
+        </a>
+        <a href="#" class="nav-tab-item" id="navTabReminder">
+            <i class="ph ph-bell"></i>
+            <span>Lời nhắc</span>
+        </a>
+        <a href="#" class="nav-tab-item" id="navTabLabel">
+            <i class="ph ph-pencil-simple"></i>
+            <span>Nhãn</span>
+        </a>
+        <a href="{% url 'archive' %}" class="nav-tab-item {% block nav_archive %}{% endblock %}" id="navTabArchive">
+            <i class="ph ph-archive-box"></i>
+            <span>Lưu trữ</span>
+        </a>
+        <a href="{% url 'trash' %}" class="nav-tab-item {% block nav_trash %}{% endblock %}" id="navTabTrash">
+            <i class="ph ph-trash"></i>
+            <span>Thùng rác</span>
+        </a>
     </div>
 
-    <div class="d-flex align-items-center gap-2">
+    <!-- Bên phải: theme toggle + avatar -->
+    <div class="d-flex align-items-center gap-2" style="min-width:180px; justify-content:flex-end;">
         <div class="menu-btn d-none d-sm-flex" title="Làm mới">
             <i class="ph ph-arrows-clockwise" style="font-size:1.1rem;"></i>
         </div>
@@ -73,29 +91,90 @@
     </div>
 </nav>
 
-<div class="sidebar" id="sidebar">
-    <div class="sidebar-section-label">Menu</div>
-    <a href="{% url 'home' %}" class="nav-item-custom {% block nav_home %}{% endblock %}">
-        <i class="ph ph-lightbulb nav-icon" style="font-size: 1.25rem;"></i>
-        <span class="nav-text">Ghi chú</span>
-    </a>
-    <a href="#" class="nav-item-custom">
-        <i class="ph ph-bell nav-icon" style="font-size: 1.25rem;"></i>
-        <span class="nav-text">Lời nhắc</span>
-    </a>
-    <a href="#" class="nav-item-custom">
-        <i class="ph ph-pencil-simple nav-icon" style="font-size: 1.25rem;"></i>
-        <span class="nav-text">Chỉnh sửa nhãn</span>
-    </a>
-    <div class="sidebar-section-label" style="margin-top:12px;">Kho lưu trữ</div>
-    <a href="{% url 'archive' %}" class="nav-item-custom {% block nav_archive %}{% endblock %}">
-        <i class="ph ph-archive nav-icon" style="font-size: 1.25rem;"></i>
-        <span class="nav-text">Lưu trữ</span>
-    </a>
-    <a href="{% url 'trash' %}" class="nav-item-custom {% block nav_trash %}{% endblock %}">
-        <i class="ph ph-trash nav-icon" style="font-size: 1.25rem;"></i>
-        <span class="nav-text">Thùng rác</span>
-    </a>
+<!-- ════════════ FILTER PANEL (SIDEBAR TRÁI) ════════════ -->
+<div class="filter-panel" id="filterPanel">
+
+    <!-- Search Box -->
+    <div class="filter-search-wrap">
+        <i class="ph ph-magnifying-glass filter-search-icon"></i>
+        <input type="text" id="globalSearch" class="filter-search-input" placeholder="Tìm kiếm ghi chú…" autocomplete="off">
+        <button class="filter-search-clear" id="btnClearFilters" onclick="clearSearchFilters()" title="Xóa bộ lọc">
+            <i class="ph ph-x"></i>
+        </button>
+    </div>
+
+    <!-- Loại -->
+    <div class="filter-section">
+        <div class="filter-section-label">Loại</div>
+        <div class="filter-type-grid">
+            <div class="filter-type-tile" data-type="note" id="filterTile-note"
+                 onclick="_toggleTypeFilter(this, 'note')">
+                <i class="ph ph-note-pencil"></i>
+                <span>Ghi chú</span>
+            </div>
+            <div class="filter-type-tile" data-type="checklist" id="filterTile-checklist"
+                 onclick="_toggleTypeFilter(this, 'checklist')">
+                <i class="ph ph-check-square"></i>
+                <span>Danh sách</span>
+            </div>
+            <div class="filter-type-tile" data-type="image" id="filterTile-image"
+                 onclick="_toggleTypeFilter(this, 'image')">
+                <i class="ph ph-image"></i>
+                <span>Hình ảnh</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nhãn -->
+    <div class="filter-section" id="filterTagSection">
+        <div class="filter-section-label">Nhãn</div>
+        <div class="filter-chip-row" id="filterTagList"></div>
+    </div>
+
+    <!-- Màu nền -->
+    <div class="filter-section">
+        <div class="filter-section-label">Màu nền</div>
+        <div class="filter-color-row">
+            <div class="filter-color-dot" data-color="" title="Mặc định" onclick="_toggleColorFilter(this, '')"><i class="ph ph-prohibit"></i></div>
+            <div class="filter-color-dot" data-color="berry"  title="Berry"  onclick="_toggleColorFilter(this, 'berry')"></div>
+            <div class="filter-color-dot" data-color="red"    title="Red"    onclick="_toggleColorFilter(this, 'red')"></div>
+            <div class="filter-color-dot" data-color="orange" title="Orange" onclick="_toggleColorFilter(this, 'orange')"></div>
+            <div class="filter-color-dot" data-color="yellow" title="Yellow" onclick="_toggleColorFilter(this, 'yellow')"></div>
+            <div class="filter-color-dot" data-color="teal"   title="Teal"   onclick="_toggleColorFilter(this, 'teal')"></div>
+            <div class="filter-color-dot" data-color="blue"   title="Blue"   onclick="_toggleColorFilter(this, 'blue')"></div>
+            <div class="filter-color-dot" data-color="indigo" title="Indigo" onclick="_toggleColorFilter(this, 'indigo')"></div>
+            <div class="filter-color-dot" data-color="purple" title="Purple" onclick="_toggleColorFilter(this, 'purple')"></div>
+            <div class="filter-color-dot" data-color="pink"   title="Pink"   onclick="_toggleColorFilter(this, 'pink')"></div>
+            <div class="filter-color-dot" data-color="brown"  title="Brown"  onclick="_toggleColorFilter(this, 'brown')"></div>
+        </div>
+    </div>
+
+    <!-- Độ ưu tiên -->
+    <div class="filter-section">
+        <div class="filter-section-label">Độ ưu tiên</div>
+        <div class="filter-chip-row">
+            <div class="filter-chip" data-priority="high" onclick="_togglePriorityFilter(this, 'high')">
+                <i class="ph ph-flag" style="color:#dc2626"></i> High
+            </div>
+            <div class="filter-chip" data-priority="medium" onclick="_togglePriorityFilter(this, 'medium')">
+                <i class="ph ph-flag" style="color:#b45309"></i> Medium
+            </div>
+            <div class="filter-chip" data-priority="low" onclick="_togglePriorityFilter(this, 'low')">
+                <i class="ph ph-flag" style="color:#16a34a"></i> Low
+            </div>
+        </div>
+    </div>
+
+    <!-- Task -->
+    <div class="filter-section">
+        <div class="filter-section-label">Task</div>
+        <div class="filter-chip-row">
+            <div class="filter-chip" id="filterTaskChip" onclick="_toggleTaskFilter(this)">
+                <i class="ph ph-check-circle"></i> Chỉ xem Task
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div class="main-content" id="mainContent">
@@ -103,7 +182,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'js/ui.js' %}"></script>
+<script src="{% static 'js/ui.js' %}?v=2"></script>
+<script src="{% static 'js/search.js' %}?v=2"></script>
 {% block extra_js %}{% endblock %}
 </body>
 </html>

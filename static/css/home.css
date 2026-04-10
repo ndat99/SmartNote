@@ -148,7 +148,8 @@
     height: 310px;
     position: relative;
     overflow: visible;
-    transition: all 0.22s ease;
+    contain: layout style;
+    transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -372,7 +373,7 @@ font-size: 0.72rem;
     margin-top: 4px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.2s ease;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 .note-card:hover .note-actions {
     opacity: 1;
@@ -431,15 +432,15 @@ font-size: 0.72rem;
 .trash-actions {
     display: flex;
     gap: 8px;
-    padding-top: 10px;
-    border-top: 1px solid var(--border);
+    padding-top: 6px;
+    margin-bottom: 6px;
     margin-top: auto;
 }
 .trash-btn {
     flex: 1;
     text-align: center;
-    padding: 7px 10px;
-    border-radius: 8px;
+    padding: 7px 7px;
+    border-radius: 2px;
     font-size: 0.8rem;
     font-weight: 500;
     text-decoration: none;
@@ -987,6 +988,9 @@ font-size: 0.72rem;
     border: 2px solid var(--surface);
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     background: #fff;
+    contain: paint layout;
+    will-change: transform;
+    transform: translateZ(0);
     transition: transform 0.2s ease;
 }
 .note-card-img-wrap img {
@@ -994,6 +998,8 @@ font-size: 0.72rem;
     height: 100%;
     object-fit: cover;
     display: block;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .note-card-img-wrap.extra-images .extra-images-overlay {
