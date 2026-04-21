@@ -58,6 +58,7 @@ class Note(models.Model):
     deleted_at = models.DateTimeField(null=True, blank=True)
 
     reminder_at = models.DateTimeField(null=True, blank=True)
+    reminder_sent = models.BooleanField(default=False)
 
     # AI fields
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, null=True, blank=True)

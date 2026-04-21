@@ -5,6 +5,7 @@
     data-priority="{{ note.priority|default:''|lower }}"
     data-category-id="{{ note.category.id|default:'' }}"
     data-has-images="{% if note.images.all %}1{% else %}0{% endif %}"
+    data-reminder-at="{% if note.reminder_at %}{{ note.reminder_at|date:'c' }}{% endif %}"
     {% if note.background_color %} data-color="{{ note.background_color }}" {%endif %}
     {% if not is_trash %}onclick="openKeepModal(this)"{% endif %}>
     <a href="{{ pin_url }}" class="note-card-pin {% if note.is_pinned %}pinned{% endif %} text-decoration-none"
@@ -83,6 +84,11 @@
         {% if note.is_task_source == 'AI' %}<span class="tag tag-task-ai"><i class="ph-fill ph-robot"></i> Task</span>
         {% else %}<span class="tag tag-task-user"><i class="ph-fill ph-user"></i> Task</span>{% endif %}
         {% endif %}
+        {% if note.reminder_at %}
+        <span class="tag tag-reminder reminder-badge" data-reminder-at="{{ note.reminder_at|date:'c' }}">
+            <i class="ph ph-bell"></i> {{ note.reminder_at|date:"d/m H:i" }}
+        </span>
+        {% endif %}
     </div>
 
     {# Actions #}
@@ -102,7 +108,8 @@
                 onclick="toggleCardColorPicker(this, event)"></i>
             <i class="ph ph-flag action-icon" style="font-size: 1.15rem;" title="Độ ưu tiên"
                 onclick="toggleCardPriorityPicker(this, event)"></i>
-            <i class="ph ph-bell action-icon" style="font-size: 1.15rem;" title="Nhắc nhở"></i>
+            <i class="ph ph-bell action-icon" style="font-size: 1.15rem;" title="Nhắc nhở"
+                onclick="toggleSharedReminderPicker(event, this)"></i>
             <a href="{% url 'toggle_archive_note' note.id %}" class="action-icon" title="Lưu trữ"
                 onclick="event.stopPropagation()">
                 <i class="ph ph-archive" style="font-size: 1.15rem;"></i>

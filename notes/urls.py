@@ -21,10 +21,17 @@ urlpatterns = [
     path('archive/', views.archive, name='archive'),
     path('archive/<int:note_id>/', views.toggle_archive_note, name='toggle_archive_note'),
 
+    # Trang Lời nhắc
+    path('reminders/', views.reminders_page, name='reminders_page'),
+
     # Checklist endpoints
     path('checklist/create/', views.create_checklist, name='create_checklist'),
     path('checklist/item/toggle/<int:item_id>/', views.toggle_checklist_item, name='toggle_checklist_item'),
     path('checklist/item/delete/<int:item_id>/', views.delete_checklist_item, name='delete_checklist_item'),
     path('checklist/item/add/<int:note_id>/', views.add_checklist_item, name='add_checklist_item'),
     path('checklist/item/reorder/<int:note_id>/', views.reorder_checklist_items, name='reorder_checklist_items'),
+
+    # Reminder endpoints
+    path('reminder/<int:note_id>/', views.set_reminder, name='set_reminder'),
+    path('api/reminders/due/', views.get_due_reminders, name='get_due_reminders'),
 ]

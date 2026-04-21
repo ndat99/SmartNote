@@ -250,6 +250,11 @@ function closeKeepModal() {
 
     document.getElementById('keepModal').classList.remove('show');
     document.getElementById('modalTagEditor').style.display = 'none';
+    
+    // Đóng bộ cài đặt nhắc nhở nếu đang mở
+    const sharedPicker = document.getElementById('sharedReminderPickerPopup');
+    if (sharedPicker) sharedPicker.style.display = 'none';
+
     if (_sortable) { _sortable.destroy(); _sortable = null; }
 }
 
