@@ -15,6 +15,15 @@ except ImportError:
     def analyze_note_with_ai(title, content):
         return None
 
+def _auto_clean_trash(request):
+    """Auto-clean trash: tối đa 1 lần/giờ/session, tránh chạy mỗi request."""
+    if not request.user.is_authenticated:
+        return
+    last_clean = request.session.get('last_trash_clean', 0)
+    if time.time() - last_clean > 3600:
+        seven_days_ago = timezone.now() - timedelta(days=7)
+        Note.objects.filter(user=request.user, is_deleted=True, deleted_at__lte=seven_days_ago).delete()
+        request.session['last_trash_clean'] = time.time()
 
 def run_ai_background(note_id, title, content):
     try:
@@ -77,12 +86,7 @@ def home(request):
     if not request.user.is_authenticated:
         return render(request, 'notes/home.html', {'notes': []})
 
-    # Auto-clean trash: tối đa 1 lần/giờ/session, tránh chạy mỗi request
-    last_clean = request.session.get('last_trash_clean', 0)
-    if time.time() - last_clean > 3600:
-        seven_days_ago = timezone.now() - timedelta(days=7)
-        Note.objects.filter(user=request.user, is_deleted=True, deleted_at__lte=seven_days_ago).delete()
-        request.session['last_trash_clean'] = time.time()
+    _auto_clean_trash(request)
 
     if request.method == 'POST':
         title            = request.POST.get('title', '')
@@ -323,6 +327,9 @@ def delete_note_image(request, image_id):
 def trash(request):
     if not request.user.is_authenticated:
         return redirect('home')
+        
+    _auto_clean_trash(request)
+    
     deleted_note = Note.objects.filter(user=request.user, is_deleted=True).prefetch_related('images').order_by('-deleted_at')
     return render(request, 'notes/trash.html', {'notes': deleted_note})
 
