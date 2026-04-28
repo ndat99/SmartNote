@@ -661,3 +661,63 @@ a {
     70% { transform: scale(1.1); box-shadow: 0 0 0 4px rgba(239, 68, 68, 0); }
     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
+
+/* -------------------------------------------
+   LABEL MANAGER MODAL
+   ------------------------------------------- */
+
+.label-item {
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition);
+}
+
+.label-item:hover {
+    background-color: var(--surface-2);
+}
+
+.label-item .label-item-actions {
+    opacity: 0;
+    transition: opacity var(--transition);
+}
+
+.label-item:hover .label-item-actions {
+    opacity: 1;
+}
+
+.label-input {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--text);
+    padding: 2px 6px;
+    width: 100%;
+    outline: none;
+    transition: border-color var(--transition), background-color var(--transition);
+}
+
+.label-input:focus {
+    border-color: var(--accent);
+    background: var(--surface);
+}
+
+.label-btn {
+    color: var(--text-muted);
+    transition: color var(--transition);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+}
+
+.label-btn:hover {
+    color: var(--text);
+}
+
+.label-btn-delete:hover {
+    color: var(--danger);
+}
