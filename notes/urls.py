@@ -11,6 +11,9 @@ urlpatterns = [
     path('update/<int:note_id>/', views.update_note, name='update_note'),
     path('update-meta/<int:note_id>/', views.update_note_meta, name='update_note_meta'),
     path('categories/', views.get_categories, name='get_categories'),
+    path('category/create/', views.create_category, name='create_category'),
+    path('category/update/<int:category_id>/', views.update_category, name='update_category'),
+    path('category/delete/<int:category_id>/', views.delete_category, name='delete_category'),
 
     # Image endpoints
     path('image/add/<int:note_id>/', views.add_note_images, name='add_note_images'),

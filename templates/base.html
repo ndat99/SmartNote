@@ -43,7 +43,7 @@
             <span>Lời nhắc</span>
             <span class="nav-tab-badge-urgent">!</span>
         </a>
-        <a href="#" class="nav-tab-item" id="navTabLabel">
+        <a href="#" class="nav-tab-item" id="navTabLabel" data-bs-toggle="modal" data-bs-target="#labelManagerModal">
             <i class="ph ph-pencil-simple"></i>
             <span>Nhãn</span>
         </a>
@@ -200,8 +200,38 @@
     </div>
 </div>
 
+<!-- Label Manager Modal -->
+<div class="modal fade" id="labelManagerModal" tabindex="-1" aria-labelledby="labelManagerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold" id="labelManagerModalLabel" style="font-size: 1.1rem;">Chỉnh sửa nhãn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Add new label form -->
+                <form id="createLabelForm" class="d-flex align-items-center mb-3 pb-2 border-bottom">
+                    <i class="ph ph-plus text-muted ms-1 me-2" style="font-size: 1.1rem;"></i>
+                    <input type="text" id="newLabelInput" class="form-control border-0 shadow-none px-0" placeholder="Tạo nhãn mới" autocomplete="off" required>
+                    <button type="submit" class="btn btn-link text-decoration-none p-0 ms-2 text-primary" title="Tạo nhãn">
+                        <i class="ph-fill ph-check" style="font-size: 1.2rem;"></i>
+                    </button>
+                </form>
+                
+                <!-- Existing labels list -->
+                <div id="labelManagerList" class="d-flex flex-column gap-1" style="max-height: 250px; overflow-y: auto;">
+                    <!-- Rendered via JS -->
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn fw-semibold" data-bs-dismiss="modal" style="color: var(--accent); background: transparent;">Xong</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'js/ui.js' %}?v=2"></script>
+<script src="{% static 'js/ui.js' %}?v=4"></script>
 <script src="{% static 'js/search.js' %}?v=2"></script>
 <script src="{% static 'js/reminder.js' %}?v=1"></script>
 {% block extra_js %}{% endblock %}

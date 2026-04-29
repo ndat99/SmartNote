@@ -15,6 +15,15 @@ except ImportError:
     def analyze_note_with_ai(title, content):
         return None
 
+def _auto_clean_trash(request):
+    """Auto-clean trash: tối đa 1 lần/giờ/session, tránh chạy mỗi request."""
+    if not request.user.is_authenticated:
+        return
+    last_clean = request.session.get('last_trash_clean', 0)
+    if time.time() - last_clean > 3600:
+        seven_days_ago = timezone.now() - timedelta(days=7)
+        Note.objects.filter(user=request.user, is_deleted=True, deleted_at__lte=seven_days_ago).delete()
+        request.session['last_trash_clean'] = time.time()
 
 def run_ai_background(note_id, title, content):
     try:
@@ -77,12 +86,7 @@ def home(request):
     if not request.user.is_authenticated:
         return render(request, 'notes/home.html', {'notes': []})
 
-    # Auto-clean trash: tối đa 1 lần/giờ/session, tránh chạy mỗi request
-    last_clean = request.session.get('last_trash_clean', 0)
-    if time.time() - last_clean > 3600:
-        seven_days_ago = timezone.now() - timedelta(days=7)
-        Note.objects.filter(user=request.user, is_deleted=True, deleted_at__lte=seven_days_ago).delete()
-        request.session['last_trash_clean'] = time.time()
+    _auto_clean_trash(request)
 
     if request.method == 'POST':
         title            = request.POST.get('title', '')
@@ -241,6 +245,70 @@ def get_categories(request):
 
     return JsonResponse({'system': system_cats, 'user': user_cats})
 
+def create_category(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+        
+    try:
+        data = json.loads(request.body)
+        name = data.get('name', '').strip()
+    except Exception:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        
+    if not name:
+        return JsonResponse({'error': 'Tên nhãn không được để trống'}, status=400)
+        
+    # Check if category already exists for this user or system
+    exists = Category.objects.filter(name__iexact=name).filter(Q(user__isnull=True) | Q(user=request.user)).exists()
+    if exists:
+        return JsonResponse({'error': 'Nhãn này đã tồn tại'}, status=400)
+        
+    cat = Category.objects.create(name=name, user=request.user)
+    return JsonResponse({'ok': True, 'id': cat.id, 'name': cat.name})
+
+def update_category(request, category_id):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+        
+    try:
+        data = json.loads(request.body)
+        name = data.get('name', '').strip()
+    except Exception:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        
+    if not name:
+        return JsonResponse({'error': 'Tên nhãn không được để trống'}, status=400)
+        
+    # User can only edit their own custom categories
+    cat = get_object_or_404(Category, id=category_id, user=request.user)
+    
+    # Check if new name already exists
+    exists = Category.objects.filter(name__iexact=name).exclude(id=category_id).filter(Q(user__isnull=True) | Q(user=request.user)).exists()
+    if exists:
+        return JsonResponse({'error': 'Nhãn này đã tồn tại'}, status=400)
+        
+    cat.name = name
+    cat.save(update_fields=['name'])
+    return JsonResponse({'ok': True, 'id': cat.id, 'name': cat.name})
+
+def delete_category(request, category_id):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+        
+    # User can only delete their own custom categories
+    cat = get_object_or_404(Category, id=category_id, user=request.user)
+    
+    # Optional: If there are notes using this category, they will have category_id set to NULL due to SET_NULL on_delete policy.
+    cat_id = cat.id
+    cat.delete()
+    return JsonResponse({'ok': True, 'deleted_id': cat_id})
+
 
 def set_note_color(request, note_id):
     if request.method != 'POST':
@@ -323,6 +391,9 @@ def delete_note_image(request, image_id):
 def trash(request):
     if not request.user.is_authenticated:
         return redirect('home')
+        
+    _auto_clean_trash(request)
+    
     deleted_note = Note.objects.filter(user=request.user, is_deleted=True).prefetch_related('images').order_by('-deleted_at')
     return render(request, 'notes/trash.html', {'notes': deleted_note})
 
