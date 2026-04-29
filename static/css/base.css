@@ -210,19 +210,22 @@ a {
     background: var(--accent);
     border-bottom-color: transparent;
     position: relative;
-    /* Dịch nội dung lên trên và cắt hình bookmark bằng clip-path */
-    padding-top: 5px;
-    padding-bottom: 20px;
-    justify-content: flex-start;
-    /* Hình ngũ giác: nhớ cân và có tam giác chỉ xuống ở phía dưới */
+    z-index: 10;
+    
+    /* Thiết lập cho phần background lòi xuống dưới navbar */
+    height: calc(100% + 24px);
+    align-self: flex-start;
+    padding-bottom: 16px; /* Bù lại phần đuôi để nội dung cân giữa phần navbar */
+    justify-content: center;
+    
+    /* Hình ngũ giác: có tam giác chỉ xuống ở phía dưới, phần tam giác cao 16px */
     clip-path: polygon(
         0 0,
         100% 0,
-        100% calc(100% - 20px),
+        100% calc(100% - 16px),
         50% 100%,
-        0 calc(100% - 20px)
+        0 calc(100% - 16px)
     );
-    z-index: 10;
 }
 
 /* Xoá tam giác nhỏ cũ (border trick) — đã dùng clip-path thay */
