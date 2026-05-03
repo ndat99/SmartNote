@@ -15,6 +15,15 @@ except ImportError:
     def analyze_note_with_ai(title, content):
         return None
 
+def _auto_clean_trash(request):
+    """Auto-clean trash: tối đa 1 lần/giờ/session, tránh chạy mỗi request."""
+    if not request.user.is_authenticated:
+        return
+    last_clean = request.session.get('last_trash_clean', 0)
+    if time.time() - last_clean > 3600:
+        seven_days_ago = timezone.now() - timedelta(days=7)
+        Note.objects.filter(user=request.user, is_deleted=True, deleted_at__lte=seven_days_ago).delete()
+        request.session['last_trash_clean'] = time.time()
 
 def run_ai_background(note_id, title, content):
     try:
@@ -41,10 +50,23 @@ def run_ai_background(note_id, title, content):
             due_date_str = ai_result.get('due_date')
             if due_date_str:
                 try:
+                    # Gán cho due_date (trường tham khảo của AI)
                     note.due_date        = due_date_str
                     note.due_date_source = 'AI'
-                except Exception:
-                    pass
+
+                    # TỰ ĐỘNG ĐẶT LỜI NHẮC: Nếu người dùng chưa đặt (reminder_at is null)
+                    if not note.reminder_at:
+                        from django.utils.dateparse import parse_datetime
+                        from zoneinfo import ZoneInfo
+                        dt = parse_datetime(due_date_str)
+                        if dt:
+                            # Đảm bảo timezone chuẩn
+                            if dt.tzinfo is None:
+                                dt = dt.replace(tzinfo=ZoneInfo('Asia/Ho_Chi_Minh'))
+                            note.reminder_at = dt
+                            print(f"[AI] Tự động đặt nhắc nhở cho Note ID {note_id} lúc {due_date_str}")
+                except Exception as e:
+                    print(f"[AI Lỗi parse date] {e}")
 
             note.save()
             print(f"[AI] Đã phân tích xong Note ID {note_id}")
@@ -64,21 +86,28 @@ def home(request):
     if not request.user.is_authenticated:
         return render(request, 'notes/home.html', {'notes': []})
 
-    # Auto-clean trash: tối đa 1 lần/giờ/session, tránh chạy mỗi request
-    last_clean = request.session.get('last_trash_clean', 0)
-    if time.time() - last_clean > 3600:
-        seven_days_ago = timezone.now() - timedelta(days=7)
-        Note.objects.filter(user=request.user, is_deleted=True, deleted_at__lte=seven_days_ago).delete()
-        request.session['last_trash_clean'] = time.time()
+    _auto_clean_trash(request)
 
     if request.method == 'POST':
         title            = request.POST.get('title', '')
         content          = request.POST.get('content', '')
         background_color = request.POST.get('background_color', '')
+        reminder_at_str  = request.POST.get('reminder_at', '').strip()
 
         VALID_COLORS = {'', 'berry', 'red', 'orange', 'yellow', 'teal', 'blue', 'indigo', 'purple', 'pink', 'brown'}
         if background_color not in VALID_COLORS:
             background_color = ''
+
+        # Parse reminder_at nếu có
+        reminder_at = None
+        if reminder_at_str:
+            from django.utils.dateparse import parse_datetime
+            from zoneinfo import ZoneInfo
+            dt = parse_datetime(reminder_at_str)
+            if dt:
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=ZoneInfo('Asia/Ho_Chi_Minh'))
+                reminder_at = dt
 
         if title.strip() or content.strip() or request.FILES.getlist('images'):
             note = Note.objects.create(
@@ -86,8 +115,9 @@ def home(request):
                 title=title,
                 content=content,
                 background_color=background_color,
+                reminder_at=reminder_at,
             )
-            
+
             # Xử lý upload ảnh
             images = request.FILES.getlist('images')
             for img in images:
@@ -215,6 +245,70 @@ def get_categories(request):
 
     return JsonResponse({'system': system_cats, 'user': user_cats})
 
+def create_category(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+        
+    try:
+        data = json.loads(request.body)
+        name = data.get('name', '').strip()
+    except Exception:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        
+    if not name:
+        return JsonResponse({'error': 'Tên nhãn không được để trống'}, status=400)
+        
+    # Check if category already exists for this user or system
+    exists = Category.objects.filter(name__iexact=name).filter(Q(user__isnull=True) | Q(user=request.user)).exists()
+    if exists:
+        return JsonResponse({'error': 'Nhãn này đã tồn tại'}, status=400)
+        
+    cat = Category.objects.create(name=name, user=request.user)
+    return JsonResponse({'ok': True, 'id': cat.id, 'name': cat.name})
+
+def update_category(request, category_id):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+        
+    try:
+        data = json.loads(request.body)
+        name = data.get('name', '').strip()
+    except Exception:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        
+    if not name:
+        return JsonResponse({'error': 'Tên nhãn không được để trống'}, status=400)
+        
+    # User can only edit their own custom categories
+    cat = get_object_or_404(Category, id=category_id, user=request.user)
+    
+    # Check if new name already exists
+    exists = Category.objects.filter(name__iexact=name).exclude(id=category_id).filter(Q(user__isnull=True) | Q(user=request.user)).exists()
+    if exists:
+        return JsonResponse({'error': 'Nhãn này đã tồn tại'}, status=400)
+        
+    cat.name = name
+    cat.save(update_fields=['name'])
+    return JsonResponse({'ok': True, 'id': cat.id, 'name': cat.name})
+
+def delete_category(request, category_id):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+        
+    # User can only delete their own custom categories
+    cat = get_object_or_404(Category, id=category_id, user=request.user)
+    
+    # Optional: If there are notes using this category, they will have category_id set to NULL due to SET_NULL on_delete policy.
+    cat_id = cat.id
+    cat.delete()
+    return JsonResponse({'ok': True, 'deleted_id': cat_id})
+
 
 def set_note_color(request, note_id):
     if request.method != 'POST':
@@ -297,6 +391,9 @@ def delete_note_image(request, image_id):
 def trash(request):
     if not request.user.is_authenticated:
         return redirect('home')
+        
+    _auto_clean_trash(request)
+    
     deleted_note = Note.objects.filter(user=request.user, is_deleted=True).prefetch_related('images').order_by('-deleted_at')
     return render(request, 'notes/trash.html', {'notes': deleted_note})
 
@@ -333,6 +430,7 @@ def create_checklist(request):
     title = data.get('title', '').strip()
     items = [i for i in data.get('items', []) if i.strip()]
     color = data.get('color', '')
+    reminder_at_str = data.get('reminder_at', '')
 
     if not title and not items:
         return JsonResponse({'ok': True, 'skipped': True})
@@ -341,11 +439,23 @@ def create_checklist(request):
     if color not in VALID_COLORS:
         color = ''
 
+    # Parse reminder_at nếu có
+    reminder_at = None
+    if reminder_at_str:
+        from django.utils.dateparse import parse_datetime
+        from zoneinfo import ZoneInfo
+        dt = parse_datetime(reminder_at_str)
+        if dt:
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=ZoneInfo('Asia/Ho_Chi_Minh'))
+            reminder_at = dt
+
     note = Note.objects.create(
         user=request.user,
         title=title,
         note_type='checklist',
         background_color=color,
+        reminder_at=reminder_at,
     )
 
     for i, text in enumerate(items):
@@ -459,3 +569,106 @@ def archive(request):
     ).prefetch_related(_checklist_prefetch(), 'images').order_by('-created_at')
 
     return render(request, 'notes/archive.html', {'notes': archived_notes})
+
+
+def reminders_page(request):
+    """Trang hiển thị tất cả ghi chú có đặt nhắc nhở."""
+    if not request.user.is_authenticated:
+        return redirect('home')
+
+    now = timezone.now()
+
+    # Nhắc nhở sắp tới (chưa qua)
+    upcoming = Note.objects.filter(
+        user=request.user,
+        reminder_at__gt=now,
+        is_deleted=False,
+    ).prefetch_related(_checklist_prefetch(), 'images').order_by('reminder_at')
+
+    # Nhắc nhở đã qua (quá hạn)
+    overdue = Note.objects.filter(
+        user=request.user,
+        reminder_at__lte=now,
+        is_deleted=False,
+    ).prefetch_related(_checklist_prefetch(), 'images').order_by('-reminder_at')
+
+    return render(request, 'notes/reminders.html', {
+        'upcoming': upcoming,
+        'overdue': overdue,
+    })
+
+
+# ──────────────────────────────────────────────
+#  REMINDER ENDPOINTS
+# ──────────────────────────────────────────────
+
+def set_reminder(request, note_id):
+    """Lưu hoặc xóa reminder_at cho ghi chú."""
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+
+    note = get_object_or_404(Note, id=note_id, user=request.user)
+
+    try:
+        data = json.loads(request.body)
+    except Exception:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    reminder_str = data.get('reminder_at')  # ISO string hoặc null
+
+    if reminder_str:
+        from django.utils.dateparse import parse_datetime
+        from django.utils import timezone as tz
+        dt = parse_datetime(reminder_str)
+        if dt is None:
+            return JsonResponse({'error': 'Invalid datetime format'}, status=400)
+        # Nếu naive (không có timezone) → gán timezone hiện tại
+        if dt.tzinfo is None:
+            import pytz
+            local_tz = pytz.timezone('Asia/Ho_Chi_Minh')
+            dt = local_tz.localize(dt)
+        note.reminder_at = dt
+        note.reminder_sent = False  # Reset để gửi lại nếu đổi giờ
+    else:
+        note.reminder_at = None
+        note.reminder_sent = False
+
+    note.save(update_fields=['reminder_at', 'reminder_sent'])
+
+    return JsonResponse({
+        'ok': True,
+        'reminder_at': note.reminder_at.isoformat() if note.reminder_at else None,
+    })
+
+
+def get_due_reminders(request):
+    """Trả về các note có reminder sắp đến trong 65 giây tới và đánh dấu đã gửi."""
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+
+    now = timezone.now()
+    soon = now + timedelta(seconds=65)
+
+    due_notes = Note.objects.filter(
+        user=request.user,
+        reminder_at__lte=soon,   # Bao gồm cả các task đã quá hạn mà chưa gửi thông báo
+        reminder_sent=False,
+        is_deleted=False,
+    )
+
+    reminders = []
+    ids_to_mark = []
+    for note in due_notes:
+        reminders.append({
+            'id': note.id,
+            'title': note.title or '(Không tiêu đề)',
+            'reminder_at': note.reminder_at.isoformat(),
+        })
+        ids_to_mark.append(note.id)
+
+    if ids_to_mark:
+        Note.objects.filter(id__in=ids_to_mark).update(reminder_sent=True)
+
+    return JsonResponse({'reminders': reminders})

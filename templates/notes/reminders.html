@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Lời nhắc — SmartNote{% endblock %}
+{% block nav_reminders %}active{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}?v=1.4">
+<link rel="stylesheet" href="{% static 'css/colors.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h5 class="fw-semibold mb-0" style="color:var(--text);">
+        <i class="ph ph-bell me-2" style="font-size:1.4rem; color:var(--text-muted); position:relative; top:3px;"></i>Lời nhắc
+    </h5>
+    <span style="font-size:0.82rem; color:var(--text-dim);">
+        {{ upcoming.count }} sắp tới · {{ overdue.count }} đã qua
+    </span>
+</div>
+
+{% if not upcoming and not overdue %}
+<!-- Empty state -->
+<div class="col-12">
+    <div class="empty-state">
+        <i class="ph ph-bell-slash empty-state-icon" style="font-size:3rem; margin-bottom:12px; display:block; color:var(--text-dim);"></i>
+        <h5>Chưa có lời nhắc nào</h5>
+        <p style="font-size:0.85rem; color:var(--text-dim); max-width:300px; margin:0 auto;">
+            Mở một ghi chú và nhấn vào icon 🔔 để đặt lời nhắc.
+        </p>
+    </div>
+</div>
+
+{% else %}
+
+{% if upcoming %}
+<!-- ═══ SẮP TỚI ═══ -->
+<div class="notes-section-header">
+    <h6><i class="ph ph-bell-ringing me-1" style="font-size:0.85rem;"></i> Sắp tới</h6>
+</div>
+<div class="row g-3 mb-4">
+    {% for note in upcoming %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        {% include 'notes/components/_note_card.html' with note=note card_index=forloop.counter0 only %}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if overdue %}
+<!-- ═══ ĐÃ QUA ═══ -->
+<div class="notes-section-header">
+    <h6 style="color:var(--danger);"><i class="ph ph-clock-counter-clockwise me-1" style="font-size:0.85rem;"></i> Đã qua</h6>
+</div>
+<div class="row g-3">
+    {% for note in overdue %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        {% include 'notes/components/_note_card.html' with note=note card_index=forloop.counter0 only %}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% endif %}
+
+{% include 'notes/components/_keep_modal.html' %}
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+<script src="{% static 'js/color-picker.js' %}"></script>
+<script src="{% static 'js/notes-form.js' %}?v=1.4"></script>
+<script src="{% static 'js/keep-modal.js' %}?v=1.3"></script>
+
+<!-- Patch openKeepModal → sync reminder icon khi mở modal -->
+<script>
+(function () {
+    const _origOpen = window.openKeepModal;
+    if (typeof _origOpen === 'function') {
+        window.openKeepModal = function (cardEl) {
+            _origOpen(cardEl);
+            if (typeof syncReminderToModal === 'function') syncReminderToModal(cardEl);
+        };
+    }
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.note-card').forEach(function (card) {
+        card.style.animationDelay = (parseInt(card.dataset.index) * 60) + 'ms';
+    });
+    document.querySelectorAll('.checklist-progress-fill[data-progress]').forEach(function (el) {
+        el.style.width = el.dataset.progress + '%';
+    });
+    document.getElementById('keepModal').addEventListener('click', closeKeepModal);
+});
+</script>
+{% endblock %}

@@ -90,7 +90,11 @@
                 <i class="ph ph-image action-icon" style="font-size: 1.15rem;" title="Thêm hình ảnh"
                    onclick="document.getElementById('modalImageInput').click()"></i>
 
-                <i class="ph ph-bell action-icon" style="font-size: 1.15rem;" title="Nhắc nhở"></i>
+                <i class="ph ph-bell action-icon" style="font-size: 1.15rem;" title="Nhắc nhở"
+                   id="modalBellBtn" onclick="toggleSharedReminderPicker(event, this)"></i>
+
+                <!-- Bảng chọn thời gian nhắc nhở (đã được chuyển ra base.html dùng chung) -->
+
                 <i class="ph ph-archive action-icon" style="font-size: 1.15rem;" title="Lưu trữ"></i>
             </div>
 

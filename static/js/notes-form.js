@@ -36,6 +36,7 @@ function collapseChecklistForm() {
     handleChecklistImages(ckImgInput);
     
     window._checklistColor = '';
+    window._checklistReminderAt = null;
     const fw = document.getElementById('formWrapper');
     fw ? fw.removeAttribute('data-color') : null;
     const none = document.querySelector('#checklistColorPicker .swatch-none');
@@ -96,7 +97,7 @@ async function submitChecklist() {
         const res = await fetch('/checklist/create/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-CSRFToken': (document.querySelector('[name=csrfmiddlewaretoken]')?.value || document.cookie.match(/csrftoken=([^;]+)/)?.[1] || '') },
-            body: JSON.stringify({ title, items, color: window._checklistColor }),
+            body: JSON.stringify({ title, items, color: window._checklistColor, reminder_at: window._checklistReminderAt || null }),
         });
         const data = await res.json();
         if (data.ok && !data.skipped) {
