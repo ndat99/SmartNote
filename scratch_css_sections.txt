@@ -1,0 +1,13 @@
+Line 1: /* ─── Note Form Wrapper ─── */
+Line 119: /* ─── Section Header ─── */
+Line 141: /* ─── Note Cards ─── */
+Line 302: /* ─── Empty State ─── */
+Line 325: /* ─── Note Actions Bar ─── */
+Line 386: /* ─── Trash card buttons ─── */
+Line 420: /* ─── MODAL GOOGLE KEEP STYLE ─── */
+Line 771: /* ─── Modal tags row ─── */
+Line 780: /* ─── Category picker trong modal ─── */
+Line 841: /* ─── Modal Tags Row ─── */
+Line 850: /* ─── Tag Editor ─── */
+Line 916: /* ─── Image Grids & Stamps ─── */
+Line 962: /* ─── Modal Image Slider ─── */
