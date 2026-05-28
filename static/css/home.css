@@ -208,23 +208,6 @@
     pointer-events: none;
 }
 
-/* ─── Dark mode overrides cho dòng kẻ và lỗ đục ─── */
-[data-theme="dark"] .note-card::before {
-    background-image: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.4) 0px,
-        rgba(0, 0, 0, 0.4) 8px,
-        transparent 8px,
-        transparent 28px
-    );
-}
-[data-theme="dark"] .note-card::after {
-    background-image: repeating-linear-gradient(
-        transparent,
-        transparent 23px,
-        rgba(255, 255, 255, 0.15) 24px
-    );
-}
 
 @keyframes noteIn {
     from { opacity: 0; transform: translateY(12px); }
@@ -338,31 +321,6 @@ font-size: 0.72rem;
     color: var(--text-dim);
 }
 
-/* ─── Dark mode overrides ─── */
-[data-theme="dark"] .note-form-wrapper {
-    background: #252830;
-    border-color: #363a4a;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-[data-theme="dark"] .note-form-wrapper:hover {
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px rgba(123,159,255,0.12);
-}
-[data-theme="dark"] .note-card {
-    z-index: 1;
-    background: #252830;
-    border-color: #363a4a;
-}
-[data-theme="dark"] .note-card:hover {
-    background: #2e3140;
-    border-color: #4a4f62;
-    box-shadow: 0 8px 28px rgba(0,0,0,0.25);
-}
-[data-theme="dark"] .tag-category  { background: rgba(107,159,255,0.12); color: #7db3ff; border-color: rgba(107,159,255,0.2); }
-[data-theme="dark"] .tag-high      { background: rgba(239,68,68,0.12);   color: #f87171; border-color: rgba(239,68,68,0.2); }
-[data-theme="dark"] .tag-medium    { background: rgba(234,179,8,0.12);   color: #fbbf24; border-color: rgba(234,179,8,0.2); }
-[data-theme="dark"] .tag-low       { background: rgba(34,197,94,0.12);   color: #4ade80; border-color: rgba(34,197,94,0.2); }
-[data-theme="dark"] .tag-task-ai   { background: rgba(168,85,247,0.12);  color: #c084fc; border-color: rgba(168,85,247,0.2); }
-[data-theme="dark"] .tag-task-user { background: rgba(14,165,233,0.12);  color: #38bdf8; border-color: rgba(14,165,233,0.2); }
 
 /* ─── Note Actions Bar ─── */
 .note-actions {
@@ -424,7 +382,6 @@ font-size: 0.72rem;
     opacity: 1 !important;
     color: var(--accent) !important;
 }
-[data-theme="dark"] .note-actions { border-top-color: var(--border); }
 
 /* ─── Trash card buttons ─── */
 .trash-card { cursor: default; }
@@ -459,8 +416,6 @@ font-size: 0.72rem;
     border: 1px solid rgba(239,68,68,0.2);
 }
 .trash-btn-delete:hover { background: var(--danger); color: #fff; }
-[data-theme="dark"] .trash-btn-restore { background: rgba(123,159,255,0.1); border-color: rgba(123,159,255,0.2); color: #7b9fff; }
-[data-theme="dark"] .trash-btn-delete  { background: rgba(239,68,68,0.1); }
 
 /* ─── MODAL GOOGLE KEEP STYLE ─── */
 .keep-modal {
@@ -812,13 +767,6 @@ font-size: 0.72rem;
     border-radius: 8px;
 }
 
-/* ─── Dark mode additions ─── */
-[data-theme="dark"] .checklist-item-input,
-[data-theme="dark"] .modal-item-input { color: var(--text); }
-[data-theme="dark"] .checklist-add-row:hover { background: var(--surface); }
-[data-theme="dark"] .modal-checklist-item:hover { background: var(--surface); }
-[data-theme="dark"] .modal-checklist-add:hover  { background: var(--surface); }
-[data-theme="dark"] .checklist-progress-bar { background: var(--border); }
 
 /* ─── Modal tags row ─── */
 .modal-tags-row {
@@ -888,11 +836,6 @@ font-size: 0.72rem;
 }
 .mcp-add-row:hover { background: var(--accent-soft); }
 
-[data-theme="dark"] .modal-category-picker {
-    background: var(--surface);
-    border-color: var(--border);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-}
 
 
 /* ─── Modal Tags Row ─── */
@@ -969,8 +912,6 @@ font-size: 0.72rem;
 }
 .tag-new-row:hover { background: var(--accent-soft); }
 
-[data-theme="dark"] .modal-tag-editor { background: var(--surface); }
-[data-theme="dark"] .tag-search-input { background: var(--surface-2); }
 
 /* ─── Image Grids & Stamps ─── */
 .note-card-images {
@@ -1017,10 +958,6 @@ font-size: 0.72rem;
     backdrop-filter: blur(2px);
 }
 
-[data-theme="dark"] .note-card-img-wrap {
-    border-color: #2e3140;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-}
 
 /* ─── Modal Image Slider ─── */
 .modal-image-slider {
@@ -1220,21 +1157,6 @@ font-size: 0.72rem;
     box-shadow: 0 2px 8px rgba(74,108,247,0.3);
 }
 
-/* ─── Dark mode ─── */
-[data-theme="dark"] .reminder-picker-popup {
-    background: #252830;
-    border-color: #363a4a;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-}
-[data-theme="dark"] .reminder-datetime-input {
-    background: #1e2029;
-    border-color: #363a4a;
-    color-scheme: dark;
-}
-[data-theme="dark"] .reminder-quick-btn {
-    background: #1e2029;
-    border-color: #363a4a;
-}
 
 
 /* ═══════════════════════════════════════════
@@ -1251,11 +1173,6 @@ font-size: 0.72rem;
 }
 .tag-reminder i { font-size: 0.8rem; }
 
-[data-theme="dark"] .tag-reminder {
-    background: rgba(251,146,60,0.12);
-    color: #fb923c;
-    border-color: rgba(251,146,60,0.2);
-}
 
 
 /* ═══════════════════════════════════════════
@@ -1342,14 +1259,4 @@ font-size: 0.72rem;
     transition: all 0.15s;
 }
 .toast-close-btn:hover { background: var(--surface-2); color: var(--text); }
-
-/* Dark mode toast */
-[data-theme="dark"] .reminder-toast {
-    background: #252830;
-    border-color: #363a4a;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.4);
-}
-[data-theme="dark"] .reminder-toast-reminder {
-    background: linear-gradient(135deg, #252830 0%, rgba(251,146,60,0.06) 100%);
-}
 

@@ -28,68 +28,6 @@
     box-sizing: border-box;
 }
 
-/* ─── Dark theme override ─── */
-[data-theme="dark"] {
-    --bg: #1c1e26;
-    --surface: #252830;
-    --surface-2: #2e3140;
-    --border: #363a4a;
-    --border-hover: #4a4f62;
-    --text: #e8eaf0;
-    --text-muted: #9096aa;
-    --text-dim: #5c6278;
-    --accent: #7b9fff;
-    --accent-glow: rgba(123, 159, 255, 0.18);
-    --accent-soft: rgba(123, 159, 255, 0.1);
-    --accent-text: #1a1d2e;
-    --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme="dark"] .navbar {
-    background-color: var(--surface);
-}
-
-[data-theme="dark"] .filter-panel {
-    background-color: var(--surface);
-}
-
-[data-theme="dark"] .dropdown-menu {
-    background-color: var(--surface);
-}
-
-[data-theme="dark"] .filter-search-input {
-    background-color: var(--surface-2);
-    color: var(--text);
-}
-
-[data-theme="dark"] .btn-nav-login {
-    color: var(--text-muted);
-    border-color: var(--border);
-    background: transparent;
-}
-
-[data-theme="dark"] .btn-nav-login:hover {
-    background: var(--surface);
-    color: var(--text);
-}
-
-[data-theme="dark"] .btn-nav-signup {
-    color: #fff;
-    background: var(--accent);
-}
-
-[data-theme="dark"] .btn-nav-signup:hover {
-    background: #5a8ef0;
-}
-
-/* Theme toggle icon color */
-.theme-toggle-btn #icon-light {
-    color: #f59e0b;
-}
-
-.theme-toggle-btn #icon-dark {
-    color: #818cf8;
-}
 
 body {
     background-color: var(--bg);
@@ -516,20 +454,6 @@ a {
 .filter-color-dot[data-color="pink"]   { background: #fde4f0; }
 .filter-color-dot[data-color="brown"]  { background: #f2e8dc; }
 
-[data-theme="dark"] .filter-color-dot[data-color=""]       { background: var(--surface-2); }
-[data-theme="dark"] .filter-color-dot[data-color="berry"]  { background: #5c2a3a; }
-[data-theme="dark"] .filter-color-dot[data-color="red"]    { background: #5c2020; }
-[data-theme="dark"] .filter-color-dot[data-color="orange"] { background: #5c3a18; }
-[data-theme="dark"] .filter-color-dot[data-color="yellow"] { background: #4a3a00; }
-[data-theme="dark"] .filter-color-dot[data-color="teal"]   { background: #0d3d3d; }
-[data-theme="dark"] .filter-color-dot[data-color="blue"]   { background: #0d2a4a; }
-[data-theme="dark"] .filter-color-dot[data-color="indigo"] { background: #1e1650; }
-[data-theme="dark"] .filter-color-dot[data-color="purple"] { background: #3a1650; }
-[data-theme="dark"] .filter-color-dot[data-color="pink"]   { background: #4a1a38; }
-[data-theme="dark"] .filter-color-dot[data-color="brown"]  { background: #3a2818; }
-
-[data-theme="dark"] .filter-type-tile { background: transparent; }
-[data-theme="dark"] .filter-chip      { background: var(--surface-2); border-color: var(--border); }
 
 /* ─── Main Content ─── */
 .main-content {
@@ -618,15 +542,10 @@ a {
 .priority-option i { font-size: 1rem; flex-shrink: 0; }
 .priority-option:hover { background: var(--surface-2); color: var(--text); }
 .priority-option.active { background: var(--accent-soft); color: var(--accent); font-weight: 500; }
-[data-theme="dark"] .priority-picker-popup { background: var(--surface); border-color: var(--border); box-shadow: 0 8px 28px rgba(0,0,0,0.45); }
-
 /* Priority flag icon color */
 #modalPriorityBtn.priority-flag-high   { color: #dc2626 !important; }
 #modalPriorityBtn.priority-flag-medium { color: #b45309 !important; }
 #modalPriorityBtn.priority-flag-low    { color: #16a34a !important; }
-[data-theme="dark"] #modalPriorityBtn.priority-flag-high   { color: #f87171 !important; }
-[data-theme="dark"] #modalPriorityBtn.priority-flag-medium { color: #fbbf24 !important; }
-[data-theme="dark"] #modalPriorityBtn.priority-flag-low    { color: #4ade80 !important; }
 
 
 /* ─── NAV REMINDER BADGE ─── */

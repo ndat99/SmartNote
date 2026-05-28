@@ -13,13 +13,7 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block extra_css %}{% endblock %}
 
-    {# Chạy trước khi render để tránh flash trắng khi dùng dark mode #}
-    <script>
-        (function () {
-            if (localStorage.getItem('sn-theme') === 'dark')
-                document.documentElement.setAttribute('data-theme', 'dark');
-        })();
-    </script>
+
 </head>
 <body>
 
@@ -61,10 +55,6 @@
     <div class="d-flex align-items-center gap-2" style="min-width:180px; justify-content:flex-end;">
         <div class="menu-btn d-none d-sm-flex" title="Làm mới">
             <i class="ph ph-arrows-clockwise" style="font-size:1.1rem;"></i>
-        </div>
-        <div class="menu-btn theme-toggle-btn d-none d-sm-flex" onclick="toggleTheme()" title="Đổi theme">
-            <i class="ph-fill ph-sun"  id="icon-light" style="font-size:1.1rem;"></i>
-            <i class="ph-fill ph-moon" id="icon-dark"  style="font-size:1.1rem; display:none;"></i>
         </div>
 
         {% if user.is_authenticated %}
