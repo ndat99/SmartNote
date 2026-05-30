@@ -6,8 +6,11 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}?v=1.5">
-<link rel="stylesheet" href="{% static 'css/note_card.css' %}?v=1.0">
-<link rel="stylesheet" href="{% static 'css/note_form.css' %}?v=1.0">
+<link rel="stylesheet" href="{% static 'css/note_card.css' %}?v=5">
+<link rel="stylesheet" href="{% static 'css/components/note-form.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/keep-modal.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/tags-editor.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/image-slider.css' %}">
 <link rel="stylesheet" href="{% static 'css/colors.css' %}">
 {% endblock %}
 
@@ -39,8 +42,12 @@
 {% block extra_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
 <script src="{% static 'js/color-picker.js' %}"></script>
-<script src="{% static 'js/keep-modal.js' %}"></script>
-<script src="{% static 'js/doodles.js' %}?v=2"></script>
+<script src="{% static 'js/modal/core.js' %}"></script>
+<script src="{% static 'js/modal/checklist.js' %}"></script>
+<script src="{% static 'js/modal/tags.js' %}"></script>
+<script src="{% static 'js/modal/images.js' %}"></script>
+<script src="{% static 'js/modal/priority.js' %}"></script>
+<script src="{% static 'js/doodles.js' %}?v=4"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.note-card').forEach(function (card) {

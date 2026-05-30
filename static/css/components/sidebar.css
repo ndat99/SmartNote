@@ -1,0 +1,258 @@
+/* ─── Filter Panel (Left Sidebar) ─── */
+.filter-panel {
+    width: var(--filter-panel-w);
+    position: fixed;
+    top: var(--nav-h);
+    left: 0;
+    height: calc(100vh - var(--nav-h));
+    padding: 16px 0 16px 0;
+    background-color: var(--surface);
+    border-right: 1px solid var(--border);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.03);
+    overflow-y: auto;
+    z-index: 50;
+}
+
+/* ─── Search inside filter panel ─── */
+.filter-search-wrap {
+    position: relative;
+    margin: 0 12px 16px;
+}
+
+.filter-search-icon {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+.filter-search-input {
+    width: 100%;
+    background: var(--surface-2);
+    border: 1px solid transparent;
+    border-radius: 20px;
+    padding: 8px 32px 8px 34px;
+    font-size: 0.82rem;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    outline: none;
+    transition: all var(--transition);
+}
+
+.filter-search-input::placeholder {
+    color: var(--text-dim);
+}
+
+.filter-search-input:focus {
+    background: var(--surface);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.filter-search-clear {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    padding: 0;
+    transition: all var(--transition);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.filter-search-wrap:has(.filter-search-input:not(:placeholder-shown)) .filter-search-clear,
+.filter-search-wrap.has-filter .filter-search-clear {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.filter-search-clear:hover {
+    background: var(--surface-2);
+    color: var(--danger);
+}
+
+/* ─── Filter Sections ─── */
+.filter-section {
+    padding: 0 10px;
+    margin-bottom: 12px;
+}
+
+.filter-section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+}
+
+/* Type tiles — Horizontal icon-only row */
+.filter-type-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
+
+.filter-type-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    border: 1px solid transparent;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all 0.18s ease;
+    user-select: none;
+    position: relative;
+}
+
+.filter-type-tile span {
+    display: none;
+}
+
+.filter-type-tile i {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.filter-type-tile:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+/* Tooltip on hover */
+.filter-type-tile::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--text);
+    color: var(--surface);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 10;
+}
+
+.filter-type-tile:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.filter-type-tile.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+/* Chips row */
+.filter-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    /* Đủ to nhưng vẫn 3 chip / hàng trong panel 270px */
+    padding: 6px 10px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text-muted);
+    font-size: 0.83rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.filter-chip i {
+    font-size: 0.9rem;
+}
+
+.filter-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.filter-chip.active {
+    background: var(--accent);
+    color: #fff !important;
+    border-color: var(--accent);
+}
+
+.filter-chip.active i {
+    color: #fff !important;
+}
+
+/* Color dots — grid 2 hàng đều nhau (6+5) */
+.filter-color-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+}
+
+.filter-color-dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    justify-self: center;
+}
+
+.filter-color-dot:hover { transform: scale(1.2); }
+.filter-color-dot.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent);
+}
+
+.filter-color-dot[data-color=""]       { background: var(--surface-2); border-color: var(--border-hover); }
+.filter-color-dot[data-color="berry"]  { background: #f9e4ec; }
+.filter-color-dot[data-color="red"]    { background: #fce8e8; }
+.filter-color-dot[data-color="orange"] { background: #fef0dc; }
+.filter-color-dot[data-color="yellow"] { background: #fef9d0; }
+.filter-color-dot[data-color="teal"]   { background: #d8f5f0; }
+.filter-color-dot[data-color="blue"]   { background: #ddeeff; }
+.filter-color-dot[data-color="indigo"] { background: #e8e4ff; }
+.filter-color-dot[data-color="purple"] { background: #f3e0ff; }
+.filter-color-dot[data-color="pink"]   { background: #fde4f0; }
+.filter-color-dot[data-color="brown"]  { background: #f2e8dc; }
+
+

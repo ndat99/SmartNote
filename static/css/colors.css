@@ -240,12 +240,12 @@
 
 /* ── Áp dụng biến màu vào card ── */
 .note-card[data-color] {
-    background: var(--nc-bg) !important;
+    background-color: var(--nc-bg) !important;
     border-color: var(--nc-border) !important;
 }
 
 .note-card[data-color]:hover {
-    background: var(--nc-bg-hover) !important;
+    background-color: var(--nc-bg-hover) !important;
 }
 
 /* ── Text overrides ── */

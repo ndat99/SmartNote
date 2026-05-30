@@ -5,8 +5,11 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}?v=2.0">
-<link rel="stylesheet" href="{% static 'css/note_card.css' %}?v=2.0">
-<link rel="stylesheet" href="{% static 'css/note_form.css' %}?v=2.0">
+<link rel="stylesheet" href="{% static 'css/note_card.css' %}?v=5">
+<link rel="stylesheet" href="{% static 'css/components/note-form.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/keep-modal.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/tags-editor.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/image-slider.css' %}">
 <link rel="stylesheet" href="{% static 'css/colors.css' %}">
 {% endblock %}
 
@@ -143,7 +146,7 @@
 <!-- ═══════════════ GHI CHÚ ĐƯỢC GHIM ═══════════════ -->
 {% if pinned_notes %}
 <div class="notes-section-header" id="pinned-header">
-    <h6><i class="ph-fill ph-push-pin me-1" style="font-size:0.85rem;"></i> Được ghim</h6>
+    <h6><i class="ph ph-paperclip me-1" style="font-size:0.85rem;"></i> Được ghim</h6>
 </div>
 <div class="row g-3 mb-2" id="pinned-grid">
     {% for note in pinned_notes %}
@@ -194,8 +197,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
 <script src="{% static 'js/color-picker.js' %}"></script>
 <script src="{% static 'js/notes-form.js' %}?v=1.5"></script>
-<script src="{% static 'js/keep-modal.js' %}?v=1.3"></script>
-<script src="{% static 'js/doodles.js' %}?v=2"></script>
+<script src="{% static 'js/modal/core.js' %}"></script>
+<script src="{% static 'js/modal/checklist.js' %}"></script>
+<script src="{% static 'js/modal/tags.js' %}"></script>
+<script src="{% static 'js/modal/images.js' %}"></script>
+<script src="{% static 'js/modal/priority.js' %}"></script>
+<script src="{% static 'js/doodles.js' %}?v=4"></script>
 
 <!-- Patch openKeepModal → sync reminder icon/picker khi mở modal -->
 <script>

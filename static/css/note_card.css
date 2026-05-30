@@ -1,21 +1,36 @@
 /* ─── Note Cards ─── */
 .note-card {
     z-index: 1;
-    background: #f8f9fe;
+    background-color: #fcfbf6;
+    background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.035) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: center top;
     border: 1px solid #eaecf5;
-    border-radius: 2px;
-    padding: 16px 10px 0px 40px ;
+    border-radius: 6px;
+    padding: 20px 18px 10px 40px;
     height: 310px;
     position: relative;
     overflow: visible;
     contain: layout style;
-    transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     animation: noteIn 0.4s cubic-bezier(0.16,1,0.3,1) both;
 }
-.note-card > * {
+
+.doodle-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.note-card > *:not(.doodle-container, .note-card-pin) {
     position: relative;
     z-index: 1; 
 }
@@ -35,36 +50,36 @@
     background-image: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 0.12) 0px,
-        rgba(0, 0, 0, 0.12) 8px, /* Chiều cao lỗ đục: 8px */
+        rgba(0, 0, 0, 0.12) 8px,
         transparent 8px,
-        transparent 28px /* Khoảng cách lặp lại giữa các lỗ */
+        transparent 28px
     );
-    background-size: 8px 28px; /* Kích thước chiều ngang của lỗ là 8px */
-    background-repeat: repeat-y; /* Lặp lại theo chiều dọc */
-    background-position: 12px 16px; /* Căn lỗ cách mép trái 12px, lùi từ trên xuống 16px */
+    background-size: 8px 28px;
+    background-repeat: repeat-y;
+    background-position: 12px 16px;
     
     z-index: 0;
     pointer-events: none;
 }
 
-/* Dòng kẻ ngang ghi chú */
-.note-card::after {
+/* Folded corner (Góc gấp) */
+.note-card.has-fold {
+    border-radius: 6px 0 6px 6px;
+}
+.note-card.has-fold::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 32px; /* Thụt vào trong, tránh mép giấy và lề đỏ */
-    right: 0;
-    bottom: 0;
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-    
-    /* Vẽ dòng kẻ ngang lặp lại */
-    background-image: repeating-linear-gradient(
-        transparent,
-        transparent 23px,
-        rgba(0, 0, 0, 0.15) 24px /* Độ dày và màu của dòng kẻ */
-    );
-    z-index: 0; /* Nằm dưới nội dung và tag */
+    top: -1px;
+    right: -1px;
+    border-width: 0 24px 24px 0;
+    border-style: solid;
+    border-color: #f4f5f7 #f4f5f7 rgba(0,0,0,0.05) rgba(0,0,0,0.05);
+    background-color: transparent;
+    display: block;
+    width: 0;
+    box-shadow: -2px 2px 5px rgba(0,0,0,0.06);
+    border-bottom-left-radius: 4px;
+    z-index: 10;
     pointer-events: none;
 }
 
@@ -83,21 +98,20 @@
 
 .note-card-pin {
     position: absolute !important;
-    top: 12px;
-    right: 12px;
-    z-index: 10;
+    top: -15px;
+    left: 28px;
+    z-index: 12;
     color: var(--text-dim);
-    font-size: 0.85rem;
-    padding: 4px;
-    border-radius: 50%;
+    padding: 0;
     transition: all var(--transition);
     opacity: 0;
     cursor: pointer;
     background: transparent;
     border: none;
+    transform: rotate(18deg);
 }
 .note-card:hover .note-card-pin { opacity: 1; }
-.note-card-pin:hover { color: var(--accent) !important; background: var(--accent-soft); opacity: 1 !important; }
+.note-card-pin:hover { color: var(--accent) !important; transform: scale(1.08) rotate(18deg); opacity: 1 !important; }
 
 .note-card-title {
     font-size: 0.95rem;

@@ -277,6 +277,11 @@
             // Số doodle: 0-2
             const count = Math.floor(rng() * 3);
 
+            // Random fold (about 50% chance)
+            if (rng() > 0.5) {
+                card.classList.add('has-fold');
+            }
+
             const usedIndices = new Set();
             const usedZones = new Set();
 
@@ -334,7 +339,13 @@
                     transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1) ${0.2 + i * 0.2}s;
                 `;
 
-                card.appendChild(wrapper);
+                let container = card.querySelector('.doodle-container');
+                if (!container) {
+                    container = document.createElement('div');
+                    container.className = 'doodle-container';
+                    card.insertBefore(container, card.firstChild);
+                }
+                container.appendChild(wrapper);
 
                 // Fade-in
                 requestAnimationFrame(() => {

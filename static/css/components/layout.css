@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap');
+
+:root {
+    --bg: #F9F8F6; /* cream background */
+    --surface: #ffffff;
+    --surface-2: #F1F0ED; /* slightly darker cream for hover */
+    --border: #EBE7DF; /* soft border */
+    --border-hover: #D8D4CC;
+    --text: #2B2523; /* soft black/brown */
+    --text-muted: #7E7975;
+    --text-dim: #A8A49F;
+    --accent: #2B2523; /* dark accent */
+    --accent-glow: rgba(43, 37, 35, 0.15);
+    --accent-soft: rgba(43, 37, 35, 0.08);
+    --danger: #ef4444;
+    --success: #22c55e;
+    --blue: #4a6cf7;
+    --accent-text: #ffffff;
+    --filter-panel-w: 250px;
+    --nav-h: 60px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    overflow-x: hidden;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--border-hover);
+}
+
+
+
+/* ─── Main Content ─── */
+.main-content {
+    margin-top: var(--nav-h);
+    margin-left: var(--filter-panel-w);
+    padding: 28px 32px;
+    min-height: calc(100vh - var(--nav-h));
+}
+
+
+
+/* ─── Main Layout Styles ─── */
+.app-layout {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.filter-panel {
+    position: static;
+    flex-shrink: 0;
+    width: 270px;
+    height: 100vh;
+    border-right: none;
+    background: transparent;
+    padding-top: 20px;
+}
+
+.app-center-column {
+    overflow: hidden;
+}
+
+.main-content {
+    margin: 0;
+    padding: 0 32px 32px 32px;
+    overflow-y: auto;
+}
+
+.right-sidebar {
+    width: 290px;
+    padding: 0 24px 32px 16px;
+    overflow-y: auto;
+}
+
+.calendar-widget, .tags-widget {
+    background: var(--surface);
+    border-radius: 16px;
+}
