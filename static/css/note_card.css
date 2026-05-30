@@ -1,0 +1,302 @@
+/* ─── Note Cards ─── */
+.note-card {
+    z-index: 1;
+    background: #f8f9fe;
+    border: 1px solid #eaecf5;
+    border-radius: 2px;
+    padding: 16px 10px 0px 40px ;
+    height: 310px;
+    position: relative;
+    overflow: visible;
+    contain: layout style;
+    transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    animation: noteIn 0.4s cubic-bezier(0.16,1,0.3,1) both;
+}
+.note-card > * {
+    position: relative;
+    z-index: 1; 
+}
+
+/* Lỗ đục gáy hình VUÔNG và lề trái */
+.note-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 32px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    
+    /* Vẽ lỗ đục hình vuông xếp thẳng hàng dọc */
+    background-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.12) 0px,
+        rgba(0, 0, 0, 0.12) 8px, /* Chiều cao lỗ đục: 8px */
+        transparent 8px,
+        transparent 28px /* Khoảng cách lặp lại giữa các lỗ */
+    );
+    background-size: 8px 28px; /* Kích thước chiều ngang của lỗ là 8px */
+    background-repeat: repeat-y; /* Lặp lại theo chiều dọc */
+    background-position: 12px 16px; /* Căn lỗ cách mép trái 12px, lùi từ trên xuống 16px */
+    
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Dòng kẻ ngang ghi chú */
+.note-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 32px; /* Thụt vào trong, tránh mép giấy và lề đỏ */
+    right: 0;
+    bottom: 0;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    
+    /* Vẽ dòng kẻ ngang lặp lại */
+    background-image: repeating-linear-gradient(
+        transparent,
+        transparent 23px,
+        rgba(0, 0, 0, 0.15) 24px /* Độ dày và màu của dòng kẻ */
+    );
+    z-index: 0; /* Nằm dưới nội dung và tag */
+    pointer-events: none;
+}
+
+
+@keyframes noteIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.note-card:hover {
+    border-color: var(--border-hover);
+    z-index: 10;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(74,108,247,0.12);
+    background: var(--surface-2);
+}
+
+.note-card-pin {
+    position: absolute !important;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    padding: 4px;
+    border-radius: 50%;
+    transition: all var(--transition);
+    opacity: 0;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+.note-card:hover .note-card-pin { opacity: 1; }
+.note-card-pin:hover { color: var(--accent) !important; background: var(--accent-soft); opacity: 1 !important; }
+
+.note-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    padding-right: 20px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+.note-card-date {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+.note-card-body {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    white-space: pre-wrap;
+    flex: 1 1 0;
+    min-height: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.note-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 2;
+}
+
+.tag {
+font-size: 0.72rem;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+    
+    /* Làm mờ dòng kẻ ngay bên dưới tag */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.tag-category  { background: rgba(74,108,247,0.08);  color: #4a6cf7; border: 1px solid rgba(74,108,247,0.2); }
+.tag-high      { background: rgba(239,68,68,0.08);   color: #dc2626; border: 1px solid rgba(239,68,68,0.2); }
+.tag-medium    { background: rgba(234,179,8,0.1);    color: #b45309; border: 1px solid rgba(234,179,8,0.25); }
+.tag-low       { background: rgba(34,197,94,0.08);   color: #16a34a; border: 1px solid rgba(34,197,94,0.2); }
+.tag-task-ai   { background: rgba(168,85,247,0.08);  color: #7c3aed; border: 1px solid rgba(168,85,247,0.2); }
+.tag-task-user { background: rgba(14,165,233,0.08);  color: #0369a1; border: 1px solid rgba(14,165,233,0.2); }
+
+/* ─── Note Actions Bar ─── */
+.note-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    margin-top: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+.note-card:hover .note-actions {
+    opacity: 1;
+    visibility: visible;
+}
+.note-actions-left { display: flex; gap: 2px; }
+.note-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+.note-actions-right .action-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all var(--transition);
+}
+.note-actions-right .action-icon:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+.note-actions-right .text-danger { color: var(--text-muted); }
+.note-actions-right .text-danger:hover {
+    background: rgba(239,68,68,0.1) !important;
+    color: var(--danger) !important;
+}
+.note-actions-right .text-accent { color: var(--accent) !important; }
+.action-icon {
+    color: var(--text-muted);
+    padding: 7px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all var(--transition);
+}
+.action-icon:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.note-card-pin.pinned {
+    opacity: 1 !important;
+    color: var(--accent) !important;
+}
+
+/* ─── Trash card buttons ─── */
+.trash-card { cursor: default; }
+
+.trash-actions {
+    display: flex;
+    gap: 8px;
+    padding-top: 6px;
+    margin-bottom: 6px;
+    margin-top: auto;
+}
+.trash-btn {
+    flex: 1;
+    text-align: center;
+    padding: 7px 7px;
+    border-radius: 2px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all var(--transition);
+    white-space: nowrap;
+}
+.trash-btn-restore {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid rgba(74,108,247,0.2);
+}
+.trash-btn-restore:hover { background: var(--accent); color: #fff; }
+.trash-btn-delete {
+    background: rgba(239,68,68,0.08);
+    color: var(--danger);
+    border: 1px solid rgba(239,68,68,0.2);
+}
+.trash-btn-delete:hover { background: var(--danger); color: #fff; }
+
+/* ─── Image Grids & Stamps ─── */
+.note-card-images {
+    display: flex;
+    padding: 12px 12px 0 12px;
+    gap: 4px;
+    border-radius: 6px 6px 0 0;
+    pointer-events: none; /* Let card handle clicks */
+}
+
+.note-card-img-wrap {
+    flex: 1;
+    height: 75px;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 2px solid var(--surface);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    background: #fff;
+    contain: paint layout;
+    will-change: transform;
+    transform: translateZ(0);
+    transition: transform 0.2s ease;
+}
+.note-card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.note-card-img-wrap.extra-images .extra-images-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+}
+
+

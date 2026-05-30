@@ -5,7 +5,9 @@
 {% block nav_reminders %}active{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}?v=1.4">
+<link rel="stylesheet" href="{% static 'css/home.css' %}?v=1.5">
+<link rel="stylesheet" href="{% static 'css/note_card.css' %}?v=1.0">
+<link rel="stylesheet" href="{% static 'css/note_form.css' %}?v=1.0">
 <link rel="stylesheet" href="{% static 'css/colors.css' %}">
 {% endblock %}
 
@@ -41,7 +43,7 @@
 </div>
 <div class="row g-3 mb-4">
     {% for note in upcoming %}
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4">
         {% include 'notes/components/_note_card.html' with note=note card_index=forloop.counter0 only %}
     </div>
     {% endfor %}
@@ -55,7 +57,7 @@
 </div>
 <div class="row g-3">
     {% for note in overdue %}
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4">
         {% include 'notes/components/_note_card.html' with note=note card_index=forloop.counter0 only %}
     </div>
     {% endfor %}
@@ -74,6 +76,7 @@
 <script src="{% static 'js/color-picker.js' %}"></script>
 <script src="{% static 'js/notes-form.js' %}?v=1.4"></script>
 <script src="{% static 'js/keep-modal.js' %}?v=1.3"></script>
+<script src="{% static 'js/doodles.js' %}?v=2"></script>
 
 <!-- Patch openKeepModal → sync reminder icon khi mở modal -->
 <script>

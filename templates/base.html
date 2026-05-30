@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,231 +10,354 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}?v=3">
     {% block extra_css %}{% endblock %}
 
-    {# Chạy trước khi render để tránh flash trắng khi dùng dark mode #}
-    <script>
-        (function () {
-            if (localStorage.getItem('sn-theme') === 'dark')
-                document.documentElement.setAttribute('data-theme', 'dark');
-        })();
-    </script>
+    <style>
+        .color-cycle-1 {
+            background-color: #4a6cf7;
+        }
+
+        .color-cycle-2 {
+            background-color: #22c55e;
+        }
+
+        .color-cycle-3 {
+            background-color: #8b5cf6;
+        }
+
+        .color-cycle-4 {
+            background-color: #f59e0b;
+        }
+
+        .color-cycle-5 {
+            background-color: #ec4899;
+        }
+
+        .color-cycle-6 {
+            background-color: #06b6d4;
+        }
+    </style>
 </head>
+
 <body>
 
-<nav class="navbar d-flex align-items-center justify-content-between fixed-top">
-    <!-- Logo bên trái -->
-    <div class="d-flex align-items-center gap-2" style="min-width:180px;">
-        <a class="navbar-brand" href="{% url 'home' %}">
-            <img src="{% static 'images/logo.png' %}" alt="Logo" width="28">
-            Smart<span class="brand-dot">Note</span>
-        </a>
-    </div>
+    <div class="app-layout d-flex" >
 
-    <!-- Tab điều hướng ở giữa -->
-    <div class="nav-tabs-center">
-        <a href="{% url 'home' %}" class="nav-tab-item {% block nav_home %}{% endblock %}" id="navTabHome">
-            <i class="ph ph-lightbulb"></i>
-            <span>Ghi chú</span>
-        </a>
-        <a href="{% url 'reminders_page' %}" class="nav-tab-item {% block nav_reminders %}{% endblock %}" id="navTabReminder">
-            <i class="ph ph-bell"></i>
-            <span>Lời nhắc</span>
-            <span class="nav-tab-badge-urgent">!</span>
-        </a>
-        <a href="#" class="nav-tab-item" id="navTabLabel" data-bs-toggle="modal" data-bs-target="#labelManagerModal">
-            <i class="ph ph-pencil-simple"></i>
-            <span>Nhãn</span>
-        </a>
-        <a href="{% url 'archive' %}" class="nav-tab-item {% block nav_archive %}{% endblock %}" id="navTabArchive">
-            <i class="ph ph-archive-box"></i>
-            <span>Lưu trữ</span>
-        </a>
-        <a href="{% url 'trash' %}" class="nav-tab-item {% block nav_trash %}{% endblock %}" id="navTabTrash">
-            <i class="ph ph-trash"></i>
-            <span>Thùng rác</span>
-        </a>
-    </div>
-
-    <!-- Bên phải: theme toggle + avatar -->
-    <div class="d-flex align-items-center gap-2" style="min-width:180px; justify-content:flex-end;">
-        <div class="menu-btn d-none d-sm-flex" title="Làm mới">
-            <i class="ph ph-arrows-clockwise" style="font-size:1.1rem;"></i>
-        </div>
-        <div class="menu-btn theme-toggle-btn d-none d-sm-flex" onclick="toggleTheme()" title="Đổi theme">
-            <i class="ph-fill ph-sun"  id="icon-light" style="font-size:1.1rem;"></i>
-            <i class="ph-fill ph-moon" id="icon-dark"  style="font-size:1.1rem; display:none;"></i>
-        </div>
-
-        {% if user.is_authenticated %}
-        <div class="dropdown ms-1">
-            {% if user.socialaccount_set.all %}
-                <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}"
-                     class="nav-avatar" role="button" data-bs-toggle="dropdown" alt="Avatar">
-            {% else %}
-                <img id="defaultAvatar"
-                     data-name="{{ user.get_full_name|default:user.username }}"
-                     src="https://ui-avatars.com/api/?name={{ user.get_full_name|default:user.username }}&background=e8eeff&color=4a6cf7&bold=true"
-                     class="nav-avatar" role="button" data-bs-toggle="dropdown" alt="Avatar">
-            {% endif %}
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><span class="dropdown-item-text">{{ user.get_full_name|default:user.username }}</span></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#"><i class="ph ph-user me-2" style="font-size: 1.05rem; opacity:.7"></i>Hồ sơ</a></li>
-                <li><a class="dropdown-item text-danger" href="{% url 'account_logout' %}"><i class="ph ph-sign-out me-2" style="font-size: 1.05rem;"></i>Đăng xuất</a></li>
-            </ul>
-        </div>
-        {% else %}
-        <a href="{% url 'account_login' %}"  class="btn-nav-login">Đăng nhập</a>
-        <a href="{% url 'account_signup' %}" class="btn-nav-signup">Đăng ký</a>
-        {% endif %}
-    </div>
-</nav>
-
-<!-- ════════════ FILTER PANEL (SIDEBAR TRÁI) ════════════ -->
-<div class="filter-panel" id="filterPanel">
-
-    <!-- Search Box -->
-    <div class="filter-search-wrap">
-        <i class="ph ph-magnifying-glass filter-search-icon"></i>
-        <input type="text" id="globalSearch" class="filter-search-input" placeholder="Tìm kiếm ghi chú…" autocomplete="off">
-        <button class="filter-search-clear" id="btnClearFilters" onclick="clearSearchFilters()" title="Xóa bộ lọc">
-            <i class="ph ph-x"></i>
-        </button>
-    </div>
-
-    <!-- Loại -->
-    <div class="filter-section">
-        <div class="filter-section-label">Loại</div>
-        <div class="filter-type-grid">
-            <div class="filter-type-tile" data-type="note" id="filterTile-note"
-                 onclick="_toggleTypeFilter(this, 'note')">
-                <i class="ph ph-note-pencil"></i>
-                <span>Ghi chú</span>
+        <!-- CỘT TRÁI: FILTER PANEL -->
+        <div class="filter-panel d-flex flex-column" id="filterPanel" style="position: static; flex-shrink: 0; width: 270px; height: 100vh; border-right: none; background: transparent; padding-top: 20px;"
+            >
+            <div class="px-3 mb-4">
+                <a class="navbar-brand text-decoration-none d-flex align-items-center gap-2" href="{% url 'home' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo" width="28">
+                    Smart<span class="brand-dot" style="color: var(--accent);">Note</span>
+                </a>
             </div>
-            <div class="filter-type-tile" data-type="checklist" id="filterTile-checklist"
-                 onclick="_toggleTypeFilter(this, 'checklist')">
-                <i class="ph ph-check-square"></i>
-                <span>Danh sách</span>
-            </div>
-            <div class="filter-type-tile" data-type="image" id="filterTile-image"
-                 onclick="_toggleTypeFilter(this, 'image')">
-                <i class="ph ph-image"></i>
-                <span>Hình ảnh</span>
-            </div>
-        </div>
-    </div>
 
-    <!-- Nhãn -->
-    <div class="filter-section" id="filterTagSection">
-        <div class="filter-section-label">Nhãn</div>
-        <div class="filter-chip-row" id="filterTagList"></div>
-    </div>
-
-    <!-- Màu nền -->
-    <div class="filter-section">
-        <div class="filter-section-label">Màu nền</div>
-        <div class="filter-color-row">
-            <div class="filter-color-dot" data-color="" title="Mặc định" onclick="_toggleColorFilter(this, '')"><i class="ph ph-prohibit"></i></div>
-            <div class="filter-color-dot" data-color="berry"  title="Berry"  onclick="_toggleColorFilter(this, 'berry')"></div>
-            <div class="filter-color-dot" data-color="red"    title="Red"    onclick="_toggleColorFilter(this, 'red')"></div>
-            <div class="filter-color-dot" data-color="orange" title="Orange" onclick="_toggleColorFilter(this, 'orange')"></div>
-            <div class="filter-color-dot" data-color="yellow" title="Yellow" onclick="_toggleColorFilter(this, 'yellow')"></div>
-            <div class="filter-color-dot" data-color="teal"   title="Teal"   onclick="_toggleColorFilter(this, 'teal')"></div>
-            <div class="filter-color-dot" data-color="blue"   title="Blue"   onclick="_toggleColorFilter(this, 'blue')"></div>
-            <div class="filter-color-dot" data-color="indigo" title="Indigo" onclick="_toggleColorFilter(this, 'indigo')"></div>
-            <div class="filter-color-dot" data-color="purple" title="Purple" onclick="_toggleColorFilter(this, 'purple')"></div>
-            <div class="filter-color-dot" data-color="pink"   title="Pink"   onclick="_toggleColorFilter(this, 'pink')"></div>
-            <div class="filter-color-dot" data-color="brown"  title="Brown"  onclick="_toggleColorFilter(this, 'brown')"></div>
-        </div>
-    </div>
-
-    <!-- Độ ưu tiên -->
-    <div class="filter-section">
-        <div class="filter-section-label">Độ ưu tiên</div>
-        <div class="filter-chip-row">
-            <div class="filter-chip" data-priority="high" onclick="_togglePriorityFilter(this, 'high')">
-                <i class="ph ph-flag" style="color:#dc2626"></i> High
-            </div>
-            <div class="filter-chip" data-priority="medium" onclick="_togglePriorityFilter(this, 'medium')">
-                <i class="ph ph-flag" style="color:#b45309"></i> Medium
-            </div>
-            <div class="filter-chip" data-priority="low" onclick="_togglePriorityFilter(this, 'low')">
-                <i class="ph ph-flag" style="color:#16a34a"></i> Low
-            </div>
-        </div>
-    </div>
-
-    <!-- Task -->
-    <div class="filter-section">
-        <div class="filter-section-label">Task</div>
-        <div class="filter-chip-row">
-            <div class="filter-chip" id="filterTaskChip" onclick="_toggleTaskFilter(this)">
-                <i class="ph ph-check-circle"></i> Chỉ xem Task
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<div class="main-content" id="mainContent">
-    {% block content %}{% endblock %}
-</div>
-
-<!-- Shared Reminder Picker -->
-<div id="sharedReminderPickerPopup" class="reminder-picker-popup" style="display:none;" onclick="event.stopPropagation()">
-    <div class="reminder-picker-header">
-        <i class="ph ph-bell-ringing" style="color:var(--accent);"></i>
-        <span>Nhắc nhở lúc</span>
-    </div>
-    <input type="datetime-local" id="sharedReminderDatetimeInput" class="reminder-datetime-input">
-    <div class="reminder-quick-btns">
-        <button type="button" class="reminder-quick-btn" onclick="setSharedQuickReminder(30)">30 phút nữa</button>
-        <button type="button" class="reminder-quick-btn" onclick="setSharedQuickReminder(60)">1 giờ nữa</button>
-        <button type="button" class="reminder-quick-btn" onclick="setSharedQuickReminder(1440)">Ngày mai</button>
-    </div>
-    <div class="reminder-picker-actions">
-        <button type="button" class="reminder-btn-clear" onclick="applySharedReminder(true)">Xóa nhắc</button>
-        <button type="button" class="reminder-btn-save" onclick="applySharedReminder(false)">Lưu</button>
-    </div>
-</div>
-
-<!-- Label Manager Modal -->
-<div class="modal fade" id="labelManagerModal" tabindex="-1" aria-labelledby="labelManagerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden;">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title fw-bold" id="labelManagerModalLabel" style="font-size: 1.1rem;">Chỉnh sửa nhãn</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Add new label form -->
-                <form id="createLabelForm" class="d-flex align-items-center mb-3 pb-2 border-bottom">
-                    <i class="ph ph-plus text-muted ms-1 me-2" style="font-size: 1.1rem;"></i>
-                    <input type="text" id="newLabelInput" class="form-control border-0 shadow-none px-0" placeholder="Tạo nhãn mới" autocomplete="off" required>
-                    <button type="submit" class="btn btn-link text-decoration-none p-0 ms-2 text-primary" title="Tạo nhãn">
-                        <i class="ph-fill ph-check" style="font-size: 1.2rem;"></i>
+            <div class="flex-grow-1 overflow-y-auto pb-4">
+                <!-- Search Box -->
+                <div class="filter-search-wrap">
+                    <i class="ph ph-magnifying-glass filter-search-icon"></i>
+                    <input type="text" id="globalSearch" class="filter-search-input" placeholder="Tìm kiếm ghi chú…"
+                        autocomplete="off">
+                    <button class="filter-search-clear" id="btnClearFilters" onclick="clearSearchFilters()"
+                        title="Xóa bộ lọc">
+                        <i class="ph ph-x"></i>
                     </button>
-                </form>
-                
-                <!-- Existing labels list -->
-                <div id="labelManagerList" class="d-flex flex-column gap-1" style="max-height: 250px; overflow-y: auto;">
-                    <!-- Rendered via JS -->
+                </div>
+
+                <!-- Loại -->
+                <div class="filter-section">
+                    <div class="filter-section-label">Loại</div>
+                    <div class="filter-type-grid">
+                        <div class="filter-type-tile" data-type="note" id="filterTile-note" data-tooltip="Ghi chú"
+                            onclick="_toggleTypeFilter(this, 'note')">
+                            <i class="ph ph-note-pencil"></i>
+                        </div>
+                        <div class="filter-type-tile" data-type="checklist" id="filterTile-checklist"
+                            data-tooltip="Danh sách" onclick="_toggleTypeFilter(this, 'checklist')">
+                            <i class="ph ph-check-square"></i>
+                        </div>
+                        <div class="filter-type-tile" data-type="image" id="filterTile-image" data-tooltip="Hình ảnh"
+                            onclick="_toggleTypeFilter(this, 'image')">
+                            <i class="ph ph-image"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nhãn -->
+                <div class="filter-section" id="filterTagSection">
+                    <div class="filter-section-label">Nhãn</div>
+                    <div class="filter-chip-row" id="filterTagList"></div>
+                </div>
+
+                <!-- Màu nền -->
+                <div class="filter-section">
+                    <div class="filter-section-label">Màu nền</div>
+                    <div class="filter-color-row">
+                        <div class="filter-color-dot" data-color="" title="Mặc định"
+                            onclick="_toggleColorFilter(this, '')"><i class="ph ph-prohibit"></i></div>
+                        <div class="filter-color-dot" data-color="berry" title="Berry"
+                            onclick="_toggleColorFilter(this, 'berry')"></div>
+                        <div class="filter-color-dot" data-color="red" title="Red"
+                            onclick="_toggleColorFilter(this, 'red')"></div>
+                        <div class="filter-color-dot" data-color="orange" title="Orange"
+                            onclick="_toggleColorFilter(this, 'orange')"></div>
+                        <div class="filter-color-dot" data-color="yellow" title="Yellow"
+                            onclick="_toggleColorFilter(this, 'yellow')"></div>
+                        <div class="filter-color-dot" data-color="teal" title="Teal"
+                            onclick="_toggleColorFilter(this, 'teal')"></div>
+                        <div class="filter-color-dot" data-color="blue" title="Blue"
+                            onclick="_toggleColorFilter(this, 'blue')"></div>
+                        <div class="filter-color-dot" data-color="indigo" title="Indigo"
+                            onclick="_toggleColorFilter(this, 'indigo')"></div>
+                        <div class="filter-color-dot" data-color="purple" title="Purple"
+                            onclick="_toggleColorFilter(this, 'purple')"></div>
+                        <div class="filter-color-dot" data-color="pink" title="Pink"
+                            onclick="_toggleColorFilter(this, 'pink')"></div>
+                        <div class="filter-color-dot" data-color="brown" title="Brown"
+                            onclick="_toggleColorFilter(this, 'brown')"></div>
+                    </div>
+                </div>
+
+                <!-- Độ ưu tiên -->
+                <div class="filter-section">
+                    <div class="filter-section-label">Độ ưu tiên</div>
+                    <div class="filter-chip-row">
+                        <div class="filter-chip" data-priority="high" onclick="_togglePriorityFilter(this, 'high')">
+                            <i class="ph ph-flag" style="color:#dc2626"></i> High
+                        </div>
+                        <div class="filter-chip" data-priority="medium" onclick="_togglePriorityFilter(this, 'medium')">
+                            <i class="ph ph-flag" style="color:#b45309"></i> Medium
+                        </div>
+                        <div class="filter-chip" data-priority="low" onclick="_togglePriorityFilter(this, 'low')">
+                            <i class="ph ph-flag" style="color:#16a34a"></i> Low
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Task -->
+                <div class="filter-section">
+                    <div class="filter-section-label">Task</div>
+                    <div class="filter-chip-row">
+                        <div class="filter-chip" id="filterTaskChip" onclick="_toggleTaskFilter(this)">
+                            <i class="ph ph-check-circle"></i> Chỉ xem Task
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer border-0 pt-0">
-                <button type="button" class="btn fw-semibold" data-bs-dismiss="modal" style="color: var(--accent); background: transparent;">Xong</button>
+        </div>
+
+        <!-- CỘT GIỮA & PHẢI -->
+        <div class="d-flex flex-column flex-grow-1 app-center-column">
+
+            <!-- HEADER (SPAN ACROSS CENTER AND RIGHT) -->
+            <header class="app-header d-flex align-items-center justify-content-between px-4 py-4">
+                <div class="header-greeting">
+                    <h2 class="mb-1 fw-bold" style="font-family: 'Playfair Display', serif; color: var(--text);">
+                        Chào buổi sáng, {{ user.get_full_name|default:user.username }} 👋
+                    </h2>
+                    <p class="text-muted mb-0" style="font-size: 0.95rem;">Hôm nay là một ngày tuyệt để ghi lại điều gì
+                        đó.</p>
+                </div>
+
+                <div class="header-actions d-flex align-items-center gap-3">
+                    <button class="btn rounded-pill px-4 py-2 d-flex align-items-center gap-2 shadow-sm"
+                        style="background-color: #2b2523; color: #fff; font-weight: 500; font-size: 0.95rem; border: none; transition: opacity 0.2s;"
+                        onclick="openCreateNoteModal()" onmouseover="this.style.opacity='0.9'"
+                        onmouseout="this.style.opacity='1'">
+                        <i class="ph ph-plus fw-bold"></i> Ghi chú mới <i class="ph ph-pencil-simple ms-1"></i>
+                    </button>
+
+                    <div class="btn rounded-circle d-flex align-items-center justify-content-center position-relative shadow-sm"
+                        style="width: 44px; height: 44px; background: #fff; border: 1px solid var(--border); cursor: pointer;">
+                        <i class="ph ph-bell" style="font-size: 1.3rem; color: var(--text);"></i>
+                        <span
+                            class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"
+                            style="margin-top: 10px; margin-left: -12px; width: 10px; height: 10px;"></span>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                    <div class="dropdown">
+                        {% if user.socialaccount_set.all %}
+                        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="nav-avatar shadow-sm"
+                            role="button" data-bs-toggle="dropdown" alt="Avatar"
+                            style="width: 44px; height: 44px; border: 1px solid var(--border);">
+                        {% else %}
+                        <img id="defaultAvatar" data-name="{{ user.get_full_name|default:user.username }}"
+                            src="https://ui-avatars.com/api/?name={{ user.get_full_name|default:user.username }}&background=e8eeff&color=4a6cf7&bold=true"
+                            class="nav-avatar shadow-sm" role="button" data-bs-toggle="dropdown" alt="Avatar"
+                            style="width: 44px; height: 44px; border: 1px solid var(--border);">
+                        {% endif %}
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" style="border-radius: 12px;">
+                            <li><span class="dropdown-item-text fw-medium">{{ user.get_full_name|default:user.username }}</span></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item py-2" href="#"><i class="ph ph-user me-2 text-muted"
+                                        style="font-size: 1.1rem;"></i>Hồ sơ</a></li>
+                            <li><a class="dropdown-item py-2 text-danger" href="{% url 'account_logout' %}"><i
+                                        class="ph ph-sign-out me-2" style="font-size: 1.1rem;"></i>Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <a href="{% url 'account_login' %}" class="btn-nav-login">Đăng nhập</a>
+                    <a href="{% url 'account_signup' %}" class="btn-nav-signup" style="background-color: #2b2523;">Đăng
+                        ký</a>
+                    {% endif %}
+                </div>
+            </header>
+
+            <!-- CỘT GIỮA & CỘT PHẢI -->
+            <div class="d-flex flex-grow-1" style="overflow: hidden;">
+
+                <!-- CỘT GIỮA (Nội dung Notes) -->
+                <main class="main-content flex-grow-1" id="mainContent" style="margin: 0; padding: 0 32px 32px 32px; overflow-y: auto;"
+                    >
+                    {% block content %}{% endblock %}
+                </main>
+
+                <!-- CỘT PHẢI -->
+                <aside class="right-sidebar d-flex flex-column gap-4 flex-shrink-0" style="width: 290px; padding: 0 24px 32px 16px; overflow-y: auto;"
+                    >
+
+                    <!-- NAV LIST -->
+                    <div class="right-nav-list d-flex flex-column gap-1">
+                        <a href="{% url 'home' %}" class="right-nav-item {% block nav_home %}{% endblock %}">
+                            <i class="ph ph-lightbulb"></i> Ghi chú
+                        </a>
+                        <a href="{% url 'reminders_page' %}"
+                            class="right-nav-item {% block nav_reminders %}{% endblock %}">
+                            <i class="ph ph-bell"></i> Lời nhắc
+                            <span class="nav-tab-badge-urgent position-static ms-auto mb-0"
+                                style="transform: none;">!</span>
+                        </a>
+                        <a href="#" class="right-nav-item" data-bs-toggle="modal" data-bs-target="#labelManagerModal">
+                            <i class="ph ph-pencil-simple"></i> Nhãn
+                        </a>
+                        <a href="{% url 'archive' %}" class="right-nav-item {% block nav_archive %}{% endblock %}">
+                            <i class="ph ph-archive-box"></i> Lưu trữ
+                        </a>
+                        <a href="{% url 'trash' %}" class="right-nav-item {% block nav_trash %}{% endblock %}">
+                            <i class="ph ph-trash"></i> Thùng rác
+                        </a>
+                    </div>
+
+                    <!-- CALENDAR WIDGET -->
+                    <div class="calendar-widget p-4 shadow-sm" style="background: var(--surface); border-radius: 16px;">
+                        <h6 class="fw-bold mb-3 d-flex align-items-center justify-content-between"
+                            style="font-size: 1rem;">
+                            <span id="calendarMonthYear">Tháng {% now "n, Y" %}</span>
+                            <div class="d-flex gap-2 text-muted">
+                                <i class="ph ph-caret-left cursor-pointer hover-text-dark" onclick="changeCalendarMonth(-1)"></i>
+                                <i class="ph ph-caret-right cursor-pointer hover-text-dark" onclick="changeCalendarMonth(1)"></i>
+                            </div>
+                        </h6>
+                        <div class="calendar-grid text-center" id="calendarGrid"
+                            style="font-size: 0.8rem; display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px 4px; font-weight: 500;">
+                            <div class="text-muted mb-1" style="font-size: 0.75rem;">T2</div>
+                            <div class="text-muted mb-1" style="font-size: 0.75rem;">T3</div>
+                            <div class="text-muted mb-1" style="font-size: 0.75rem;">T4</div>
+                            <div class="text-muted mb-1" style="font-size: 0.75rem;">T5</div>
+                            <div class="text-muted mb-1" style="font-size: 0.75rem;">T6</div>
+                            <div class="text-muted mb-1" style="font-size: 0.75rem;">T7</div>
+                            <div class="text-muted mb-1" style="font-size: 0.75rem;">CN</div>
+                            <!-- JS sẽ tự động điền lịch vào đây -->
+                        </div>
+                    </div>
+
+                    <!-- POPULAR TAGS WIDGET -->
+                    <div class="tags-widget p-4 shadow-sm" style="background: var(--surface); border-radius: 16px;">
+                        <h6 class="fw-bold mb-3 d-flex align-items-center gap-2" style="font-size: 1rem;">
+                            <i class="ph ph-tag" style="font-size: 1.1rem; opacity: 0.7;"></i> Tag phổ biến
+                        </h6>
+                        <div class="d-flex flex-column gap-3 mt-4 pe-2" style="max-height: 250px; overflow-y: auto;">
+                            {% for tag in popular_tags %}
+                            <div class="d-flex align-items-center justify-content-between cursor-pointer"
+                                onclick="_toggleTagFilter('{{ tag.name|escapejs }}')">
+                                <div class="d-flex align-items-center gap-3 text-dark fw-medium"
+                                    style="font-size: 0.9rem;">
+                                    <div class="rounded-circle color-cycle-{% cycle '1' '2' '3' '4' '5' '6' %}"
+                                        style="width: 10px; height: 10px;">
+                                    </div>
+                                    {{ tag.name }}
+                                </div>
+                                <span class="text-muted" style="font-size: 0.85rem;">{{ tag.note_count }}</span>
+                            </div>
+                            {% empty %}
+                            <div class="text-muted" style="font-size: 0.85rem;">Chưa có tag nào</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </aside>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'js/ui.js' %}?v=4"></script>
-<script src="{% static 'js/search.js' %}?v=2"></script>
-<script src="{% static 'js/reminder.js' %}?v=1"></script>
-{% block extra_js %}{% endblock %}
+    <!-- Shared Reminder Picker -->
+    <div id="sharedReminderPickerPopup" class="reminder-picker-popup" style="display:none;"
+        onclick="event.stopPropagation()">
+        <div class="reminder-picker-header">
+            <i class="ph ph-bell-ringing" style="color:var(--accent);"></i>
+            <span>Nhắc nhở lúc</span>
+        </div>
+        <input type="datetime-local" id="sharedReminderDatetimeInput" class="reminder-datetime-input">
+        <div class="reminder-quick-btns">
+            <button type="button" class="reminder-quick-btn" onclick="setSharedQuickReminder(30)">30 phút nữa</button>
+            <button type="button" class="reminder-quick-btn" onclick="setSharedQuickReminder(60)">1 giờ nữa</button>
+            <button type="button" class="reminder-quick-btn" onclick="setSharedQuickReminder(1440)">Ngày mai</button>
+        </div>
+        <div class="reminder-picker-actions">
+            <button type="button" class="reminder-btn-clear" onclick="applySharedReminder(true)">Xóa nhắc</button>
+            <button type="button" class="reminder-btn-save" onclick="applySharedReminder(false)">Lưu</button>
+        </div>
+    </div>
+
+    <!-- Label Manager Modal -->
+    <div class="modal fade" id="labelManagerModal" tabindex="-1" aria-labelledby="labelManagerModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="labelManagerModalLabel" style="font-size: 1.1rem;">Chỉnh sửa
+                        nhãn</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add new label form -->
+                    <form id="createLabelForm" class="d-flex align-items-center mb-3 pb-2 border-bottom">
+                        <i class="ph ph-plus text-muted ms-1 me-2" style="font-size: 1.1rem;"></i>
+                        <input type="text" id="newLabelInput" class="form-control border-0 shadow-none px-0"
+                            placeholder="Tạo nhãn mới" autocomplete="off" required>
+                        <button type="submit" class="btn btn-link text-decoration-none p-0 ms-2 text-primary"
+                            title="Tạo nhãn">
+                            <i class="ph-fill ph-check" style="font-size: 1.2rem;"></i>
+                        </button>
+                    </form>
+
+                    <!-- Existing labels list -->
+                    <div id="labelManagerList" class="d-flex flex-column gap-1"
+                        style="max-height: 250px; overflow-y: auto;">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn fw-semibold" data-bs-dismiss="modal"
+                        style="color: var(--accent); background: transparent;">Xong</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/ui.js' %}?v=4"></script>
+    <script src="{% static 'js/search.js' %}?v=2"></script>
+    <script src="{% static 'js/reminder.js' %}?v=1"></script>
+    <script src="{% static 'js/calendar.js' %}?v=1"></script>
+    {% block extra_js %}{% endblock %}
 </body>
+
 </html>

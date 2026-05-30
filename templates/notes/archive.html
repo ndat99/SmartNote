@@ -5,7 +5,9 @@
 {% block nav_archive %}active{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}?v=1.5">
+<link rel="stylesheet" href="{% static 'css/note_card.css' %}?v=1.0">
+<link rel="stylesheet" href="{% static 'css/note_form.css' %}?v=1.0">
 <link rel="stylesheet" href="{% static 'css/colors.css' %}">
 {% endblock %}
 
@@ -19,7 +21,7 @@
 
 <div class="row g-3">
     {% for note in notes %}
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4">
         {% include 'notes/components/_note_card.html' with note=note card_index=forloop.counter0 only %}
     </div>
     {% empty %}
@@ -38,6 +40,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
 <script src="{% static 'js/color-picker.js' %}"></script>
 <script src="{% static 'js/keep-modal.js' %}"></script>
+<script src="{% static 'js/doodles.js' %}?v=2"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.note-card').forEach(function (card) {

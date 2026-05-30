@@ -1,11 +1,96 @@
 // ═══════════════════════════════════════
 //  NOTE FORM (tạo ghi chú thường)
 // ═══════════════════════════════════════
+function openCreateNoteModal() {
+    const overlay = document.getElementById('createNoteModalOverlay');
+    if (overlay) {
+        overlay.style.display = 'flex';
+        // Small delay to allow display block to apply before animating opacity/transform
+        setTimeout(() => {
+            const fw = document.getElementById('formWrapper');
+            if (fw) {
+                fw.style.opacity = '1';
+                fw.style.transform = 'scale(1)';
+            }
+        }, 10);
+        document.getElementById('noteCollapsed').style.display = 'flex';
+    } else {
+        // If not on home page, redirect to home page with a query parameter maybe?
+        // Or just redirect to home
+        window.location.href = '/';
+    }
+}
+
+function closeCreateNoteModal() {
+    const fw = document.getElementById('formWrapper');
+    if (fw) {
+        fw.style.opacity = '0';
+        fw.style.transform = 'scale(0.95)';
+    }
+    setTimeout(() => {
+        const overlay = document.getElementById('createNoteModalOverlay');
+        if (overlay) overlay.style.display = 'none';
+        
+        // Reset form content
+        document.getElementById('noteCollapsed').style.display = 'none';
+        document.getElementById('checklistExpanded').style.display = 'none';
+        document.getElementById('noteExpanded').style.display = 'none';
+        const form = document.getElementById('noteExpanded');
+        if (form) {
+            form.querySelector('input[name="title"]').value = '';
+            form.querySelector('textarea[name="content"]').value = '';
+        }
+        
+        // Reset images
+        if (window._formImageDT) window._formImageDT = new DataTransfer();
+        const imgInput = document.getElementById('formImageInput');
+        if (imgInput) imgInput.value = '';
+        handleFormImages(imgInput);
+        
+        // Reset colors
+        const fwWrapper = document.getElementById('formWrapper');
+        if (fwWrapper) fwWrapper.removeAttribute('data-color');
+        
+    }, 200); // matches transition time
+}
+
+// Close when clicking outside
+document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('createNoteModalOverlay');
+    if (overlay) {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                const noteTitle = document.querySelector('#noteExpanded input[name="title"]')?.value.trim();
+                const noteContent = document.querySelector('#noteExpanded textarea[name="content"]')?.value.trim();
+                const noteActive = document.getElementById('noteExpanded')?.style.display === 'block';
+                
+                const checkTitle = document.querySelector('#checklistExpanded input[name="title"]')?.value.trim();
+                const checkItems = document.querySelectorAll('#checklistItemList .checklist-item-input');
+                let hasCheckItem = false;
+                if (checkItems) {
+                    checkItems.forEach(i => { if (i.value.trim()) hasCheckItem = true; });
+                }
+                const checkActive = document.getElementById('checklistExpanded')?.style.display === 'block';
+
+                if (noteActive && (noteTitle || noteContent)) {
+                    document.querySelector('#noteExpanded .btn-close-note')?.click();
+                } else if (checkActive && (checkTitle || hasCheckItem)) {
+                    document.querySelector('#checklistExpanded .btn-close-note')?.click();
+                } else {
+                    closeCreateNoteModal();
+                }
+            }
+        });
+    }
+});
+
 function expandForm() {
     document.getElementById('noteCollapsed').style.display = 'none';
     document.getElementById('checklistExpanded').style.display = 'none';
     document.getElementById('noteExpanded').style.display = 'block';
-    document.querySelector('#noteExpanded input[name="title"]').focus();
+    setTimeout(() => {
+        document.querySelector('#noteExpanded input[name="title"]').focus();
+    }, 50);
 }
 
 // ═══════════════════════════════════════
@@ -24,8 +109,7 @@ function expandChecklistForm() {
 }
 
 function collapseChecklistForm() {
-    document.getElementById('checklistExpanded').style.display = 'none';
-    document.getElementById('noteCollapsed').style.display = 'flex';
+    closeCreateNoteModal(); // Hook into our new modal close logic
     document.getElementById('checklistTitle').value = '';
     document.getElementById('checklistItemList').innerHTML = '';
     
@@ -107,7 +191,7 @@ async function submitChecklist() {
                 const grid = document.getElementById('notes-grid');
                 if (grid) {
                     const col = document.createElement('div');
-                    col.className = 'col-12 col-sm-6 col-md-4 col-lg-3';
+                    col.className = 'col-12 col-sm-6 col-md-4 col-lg-4';
                     col.innerHTML = data.card_html;
                     grid.prepend(col);
                     // Khởi tạo progress bar và animation cho card mới
