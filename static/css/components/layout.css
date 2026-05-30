@@ -1,15 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap');
 
 :root {
-    --bg: #F9F8F6; /* cream background */
+    --bg: #F9F8F6;
+    /* cream background */
     --surface: #ffffff;
-    --surface-2: #F1F0ED; /* slightly darker cream for hover */
-    --border: #EBE7DF; /* soft border */
+    --surface-2: #F1F0ED;
+    /* slightly darker cream for hover */
+    --border: #EBE7DF;
+    /* soft border */
     --border-hover: #D8D4CC;
-    --text: #2B2523; /* soft black/brown */
+    --text: #2B2523;
+    /* soft black/brown */
     --text-muted: #7E7975;
     --text-dim: #A8A49F;
-    --accent: #2B2523; /* dark accent */
+    --accent: #2B2523;
+    /* dark accent */
     --accent-glow: rgba(43, 37, 35, 0.15);
     --accent-soft: rgba(43, 37, 35, 0.08);
     --danger: #ef4444;
@@ -29,10 +34,16 @@
 }
 
 
+html {
+    font-size: 115%; /* Scale lên 115% để tất cả các thẻ dùng 'rem' đều to lên */
+}
+
 body {
     background-color: var(--bg);
     color: var(--text);
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.25rem;
+    /* Tăng font size mặc định */
     overflow-x: hidden;
     margin: 0;
 }
@@ -105,7 +116,8 @@ a {
     overflow-y: auto;
 }
 
-.calendar-widget, .tags-widget {
+.calendar-widget,
+.tags-widget {
     background: var(--surface);
     border-radius: 16px;
 }

@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap');
 
 :root {
-    --bg: #f0f4ff;
+    --bg: #F9F8F6;
     --surface: #ffffff;
-    --surface-2: #f5f7ff;
-    --border: #e2e7f8;
-    --border-focus: #4a6cf7;
-    --text: #1a1d2e;
-    --text-muted: #6b7280;
-    --text-dim: #a0a8b8;
-    --accent: #4a6cf7;
-    --accent-glow: rgba(74, 108, 247, 0.15);
-    --accent-soft: rgba(74, 108, 247, 0.06);
+    --surface-2: #F1F0ED;
+    --border: #EBE7DF;
+    --border-focus: #2B2523;
+    --text: #2B2523;
+    --text-muted: #7E7975;
+    --text-dim: #A8A49F;
+    --accent: #2B2523;
+    --accent-glow: rgba(43, 37, 35, 0.15);
+    --accent-soft: rgba(43, 37, 35, 0.08);
     --danger: #ef4444;
     --radius: 14px;
     --radius-sm: 10px;
@@ -23,10 +23,10 @@
 body {
     background-color: var(--bg);
     background-image:
-        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(74,108,247,0.06) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 80% 20%, rgba(74,108,247,0.04) 0%, transparent 60%);
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(43, 37, 35, 0.03) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 20%, rgba(43, 37, 35, 0.02) 0%, transparent 60%);
     color: var(--text);
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: 'Patrick Hand', cursive;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,14 +61,14 @@ a:hover { opacity: 0.8; }
     margin-bottom: 8px;
 }
 .auth-brand-name {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Pangolin', cursive;
     font-size: 1.5rem;
     color: var(--text);
     letter-spacing: 0.01em;
 }
 .auth-brand-dot { color: var(--accent); }
 
-.auth-subtitle { color: var(--text-muted); font-size: 0.9rem; }
+.auth-subtitle { color: var(--text-muted); font-size: 1.05rem; }
 
 /* ─── Google Button ─── */
 .btn-google {
@@ -79,7 +79,7 @@ a:hover { opacity: 0.8; }
     padding: 11px 16px;
     font-weight: 500;
     font-size: 0.92rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Patrick Hand', cursive;
     transition: all var(--transition);
     display: flex;
     align-items: center;
@@ -137,7 +137,7 @@ a:hover { opacity: 0.8; }
     border-radius: var(--radius-sm);
     color: var(--text);
     font-size: 0.95rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Patrick Hand', cursive;
     transition: all var(--transition);
     appearance: none;
     -webkit-appearance: none;
@@ -192,29 +192,21 @@ a:hover { opacity: 0.8; }
     padding: 12px;
     font-weight: 600;
     font-size: 0.95rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Patrick Hand', cursive;
     letter-spacing: 0.02em;
     border: none;
     cursor: pointer;
     transition: all var(--transition);
     width: 100%;
 }
-.btn-submit.btn-primary {
+.btn-submit.btn-primary, .btn-submit.btn-success {
     background: var(--accent);
     color: #ffffff;
 }
-.btn-submit.btn-primary:hover {
-    background: #3a5ce6;
+.btn-submit.btn-primary:hover, .btn-submit.btn-success:hover {
+    background: var(--accent);
+    opacity: 0.9;
     box-shadow: 0 4px 20px var(--accent-glow);
-    transform: translateY(-1px);
-}
-.btn-submit.btn-success {
-    background: #3a8f65;
-    color: #fff;
-}
-.btn-submit.btn-success:hover {
-    background: #42a374;
-    box-shadow: 0 4px 20px rgba(82,183,136,0.25);
     transform: translateY(-1px);
 }
 

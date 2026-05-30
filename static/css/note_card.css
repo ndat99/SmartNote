@@ -30,7 +30,28 @@
     z-index: 0;
 }
 
-.note-card > *:not(.doodle-container, .note-card-pin) {
+.tape-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    overflow: visible;
+}
+
+.doodle-img {
+    position: absolute;
+    opacity: 0.8;
+    mix-blend-mode: multiply;
+}
+
+.tape-img {
+    position: absolute;
+    opacity: 0.85;
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));
+}
+
+.note-card > *:not(.doodle-container, .tape-container, .note-card-pin, .note-doodle) {
     position: relative;
     z-index: 1; 
 }
@@ -201,7 +222,7 @@ font-size: 0.72rem;
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    font-size: 0.85rem;
+    font-size: 0.74rem; /* Scaled down because root font-size increased */
     color: var(--text-muted);
     text-decoration: none;
     transition: all var(--transition);
@@ -221,7 +242,7 @@ font-size: 0.72rem;
     padding: 7px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.91rem; /* Scaled down because root font-size increased */
     transition: all var(--transition);
 }
 .action-icon:hover {

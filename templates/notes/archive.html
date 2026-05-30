@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Lưu trữ — SmartNote{% endblock %}
+{% block title %}Lưu trữ — Notelygent{% endblock %}
 {% block nav_archive %}active{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}?v=1.5">
-<link rel="stylesheet" href="{% static 'css/note_card.css' %}?v=5">
+<link rel="stylesheet" href="{% static 'css/note_card.css' %}?v=9">
 <link rel="stylesheet" href="{% static 'css/components/note-form.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/keep-modal.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/tags-editor.css' %}">
@@ -18,7 +18,8 @@
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h5 class="fw-semibold mb-0" style="color:var(--text);">
-        <i class="ph ph-archive me-2" style="font-size:1.4rem; color:var(--text-muted); position:relative; top:3px;"></i>Lưu trữ
+        <i class="ph ph-archive me-2"
+            style="font-size:1.4rem; color:var(--text-muted); position:relative; top:3px;"></i>Lưu trữ
     </h5>
 </div>
 
@@ -30,7 +31,8 @@
     {% empty %}
     <div class="col-12">
         <div class="empty-state">
-            <i class="ph ph-archive empty-state-icon" style="font-size:3rem; margin-bottom:12px; display:block; color:var(--text-dim);"></i>
+            <i class="ph ph-archive empty-state-icon"
+                style="font-size:3rem; margin-bottom:12px; display:block; color:var(--text-dim);"></i>
             <h5>Chưa có ghi chú nào được lưu trữ</h5>
         </div>
     </div>
@@ -47,7 +49,7 @@
 <script src="{% static 'js/modal/tags.js' %}"></script>
 <script src="{% static 'js/modal/images.js' %}"></script>
 <script src="{% static 'js/modal/priority.js' %}"></script>
-<script src="{% static 'js/doodles.js' %}?v=4"></script>
+<script src="{% static 'js/doodles.js' %}?v=8"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.note-card').forEach(function (card) {

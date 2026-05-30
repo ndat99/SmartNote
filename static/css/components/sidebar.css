@@ -25,7 +25,7 @@
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-dim);
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     pointer-events: none;
 }
 
@@ -36,7 +36,7 @@
     border-radius: 20px;
     padding: 8px 32px 8px 34px;
     font-size: 0.82rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Patrick Hand', cursive;
     color: var(--text);
     outline: none;
     transition: all var(--transition);
@@ -130,7 +130,7 @@
 }
 
 .filter-type-tile i {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     flex-shrink: 0;
 }
 
@@ -196,7 +196,7 @@
 }
 
 .filter-chip i {
-    font-size: 0.9rem;
+    font-size: 1.05rem;
 }
 
 .filter-chip:hover {
@@ -237,22 +237,56 @@
     justify-self: center;
 }
 
-.filter-color-dot:hover { transform: scale(1.2); }
+.filter-color-dot:hover {
+    transform: scale(1.2);
+}
+
 .filter-color-dot.active {
     border-color: var(--accent);
     box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent);
 }
 
-.filter-color-dot[data-color=""]       { background: var(--surface-2); border-color: var(--border-hover); }
-.filter-color-dot[data-color="berry"]  { background: #f9e4ec; }
-.filter-color-dot[data-color="red"]    { background: #fce8e8; }
-.filter-color-dot[data-color="orange"] { background: #fef0dc; }
-.filter-color-dot[data-color="yellow"] { background: #fef9d0; }
-.filter-color-dot[data-color="teal"]   { background: #d8f5f0; }
-.filter-color-dot[data-color="blue"]   { background: #ddeeff; }
-.filter-color-dot[data-color="indigo"] { background: #e8e4ff; }
-.filter-color-dot[data-color="purple"] { background: #f3e0ff; }
-.filter-color-dot[data-color="pink"]   { background: #fde4f0; }
-.filter-color-dot[data-color="brown"]  { background: #f2e8dc; }
+.filter-color-dot[data-color=""] {
+    background: var(--surface-2);
+    border-color: var(--border-hover);
+}
 
+.filter-color-dot[data-color="berry"] {
+    background: #f9e4ec;
+}
 
+.filter-color-dot[data-color="red"] {
+    background: #fce8e8;
+}
+
+.filter-color-dot[data-color="orange"] {
+    background: #fef0dc;
+}
+
+.filter-color-dot[data-color="yellow"] {
+    background: #fef9d0;
+}
+
+.filter-color-dot[data-color="teal"] {
+    background: #d8f5f0;
+}
+
+.filter-color-dot[data-color="blue"] {
+    background: #ddeeff;
+}
+
+.filter-color-dot[data-color="indigo"] {
+    background: #e8e4ff;
+}
+
+.filter-color-dot[data-color="purple"] {
+    background: #f3e0ff;
+}
+
+.filter-color-dot[data-color="pink"] {
+    background: #fde4f0;
+}
+
+.filter-color-dot[data-color="brown"] {
+    background: #f2e8dc;
+}

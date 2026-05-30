@@ -1,6 +1,7 @@
 {% extends "base_auth.html" %}
+{% load static %}
 {% load socialaccount %}
-{% block title %}Đăng ký — SmartNote{% endblock %}
+{% block title %}Đăng ký — Notelygent{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center w-100 m-0" style="min-height:100vh; align-items:center;">
@@ -10,8 +11,7 @@
             <!-- Brand -->
             <div class="text-center mb-4">
                 <div class="auth-brand mb-2">
-                    <i class="ph ph-user-plus" style="color: var(--accent); font-size:1.6rem;"></i>
-                    <span class="auth-brand-name">Smart<span class="auth-brand-dot">Note</span></span>
+                    <img src="{% static 'images/logo.png' %}" alt="Logo" width="200">
                 </div>
                 <p class="auth-subtitle">Tạo tài khoản miễn phí</p>
             </div>
@@ -39,7 +39,7 @@
 
             <div class="text-center mt-4 auth-footer-text">
                 Đã có tài khoản?
-                <a href="{% url 'account_login' %}" style="color: #52b788;">Đăng nhập</a>
+                <a href="{% url 'account_login' %}">Đăng nhập</a>
             </div>
         </div>
     </div>

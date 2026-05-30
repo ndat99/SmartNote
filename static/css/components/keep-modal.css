@@ -1,9 +1,13 @@
 /* ─── MODAL GOOGLE KEEP STYLE ─── */
 .keep-modal {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 10000 !important; /* Đảm bảo đè lên Navbar và mọi thành phần khác */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10000 !important;
+    /* Đảm bảo đè lên Navbar và mọi thành phần khác */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,33 +15,45 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.25s cubic-bezier(0.2,0.8,0.2,1), visibility 0.25s cubic-bezier(0.2,0.8,0.2,1);
+    transition: opacity 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
 .keep-modal.show {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
 }
+
 .keep-modal-content {
     background: var(--surface);
     width: 100%;
     max-width: 600px;
     border-radius: 4px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     padding: 24px;
     transform: scale(0.85);
-    transition: transform 0.25s cubic-bezier(0.2,0.8,0.2,1);
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
     will-change: transform;
     max-height: 85vh;
     display: flex;
     flex-direction: column;
     overflow: visible !important;
 }
-.keep-modal-body { overflow-y: auto; }
-.keep-modal-content .color-picker-popup { z-index: 1100; }
-.keep-modal.show .keep-modal-content { transform: scale(1); }
+
+.keep-modal-body {
+    overflow-y: auto;
+}
+
+.keep-modal-content .color-picker-popup {
+    z-index: 1100;
+}
+
+.keep-modal.show .keep-modal-content {
+    transform: scale(1);
+}
+
 .keep-modal-title {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 16px;
     color: var(--text);
@@ -46,6 +62,7 @@
     outline: none;
     width: 100%;
 }
+
 .keep-modal-body {
     font-size: 1rem;
     color: var(--text-muted);
@@ -58,6 +75,7 @@
     min-height: 150px;
     width: 100%;
 }
+
 .keep-modal-footer {
     display: flex;
     justify-content: space-between;
@@ -68,6 +86,7 @@
     position: relative;
     overflow: visible !important;
 }
+
 .btn-keep-close {
     background: transparent;
     border: none;
@@ -78,7 +97,10 @@
     cursor: pointer;
     transition: background 0.2s;
 }
-.btn-keep-close:hover { background: var(--surface-2); }
+
+.btn-keep-close:hover {
+    background: var(--surface-2);
+}
 
 
 /* ═══════════════════════════════════════════
@@ -100,7 +122,10 @@
     border-radius: 8px;
     transition: background var(--transition);
 }
-.checklist-input-row:hover { background: var(--surface-2); }
+
+.checklist-input-row:hover {
+    background: var(--surface-2);
+}
 
 .checklist-row-icon {
     color: var(--text-dim);
@@ -117,11 +142,14 @@
     outline: none;
     color: var(--text);
     font-size: 0.92rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Patrick Hand', cursive;
     caret-color: var(--accent);
     padding: 2px 0;
 }
-.checklist-item-input::placeholder { color: var(--text-dim); }
+
+.checklist-item-input::placeholder {
+    color: var(--text-dim);
+}
 
 .checklist-row-delete {
     background: transparent;
@@ -140,8 +168,16 @@
     font-size: 0.8rem;
     flex-shrink: 0;
 }
-.checklist-input-row:hover .checklist-row-delete { opacity: 1; }
-.checklist-row-delete:hover { color: var(--danger); background: rgba(239,68,68,0.1); opacity: 1; }
+
+.checklist-input-row:hover .checklist-row-delete {
+    opacity: 1;
+}
+
+.checklist-row-delete:hover {
+    color: var(--danger);
+    background: rgba(239, 68, 68, 0.1);
+    opacity: 1;
+}
 
 .checklist-add-row {
     display: flex;
@@ -156,7 +192,11 @@
     margin-bottom: 6px;
     user-select: none;
 }
-.checklist-add-row:hover { background: var(--surface-2); color: var(--text-muted); }
+
+.checklist-add-row:hover {
+    background: var(--surface-2);
+    color: var(--text-muted);
+}
 
 
 /* ═══════════════════════════════════════════
@@ -181,18 +221,24 @@
     line-height: 1.3;
     overflow: hidden;
 }
+
 .checklist-preview-item .check-icon {
     font-size: 0.7rem;
     flex-shrink: 0;
     color: var(--text-dim);
     transition: color var(--transition);
 }
-.checklist-preview-item.item-checked .check-icon { color: var(--success); }
+
+.checklist-preview-item.item-checked .check-icon {
+    color: var(--success);
+}
+
 .checklist-preview-item span {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .checklist-preview-item.item-checked span {
     text-decoration: line-through;
     opacity: 0.5;
@@ -219,6 +265,7 @@
     margin-top: 8px;
     margin-bottom: 4px;
 }
+
 .checklist-progress-fill {
     height: 100%;
     background: var(--success);
@@ -252,7 +299,10 @@
     cursor: default;
     user-select: none;
 }
-.modal-checklist-item:hover { background: var(--surface-2); }
+
+.modal-checklist-item:hover {
+    background: var(--surface-2);
+}
 
 .checklist-drag-handle {
     color: var(--text-dim);
@@ -263,8 +313,14 @@
     transition: opacity var(--transition);
     width: 14px;
 }
-.modal-checklist-item:hover .checklist-drag-handle { opacity: 1; }
-.checklist-drag-handle:active { cursor: grabbing; }
+
+.modal-checklist-item:hover .checklist-drag-handle {
+    opacity: 1;
+}
+
+.checklist-drag-handle:active {
+    cursor: grabbing;
+}
 
 .checklist-checkbox {
     cursor: pointer;
@@ -278,8 +334,15 @@
     align-items: center;
     justify-content: center;
 }
-.checklist-checkbox:hover { color: var(--accent); transform: scale(1.1); }
-.modal-checklist-item.item-checked .checklist-checkbox { color: var(--success); }
+
+.checklist-checkbox:hover {
+    color: var(--accent);
+    transform: scale(1.1);
+}
+
+.modal-checklist-item.item-checked .checklist-checkbox {
+    color: var(--success);
+}
 
 .modal-item-text {
     flex: 1;
@@ -288,6 +351,7 @@
     line-height: 1.4;
     word-break: break-word;
 }
+
 .modal-item-text.checked-text {
     text-decoration: line-through;
     opacity: 0.5;
@@ -301,10 +365,13 @@
     outline: none;
     color: var(--text);
     font-size: 0.92rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Patrick Hand', cursive;
     caret-color: var(--accent);
 }
-.modal-item-input::placeholder { color: var(--text-dim); }
+
+.modal-item-input::placeholder {
+    color: var(--text-dim);
+}
 
 .checklist-item-delete {
     background: transparent;
@@ -323,8 +390,16 @@
     font-size: 0.78rem;
     flex-shrink: 0;
 }
-.modal-checklist-item:hover .checklist-item-delete { opacity: 1; }
-.checklist-item-delete:hover { color: var(--danger); background: rgba(239,68,68,0.1); opacity: 1 !important; }
+
+.modal-checklist-item:hover .checklist-item-delete {
+    opacity: 1;
+}
+
+.checklist-item-delete:hover {
+    color: var(--danger);
+    background: rgba(239, 68, 68, 0.1);
+    opacity: 1 !important;
+}
 
 /* "Add item" row in modal */
 .modal-checklist-add {
@@ -339,7 +414,11 @@
     transition: all var(--transition);
     user-select: none;
 }
-.modal-checklist-add:hover { background: var(--surface-2); color: var(--text-muted); }
+
+.modal-checklist-add:hover {
+    background: var(--surface-2);
+    color: var(--text-muted);
+}
 
 /* Sortable ghost */
 .sortable-ghost {
@@ -359,7 +438,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 2000;
     align-items: flex-start;
     justify-content: center;
@@ -371,7 +450,7 @@
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     transform: scale(0.95);
     opacity: 0;

@@ -51,7 +51,7 @@
     outline: none;
     font-size: 1rem;
     font-weight: 600;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Patrick Hand', cursive;
     margin-bottom: 10px;
     caret-color: var(--accent);
 }
@@ -62,7 +62,7 @@
     width: 100%;
     outline: none;
     font-size: 0.92rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Patrick Hand', cursive;
     resize: none;
     min-height: 90px;
     line-height: 1.6;
@@ -107,7 +107,7 @@
     cursor: pointer;
     padding: 6px 18px;
     border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Patrick Hand', cursive;
     transition: all var(--transition);
 }
 .btn-close-note:hover {

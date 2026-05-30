@@ -31,8 +31,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
+    font-family: 'Pangolin', cursive;
+    font-size: 1.25rem;
     color: var(--text) !important;
     letter-spacing: 0.01em;
 }
@@ -107,7 +107,7 @@
     color: var(--text);
     border-radius: var(--radius-sm);
     padding: 8px 12px;
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     transition: background var(--transition);
 }
 
@@ -175,7 +175,7 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
     padding: 6px;
     min-width: 140px;
     z-index: 9999;
@@ -184,7 +184,12 @@
     pointer-events: none;
     transition: opacity 0.18s ease, transform 0.18s ease;
 }
-.priority-picker-popup.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+
+.priority-picker-popup.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+}
 
 .modal-priority-picker {
     position: absolute;
@@ -209,13 +214,35 @@
     white-space: nowrap;
     user-select: none;
 }
-.priority-option i { font-size: 1rem; flex-shrink: 0; }
-.priority-option:hover { background: var(--surface-2); color: var(--text); }
-.priority-option.active { background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+
+.priority-option i {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.priority-option:hover {
+    background: var(--surface-2);
+    color: var(--text);
+}
+
+.priority-option.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 500;
+}
+
 /* Priority flag icon color */
-#modalPriorityBtn.priority-flag-high   { color: #dc2626 !important; }
-#modalPriorityBtn.priority-flag-medium { color: #b45309 !important; }
-#modalPriorityBtn.priority-flag-low    { color: #16a34a !important; }
+#modalPriorityBtn.priority-flag-high {
+    color: #dc2626 !important;
+}
+
+#modalPriorityBtn.priority-flag-medium {
+    color: #b45309 !important;
+}
+
+#modalPriorityBtn.priority-flag-low {
+    color: #16a34a !important;
+}
 
 
 /* ─── NAV REMINDER BADGE ─── */
@@ -249,9 +276,20 @@
 }
 
 @keyframes navBadgePulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-    70% { transform: scale(1.1); box-shadow: 0 0 0 4px rgba(239, 68, 68, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 4px rgba(239, 68, 68, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
 }
 
 /* -------------------------------------------
@@ -313,4 +351,3 @@
 .label-btn-delete:hover {
     color: var(--danger);
 }
-
