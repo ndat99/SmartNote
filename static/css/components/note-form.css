@@ -1,0 +1,118 @@
+/* ─── Note Form Wrapper ─── */
+.note-form-wrapper {
+    max-width: 580px;
+    margin: 0 auto 48px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    box-shadow: 0 4px 20px rgba(74,108,247,0.08);
+    transition: box-shadow 0.25s ease;
+    overflow: hidden;
+}
+.note-form-wrapper:hover {
+    box-shadow: 0 8px 32px rgba(74,108,247,0.14), 0 0 0 1px rgba(74,108,247,0.1);
+}
+
+/* Collapsed state */
+.note-collapsed {
+    padding: 14px 18px;
+    cursor: text;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    transition: background var(--transition);
+}
+.note-collapsed:hover { background: var(--surface-2); }
+.note-collapsed-icons { display: flex; gap: 8px; align-items: center; }
+.note-collapsed-icons i {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    padding: 6px;
+    border-radius: 50%;
+    transition: all var(--transition);
+    cursor: pointer;
+}
+.note-collapsed-icons i:hover { color: var(--accent); background: var(--accent-soft); }
+
+/* Expanded state */
+.note-expanded {
+    display: none;
+    padding: 16px 18px 12px;
+}
+.note-expanded input {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Patrick Hand', cursive;
+    margin-bottom: 10px;
+    caret-color: var(--accent);
+}
+.note-expanded textarea {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    width: 100%;
+    outline: none;
+    font-size: 0.92rem;
+    font-family: 'Patrick Hand', cursive;
+    resize: none;
+    min-height: 90px;
+    line-height: 1.6;
+    caret-color: var(--accent);
+}
+.note-expanded input::placeholder,
+.note-expanded textarea::placeholder { color: var(--text-dim); }
+
+.note-separator {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 8px 0;
+}
+
+/* Toolbar */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+.toolbar-icons i {
+    color: var(--text-muted);
+    font-size: 1rem;
+    padding: 7px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all var(--transition);
+    margin-right: 2px;
+}
+.toolbar-icons i:hover {
+    color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.btn-close-note {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    font-weight: 500;
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 6px 18px;
+    border-radius: 8px;
+    font-family: 'Patrick Hand', cursive;
+    transition: all var(--transition);
+}
+.btn-close-note:hover {
+    border-color: var(--border-hover);
+    color: var(--text);
+    background: var(--surface-2);
+}
+

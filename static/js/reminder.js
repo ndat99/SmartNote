@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════
-//  REMINDER MODULE  — SmartNote
+//  REMINDER MODULE  — Notelygent
 //  Xử lý: picker UI, lưu/xóa reminder, polling, browser notification, toast
 // ═══════════════════════════════════════════════════════
 
@@ -252,7 +252,7 @@ async function applySharedReminder(isClear = false) {
 
             // Cập nhật card trên trang (các card nào có noteId này)
             document.querySelectorAll(`.note-card[data-note-id="${noteId}"]`)
-                    .forEach(c => c.dataset.reminderAt = newReminder);
+                .forEach(c => c.dataset.reminderAt = newReminder);
 
             // Cập nhật modal content nếu đang mở
             const mc = document.querySelector('.keep-modal-content');
@@ -375,7 +375,7 @@ function _startReminderPolling() {
         _checkDueReminders();
         _updateReminderUIStates();
     }, 5000);
-    
+
     // Sau đó mỗi 60 giây
     setInterval(() => {
         _checkDueReminders();
@@ -390,16 +390,16 @@ function _updateReminderUIStates() {
     const now = new Date();
     const badges = document.querySelectorAll('.tag-reminder[data-reminder-at]');
     let anyUrgent = false; // Biến cờ để kiểm soát thông báo trên Menu
-    
+
     badges.forEach(badge => {
         const reminderTimeStr = badge.dataset.reminderAt;
         if (!reminderTimeStr) return;
-        
+
         const reminderTime = new Date(reminderTimeStr);
         const diffMs = reminderTime - now;
-        
+
         // Chỉ kiểm tra để bật cảnh báo trên Navbar, không thay đổi class của badge từng task
-        if (diffMs > 0 && diffMs <= 5 * 60 * 1000) { 
+        if (diffMs > 0 && diffMs <= 5 * 60 * 1000) {
             anyUrgent = true;
         }
     });
@@ -439,9 +439,9 @@ function _showBrowserNotification(note) {
     if (!('Notification' in window)) return;
 
     if (Notification.permission === 'granted') {
-        const notif = new Notification('⏰ SmartNote — Nhắc nhở', {
+        const notif = new Notification('⏰ Notelygent — Nhắc nhở', {
             body: note.title,
-            icon: '/static/images/logo.png',
+            icon: '/static/images/logo_small.png',
             tag: `reminder-${note.id}`,   // Gộp notification cùng note
             requireInteraction: true,        // Giữ notification đến khi user dismiss
         });

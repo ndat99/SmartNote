@@ -1,0 +1,353 @@
+/* ─── Navbar ─── */
+.navbar {
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+    padding: 0 20px;
+    height: var(--nav-h);
+    z-index: 200;
+}
+
+.menu-btn {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all var(--transition);
+    flex-shrink: 0;
+}
+
+.menu-btn:hover {
+    background-color: var(--surface-2);
+    color: var(--text);
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Pangolin', cursive;
+    font-size: 1.25rem;
+    color: var(--text) !important;
+    letter-spacing: 0.01em;
+}
+
+.navbar-brand span.brand-dot {
+    color: var(--accent);
+}
+
+/* ─── Right Navigation List ─── */
+.right-nav-list {
+    margin-top: 10px;
+}
+
+.right-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all var(--transition);
+}
+
+.right-nav-item i {
+    font-size: 1.25rem;
+    transition: color var(--transition);
+}
+
+.right-nav-item:hover {
+    color: var(--text);
+    background: var(--surface-2);
+}
+
+.right-nav-item.active {
+    color: var(--text);
+    background: var(--surface-2);
+    font-weight: 600;
+}
+
+.right-nav-item.active i {
+    color: var(--text);
+}
+
+/* ─── Avatar & Dropdown ─── */
+.nav-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: border-color var(--transition);
+    object-fit: cover;
+}
+
+.nav-avatar:hover {
+    border-color: var(--accent);
+}
+
+.dropdown-menu {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 8px;
+    min-width: 200px;
+}
+
+.dropdown-item {
+    color: var(--text);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 1.05rem;
+    transition: background var(--transition);
+}
+
+.dropdown-item:hover {
+    background-color: var(--surface-2);
+    color: var(--text);
+}
+
+.dropdown-item.text-danger {
+    color: var(--danger) !important;
+}
+
+.dropdown-item-text {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    padding: 4px 12px;
+}
+
+.dropdown-divider {
+    border-color: var(--border);
+    margin: 4px 0;
+}
+
+
+
+/* ─── Auth buttons in navbar ─── */
+.btn-nav-login {
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    background: transparent;
+    transition: all var(--transition);
+}
+
+.btn-nav-login:hover {
+    border-color: var(--border-hover);
+    color: var(--text);
+    background: var(--surface);
+}
+
+.btn-nav-signup {
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: none;
+    color: #ffffff;
+    background: var(--accent);
+    transition: all var(--transition);
+}
+
+.btn-nav-signup:hover {
+    background: #3a5ce6;
+    color: #ffffff;
+}
+
+/* -------------------------------------------
+   PRIORITY PICKER POPUP
+   ------------------------------------------- */
+
+.priority-picker-popup {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+    padding: 6px;
+    min-width: 140px;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.priority-picker-popup.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+}
+
+.modal-priority-picker {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 30px;
+    z-index: 1100;
+    opacity: 1;
+    transform: none;
+    pointer-events: all;
+}
+
+.priority-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    transition: background 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.priority-option i {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.priority-option:hover {
+    background: var(--surface-2);
+    color: var(--text);
+}
+
+.priority-option.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 500;
+}
+
+/* Priority flag icon color */
+#modalPriorityBtn.priority-flag-high {
+    color: #dc2626 !important;
+}
+
+#modalPriorityBtn.priority-flag-medium {
+    color: #b45309 !important;
+}
+
+#modalPriorityBtn.priority-flag-low {
+    color: #16a34a !important;
+}
+
+
+/* ─── NAV REMINDER BADGE ─── */
+.nav-tab-badge-urgent {
+    position: absolute;
+    top: 5px;
+    right: 50%;
+    margin-right: -15px;
+    background: #ef4444;
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--surface);
+    z-index: 5;
+    animation: navBadgePulse 2s infinite;
+    line-height: 1;
+}
+
+.navTabReminder-urgent .nav-tab-badge-urgent {
+    display: flex;
+}
+
+.nav-tab-item.has-urgent .nav-tab-badge-urgent {
+    display: flex;
+}
+
+@keyframes navBadgePulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 4px rgba(239, 68, 68, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+/* -------------------------------------------
+   LABEL MANAGER MODAL
+   ------------------------------------------- */
+
+.label-item {
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition);
+}
+
+.label-item:hover {
+    background-color: var(--surface-2);
+}
+
+.label-item .label-item-actions {
+    opacity: 0;
+    transition: opacity var(--transition);
+}
+
+.label-item:hover .label-item-actions {
+    opacity: 1;
+}
+
+.label-input {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--text);
+    padding: 2px 6px;
+    width: 100%;
+    outline: none;
+    transition: border-color var(--transition), background-color var(--transition);
+}
+
+.label-input:focus {
+    border-color: var(--accent);
+    background: var(--surface);
+}
+
+.label-btn {
+    color: var(--text-muted);
+    transition: color var(--transition);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+}
+
+.label-btn:hover {
+    color: var(--text);
+}
+
+.label-btn-delete:hover {
+    color: var(--danger);
+}
