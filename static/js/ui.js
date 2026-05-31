@@ -19,18 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!labelModalEl) return;
 
     labelModalEl.addEventListener('show.bs.modal', loadLabels);
-
-    const createForm = document.getElementById('createLabelForm');
-    if (createForm) {
-        createForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const input = document.getElementById('newLabelInput');
-            const name = input.value.trim();
-            if (name) {
-                createLabel(name, input);
-            }
-        });
-    }
 });
 
 function loadLabels() {
@@ -93,27 +81,6 @@ function createLabelElement(cat) {
         </div>
     `;
     return div;
-}
-
-function createLabel(name, inputEl) {
-    fetch('/category/create/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCSRFToken()
-        },
-        body: JSON.stringify({ name: name })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.ok) {
-            inputEl.value = '';
-            loadLabels();
-        } else {
-            alert(data.error || 'Lỗi khi tạo nhãn');
-        }
-    })
-    .catch(err => console.error(err));
 }
 
 function renameLabel(id, inputEl) {

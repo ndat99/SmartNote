@@ -24,6 +24,7 @@ const _filters = {
     priorities: new Set(),   // 'high' | 'medium' | 'low'
     categories: new Set(),   // category id (string)
     task:       false,
+    calendarDate: null,
 };
 
 let _currentPage  = 1;
@@ -407,15 +408,130 @@ function _toggleFilter(group, value, el) {
     _updateClearBtn();
 }
 
-/* ══════════════════════════════════════════
-   CLEAR ALL
-══════════════════════════════════════════ */
+// ────────────────────────────────────────
+//  APPLY FILTERS
+//  Logic: OR trong cùng nhóm, AND giữa các nhóm
+// ────────────────────────────────────────
+function _applyFilters() {
+    var query = ((document.getElementById('globalSearch') || {}).value || '').trim().toLowerCase();
+
+    var hasFilters =
+        _filters.types.size > 0 ||
+        _filters.colors.size > 0 ||
+        _filters.priorities.size > 0 ||
+        _filters.categories.size > 0 ||
+        _filters.task ||
+        _filters.calendarDate !== null;
+
+    var hasQuery = query.length > 0;
+
+    document.querySelectorAll('.note-card').forEach(function (card) {
+        var wrapper = card.closest('[class*="col-"]') || card;
+
+        if (!hasFilters && !hasQuery) {
+            wrapper.style.display = '';
+            return;
+        }
+
+        var visible = true;
+
+        // Nhóm Loại (OR trong nhóm)
+        if (_filters.types.size > 0) {
+            var noteType  = card.dataset.noteType || 'note';
+            var hasImages = !!card.querySelector('.note-card-images');
+            var typeMatch = false;
+            if (_filters.types.has('note')      && noteType === 'note')       typeMatch = true;
+            if (_filters.types.has('checklist') && noteType === 'checklist')  typeMatch = true;
+            if (_filters.types.has('image')     && hasImages)                  typeMatch = true;
+            if (!typeMatch) visible = false;
+        }
+
+        // Nhóm Màu nền (OR trong nhóm)
+        if (visible && _filters.colors.size > 0) {
+            var color = card.dataset.color || '';
+            if (!_filters.colors.has(color)) visible = false;
+        }
+
+        // Nhóm Priority (OR trong nhóm)
+        if (visible && _filters.priorities.size > 0) {
+            var p = (card.dataset.priority || '').toLowerCase();
+            if (!_filters.priorities.has(p)) visible = false;
+        }
+
+        // Nhóm Nhãn / Category (OR trong nhóm)
+        if (visible && _filters.categories.size > 0) {
+            var catId = card.dataset.categoryId || '';
+            if (!_filters.categories.has(catId)) visible = false;
+        }
+
+        // Nhóm Task
+        if (visible && _filters.task) {
+            if (!card.querySelector('.tag-task-ai, .tag-task-user')) visible = false;
+        }
+
+        // Nhóm Calendar Date (AND với các nhóm khác)
+        if (visible && _filters.calendarDate) {
+            var createdAt = card.dataset.createdAt || '';
+            var reminderAt = card.dataset.reminderAt || '';
+            
+            // Extract YYYY-MM-DD from reminderAt (which is ISO format like 2026-05-31T08:00:00Z)
+            if (reminderAt) reminderAt = reminderAt.substring(0, 10);
+            
+            if (createdAt !== _filters.calendarDate && reminderAt !== _filters.calendarDate) {
+                visible = false;
+            }
+        }
+
+        // Text query (AND với tất cả filter)
+        if (visible && hasQuery) {
+            var title  = ((card.querySelector('.note-card-title')  || {}).innerText  || '').toLowerCase();
+            var body   = ((card.querySelector('.note-card-body')   || {}).innerText   || '').toLowerCase();
+            var checkItems = card.querySelectorAll('.checklist-preview-item span');
+            var checks = Array.prototype.map.call(checkItems, function(el){ return el.innerText.toLowerCase(); }).join(' ');
+            if (!title.includes(query) && !body.includes(query) && !checks.includes(query)) {
+                visible = false;
+            }
+        }
+
+        wrapper.style.display = visible ? '' : 'none';
+    });
+
+    _updateEmptyState();
+}
+
+// ────────────────────────────────────────
+//  EMPTY STATE
+// ────────────────────────────────────────
+function _updateEmptyState() {
+    var allWrappers = document.querySelectorAll('#notes-grid > [class*="col-"], #pinned-grid > [class*="col-"]');
+    var noResults   = allWrappers.length > 0 && Array.prototype.every.call(allWrappers, function(w){ return w.style.display === 'none'; });
+    var msg = document.getElementById('searchNoResults');
+    if (noResults) {
+        if (!msg) {
+            msg = document.createElement('div');
+            msg.id = 'searchNoResults';
+            msg.className = 'col-12';
+            msg.innerHTML = '<div class="empty-state"><i class="ph ph-magnifying-glass empty-state-icon"></i><h5>Không tìm thấy ghi chú nào</h5><p style="font-size:0.85rem;color:var(--text-dim);">Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm.</p></div>';
+            var grid = document.getElementById('notes-grid');
+            if (grid) grid.appendChild(msg);
+        }
+    } else {
+        if (msg) msg.remove();
+    }
+}
+
 function clearSearchFilters() {
     _filters.types.clear();
     _filters.colors.clear();
     _filters.priorities.clear();
     _filters.categories.clear();
     _filters.task = false;
+    _filters.calendarDate = null;
+
+    // Reset active class trên calendar nếu có
+    if (typeof window.clearCalendarSelection === 'function') {
+        window.clearCalendarSelection();
+    }
 
     var panel = document.getElementById('filterPanel');
     if (panel) {

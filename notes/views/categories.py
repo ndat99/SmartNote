@@ -18,30 +18,6 @@ def get_categories(request):
     return JsonResponse({'system': system_cats, 'user': user_cats})
 
 
-def create_category(request):
-    if request.method != 'POST':
-        return JsonResponse({'error': 'Method not allowed'}, status=405)
-    if not request.user.is_authenticated:
-        return JsonResponse({'error': 'Unauthorized'}, status=401)
-        
-    try:
-        data = json.loads(request.body)
-        name = data.get('name', '').strip()
-    except Exception:
-        return JsonResponse({'error': 'Invalid JSON'}, status=400)
-        
-    if not name:
-        return JsonResponse({'error': 'Tên nhãn không được để trống'}, status=400)
-        
-    # Check if category already exists for this user or system
-    exists = Category.objects.filter(name__iexact=name).filter(Q(user__isnull=True) | Q(user=request.user)).exists()
-    if exists:
-        return JsonResponse({'error': 'Nhãn này đã tồn tại'}, status=400)
-        
-    cat = Category.objects.create(name=name, user=request.user)
-    return JsonResponse({'ok': True, 'id': cat.id, 'name': cat.name})
-
-
 def update_category(request, category_id):
     if request.method != 'POST':
         return JsonResponse({'error': 'Method not allowed'}, status=405)
