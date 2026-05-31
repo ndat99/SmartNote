@@ -111,7 +111,6 @@ async function toggleTagEditor() {
 function filterCategories(query) {
     const q = query.trim().toLowerCase();
     const list = document.getElementById('tagCategoryList');
-    const newRow = document.getElementById('tagNewRow');
     const mc = document.querySelector('.keep-modal-content');
     const current = parseInt(mc.dataset.categoryId) || null;
 
@@ -131,16 +130,6 @@ function filterCategories(query) {
         div.onclick = () => applyCategory(cat.id, cat.name);
         list.appendChild(div);
     });
-
-    // Hiện "Tạo mới" nếu có query và không match chính xác
-    const exactMatch = _allCategories.some(c => c.name.toLowerCase() === q);
-    if (q && !exactMatch) {
-        document.getElementById('tagNewLabel').textContent = `Tạo "${query}"`;
-        newRow.style.display = 'flex';
-        newRow.dataset.name = query;
-    } else {
-        newRow.style.display = 'none';
-    }
 
     // Thêm option "Không có nhãn" ở đầu
     const noneDiv = document.createElement('div');
@@ -187,39 +176,6 @@ async function applyCategory(catId, catName) {
             }
         }
     } catch (err) { console.error('[Tags] Lưu category thất bại:', err); }
-}
-
-async function createAndApplyCategory() {
-    const name = document.getElementById('tagNewRow').dataset.name?.trim();
-    if (!name) return;
-
-    const mc = document.querySelector('.keep-modal-content');
-    const noteId = mc.getAttribute('data-note-id');
-
-    try {
-        const res = await fetch(`/update-meta/${noteId}/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': _csrf() },
-            body: JSON.stringify({ new_category: name }),
-        });
-        const data = await res.json();
-        if (data.ok && data.category) {
-            mc.dataset.categoryId = data.category.id;
-            mc.dataset.categoryName = data.category.name;
-            _renderModalTags({
-                category: data.category,
-                priority: null,
-                is_task: mc.dataset.isTask === '1',
-                is_task_source: mc.dataset.isTaskSource,
-            });
-            if (!_allCategories.find(c => c.id === data.category.id)) {
-                _allCategories.push({ ...data.category, type: 'user' });
-            }
-            _syncCardMeta(noteId, data);
-        }
-    } catch (err) { console.error('[Tags] Tạo category thất bại:', err); }
-
-    document.getElementById('modalTagEditor').style.display = 'none';
 }
 
 // Sync tags trên card ngoài trang
