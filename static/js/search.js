@@ -4,6 +4,7 @@ const _filters = {
     priorities: new Set(),   // 'high' | 'medium' | 'low'
     categories: new Set(),   // category id (string)
     task:       false,
+    calendarDate: null,
 };
 
 // ────────────────────────────────────────
@@ -57,7 +58,8 @@ function _updateClearBtn() {
         _filters.colors.size > 0 ||
         _filters.priorities.size > 0 ||
         _filters.categories.size > 0 ||
-        _filters.task;
+        _filters.task ||
+        _filters.calendarDate !== null;
     var hasText = ((document.getElementById('globalSearch') || {}).value || '').trim().length > 0;
     var shouldShow = hasFilter || hasText;
 
@@ -119,7 +121,8 @@ function _applyFilters() {
         _filters.colors.size > 0 ||
         _filters.priorities.size > 0 ||
         _filters.categories.size > 0 ||
-        _filters.task;
+        _filters.task ||
+        _filters.calendarDate !== null;
 
     var hasQuery = query.length > 0;
 
@@ -165,6 +168,19 @@ function _applyFilters() {
         // Nhóm Task
         if (visible && _filters.task) {
             if (!card.querySelector('.tag-task-ai, .tag-task-user')) visible = false;
+        }
+
+        // Nhóm Calendar Date (AND với các nhóm khác)
+        if (visible && _filters.calendarDate) {
+            var createdAt = card.dataset.createdAt || '';
+            var reminderAt = card.dataset.reminderAt || '';
+            
+            // Extract YYYY-MM-DD from reminderAt (which is ISO format like 2026-05-31T08:00:00Z)
+            if (reminderAt) reminderAt = reminderAt.substring(0, 10);
+            
+            if (createdAt !== _filters.calendarDate && reminderAt !== _filters.calendarDate) {
+                visible = false;
+            }
         }
 
         // Text query (AND với tất cả filter)
@@ -214,6 +230,12 @@ function clearSearchFilters() {
     _filters.priorities.clear();
     _filters.categories.clear();
     _filters.task = false;
+    _filters.calendarDate = null;
+
+    // Reset active class trên calendar nếu có
+    if (typeof window.clearCalendarSelection === 'function') {
+        window.clearCalendarSelection();
+    }
 
     // Reset active class trên filter panel
     var panel = document.getElementById('filterPanel');

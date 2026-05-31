@@ -3,6 +3,7 @@
 <div class="note-card{% if is_trash %} trash-card{% endif %}" data-index="{{ card_index|default:0 }}"
     data-note-id="{{ note.id }}" data-note-type="{{ note.note_type }}"
     data-priority="{{ note.priority|default:''|lower }}" data-category-id="{{ note.category.id|default:'' }}"
+    data-created-at="{{ note.created_at|date:'Y-m-d' }}"
     data-has-images="{% if note.images.all %}1{% else %}0{% endif %}"
     data-reminder-at="{% if note.reminder_at %}{{ note.reminder_at|date:'c' }}{% endif %}" {% if note.background_color %} data-color="{{ note.background_color }}" {% endif %} {% if not is_trash %}onclick="openKeepModal(this)" {% endif %}>
     <a href="{{ pin_url }}" class="note-card-pin {% if note.is_pinned %}pinned{% endif %} text-decoration-none"
