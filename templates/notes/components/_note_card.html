@@ -14,6 +14,9 @@
         </svg>
     </a>
 
+    <!-- Inner wrapper: clip nội dung nhưng không cắt tape/doodle -->
+    <div class="note-card-inner">
+
     {% if note.images.all %}
     <div class="note-card-images len-{{ note.images.count|default:1 }}">
         {% for img in note.images.all|slice:":3" %}
@@ -127,4 +130,5 @@
         </div>
     </div>
     {% endif %}
+    </div>{# /note-card-inner #}
 </div>

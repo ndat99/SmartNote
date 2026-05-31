@@ -1,0 +1,115 @@
+/* ═══════════════════════════════════════════════
+   PAGINATION — notes-pagination
+   Dùng cho: home, archive, trash (notes không ghim)
+   ═══════════════════════════════════════════════ */
+
+.notes-pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 32px 0 16px;
+    user-select: none;
+}
+
+.pagination-inner {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* ─── Base button ─── */
+.page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 10px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.page-btn:hover:not(.disabled):not(.page-btn-current) {
+    background: var(--surface-2);
+    border-color: var(--border-hover);
+    color: var(--text);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+/* ─── Current page ─── */
+.page-btn-current {
+    background: var(--accent);
+    color: var(--accent-text);
+    border-color: var(--accent);
+    font-weight: 700;
+    cursor: default;
+    box-shadow: 0 3px 12px var(--accent-glow);
+}
+
+/* ─── Prev / Next buttons ─── */
+.page-btn-nav {
+    padding: 0 14px;
+    gap: 5px;
+    font-weight: 600;
+}
+
+.page-btn-nav i {
+    font-size: 0.9rem;
+}
+
+/* ─── Disabled ─── */
+.page-btn.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    box-shadow: none;
+    pointer-events: none;
+}
+
+/* ─── Ellipsis ─── */
+.page-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 38px;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    cursor: default;
+}
+
+/* ─── Info text ─── */
+.pagination-info {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+}
+
+.pagination-total {
+    margin-left: 4px;
+    opacity: 0.75;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 480px) {
+    .page-btn {
+        min-width: 34px;
+        height: 34px;
+        font-size: 0.82rem;
+    }
+    .page-ellipsis {
+        width: 24px;
+    }
+}

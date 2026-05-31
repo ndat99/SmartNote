@@ -15,8 +15,6 @@ def add_note_images(request, note_id):
         
     note = get_object_or_404(Note, id=note_id, user=request.user)
     images = request.FILES.getlist('images')
-    
-    from .models import NoteImage
     uploaded_data = []
     for img in images:
         n_img = NoteImage.objects.create(note=note, image=img)
@@ -31,7 +29,6 @@ def delete_note_image(request, image_id):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'Unauthorized'}, status=401)
         
-    from .models import NoteImage
     img = get_object_or_404(NoteImage, id=image_id, note__user=request.user)
     img_id = img.id
     img.delete()
