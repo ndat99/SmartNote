@@ -13,12 +13,23 @@
     height: 310px;
     position: relative;
     overflow: visible;
-    contain: layout style;
+    isolation: isolate;  /* Stacking context riêng, KHÔNG clip overflow */
     transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     animation: noteIn 0.4s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+/* Inner content wrapper — clip nội dung, KHÔNG ảnh hưởng tape/doodle */
+.note-card-inner {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;   /* chỉ clip nội dung bên trong */
+    position: relative;
+    z-index: 1;
 }
 
 .doodle-container {
@@ -164,6 +175,7 @@
     line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    word-break: break-word;  /* tràn chữ dài không có khoảng trắng */
 }
 
 .note-card-tags {
@@ -335,3 +347,79 @@ font-size: 0.72rem;
 }
 
 
+
+/* ─── Checklist Card Preview ─── */
+.checklist-card-preview {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-bottom: 4px;
+
+    /* Fade-out ở cuối để báo hiệu còn nội dung */
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+}
+
+.checklist-preview-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    min-height: 0;
+    flex-shrink: 0;
+}
+
+.checklist-preview-item span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.checklist-preview-item.item-checked span {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.checklist-preview-item .check-icon {
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    margin-top: 1px;
+}
+
+.checklist-preview-empty {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+.checklist-more {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+/* ─── Checklist Progress Bar ─── */
+.checklist-progress-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+    flex-shrink: 0;
+    margin: 4px 0 6px;
+}
+
+.checklist-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 99px;
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}

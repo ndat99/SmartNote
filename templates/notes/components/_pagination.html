@@ -1,0 +1,79 @@
+{% comment %}
+Pagination component — dùng với page_obj (Django Page object)
+Usage: {% include 'notes/components/_pagination.html' with page_obj=page_obj %}
+{% endcomment %}
+
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="notes-pagination" aria-label="Phân trang ghi chú">
+    <div class="pagination-inner">
+
+        {% comment %} Nút Prev {% endcomment %}
+        {% if page_obj.has_previous %}
+        <a class="page-btn page-btn-nav"
+           href="?page={{ page_obj.previous_page_number }}"
+           aria-label="Trang trước">
+            <i class="ph ph-caret-left"></i>
+            <span>Prev</span>
+        </a>
+        {% else %}
+        <span class="page-btn page-btn-nav disabled" aria-disabled="true">
+            <i class="ph ph-caret-left"></i>
+            <span>Prev</span>
+        </span>
+        {% endif %}
+
+        {% comment %} Số trang {% endcomment %}
+        {% with num=page_obj.paginator.num_pages cur=page_obj.number %}
+
+            {% comment %} Trang 1 {% endcomment %}
+            {% if cur > 3 %}
+            <a class="page-btn" href="?page=1">1</a>
+            {% if cur > 4 %}
+            <span class="page-ellipsis">…</span>
+            {% endif %}
+            {% endif %}
+
+            {% comment %} Trang xung quanh trang hiện tại (±2) {% endcomment %}
+            {% for i in page_obj.paginator.page_range %}
+                {% if i >= cur|add:"-2" and i <= cur|add:"2" %}
+                    {% if i == cur %}
+                    <span class="page-btn page-btn-current" aria-current="page">{{ i }}</span>
+                    {% else %}
+                    <a class="page-btn" href="?page={{ i }}">{{ i }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% comment %} Trang cuối {% endcomment %}
+            {% if cur < num|add:"-2" %}
+            {% if cur < num|add:"-3" %}
+            <span class="page-ellipsis">…</span>
+            {% endif %}
+            <a class="page-btn" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+
+        {% endwith %}
+
+        {% comment %} Nút Next {% endcomment %}
+        {% if page_obj.has_next %}
+        <a class="page-btn page-btn-nav"
+           href="?page={{ page_obj.next_page_number }}"
+           aria-label="Trang tiếp">
+            <span>Next</span>
+            <i class="ph ph-caret-right"></i>
+        </a>
+        {% else %}
+        <span class="page-btn page-btn-nav disabled" aria-disabled="true">
+            <span>Next</span>
+            <i class="ph ph-caret-right"></i>
+        </span>
+        {% endif %}
+
+    </div>
+
+    <div class="pagination-info">
+        Trang {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        <span class="pagination-total">({{ page_obj.paginator.count }} ghi chú)</span>
+    </div>
+</nav>
+{% endif %}

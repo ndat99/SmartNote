@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="{% static 'css/components/tags-editor.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/image-slider.css' %}">
 <link rel="stylesheet" href="{% static 'css/colors.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/pagination.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -23,7 +24,14 @@
     </h5>
 </div>
 
-<div class="row g-3">
+<!-- Meta cho JS search biết context -->
+<div id="search-meta"
+    data-context="archive"
+    data-current-page="{{ page_obj.number }}"
+    data-total-pages="{{ page_obj.paginator.num_pages }}"
+    style="display:none;"></div>
+
+<div class="row g-3" id="notes-grid" data-context="archive">
     {% for note in notes %}
     <div class="col-12 col-sm-6 col-md-4 col-lg-4">
         {% include 'notes/components/_note_card.html' with note=note card_index=forloop.counter0 only %}
@@ -37,6 +45,11 @@
         </div>
     </div>
     {% endfor %}
+</div>
+
+<!-- Pagination -->
+<div id="pagination-container">
+    {% include 'notes/components/_pagination.html' with page_obj=page_obj %}
 </div>
 
 {% include 'notes/components/_keep_modal.html' %}
