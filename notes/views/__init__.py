@@ -1,4 +1,6 @@
-from .core import home, trash, archive, search_notes
+from .core import home, trash, archive
+from .search_views import search_notes
+from .calendar_views import get_calendar_dates
 from .note_crud import update_note, update_note_meta, delete_note, restore_note, hard_delete_note
 from .note_actions import toggle_pin_note, toggle_archive_note, set_note_color
 from .categories import get_categories, update_category, delete_category

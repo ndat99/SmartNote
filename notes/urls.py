@@ -39,4 +39,5 @@ urlpatterns = [
 
     # Search API
     path('api/search/', views.search_notes, name='search_notes'),
+    path('api/calendar-dates/', views.get_calendar_dates, name='get_calendar_dates'),
 ]

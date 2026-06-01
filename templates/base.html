@@ -192,8 +192,7 @@
                             style="width: 44px; height: 44px; border: 1px solid var(--border);">
                         {% endif %}
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" style="border-radius: 12px;">
-                            <li><span class="dropdown-item-text fw-medium">{{ user.get_full_name|default:user.username
-                                    }}</span></li>
+                            <li><span class="dropdown-item-text fw-medium">{{ user.get_full_name|default:user.username }}</span></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -216,7 +215,7 @@
 
                 <!-- CỘT GIỮA (Nội dung Notes) -->
                 <main class="main-content flex-grow-1" id="mainContent"
-                    style="margin: 0; padding: 0 32px 0 32px; overflow-y: auto;">
+                    style="margin: 0; padding: 16px 32px 0 32px; overflow-y: auto;">
                     {% block content %}{% endblock %}
                     <!-- Spacer để đảm bảo cuộn tới cùng không bị cắt (doodle absolute) -->
                     <div style="height: 60px; flex-shrink: 0; width: 100%;"></div>
