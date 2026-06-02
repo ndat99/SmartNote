@@ -39,73 +39,98 @@ function renderCalendar() {
         calendarGrid.appendChild(div);
     }
 
-    // Extract dates from DOM
-    const createdDates = new Set();
-    const reminderDates = new Set();
-    document.querySelectorAll('.note-card').forEach(card => {
-        if (card.dataset.createdAt) createdDates.add(card.dataset.createdAt);
-        if (card.dataset.reminderAt) reminderDates.add(card.dataset.reminderAt.substring(0, 10));
-    });
-
-    // Render current month's days
-    const today = new Date();
-    for (let i = 1; i <= daysInMonth; i++) {
-        const div = document.createElement('div');
-        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
-        
-        const hasCreated = createdDates.has(dateStr);
-        const hasReminder = reminderDates.has(dateStr);
-        
-        let html = `<span>${i}</span>`;
-        if (hasCreated || hasReminder) {
-            html += `<div style="display:flex; justify-content:center; gap:3px; margin-top:2px;">`;
-            if (hasCreated) html += `<span style="width:5px;height:5px;border-radius:50%;background-color:var(--accent, #4e54c8);"></span>`;
-            if (hasReminder) html += `<span style="width:5px;height:5px;border-radius:50%;background-color:var(--warning, #f39c12);"></span>`;
-            html += `</div>`;
-        }
-        div.innerHTML = html;
-        div.style.display = 'flex';
-        div.style.flexDirection = 'column';
-        div.style.alignItems = 'center';
-        div.style.justifyContent = 'center';
-        div.style.cursor = 'pointer';
-        div.style.padding = '2px 0';
-        
-        // Highlight today
-        if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
-            div.querySelector('span').style.backgroundColor = 'var(--accent)';
-            div.querySelector('span').style.color = '#fff';
-            div.querySelector('span').style.borderRadius = '50%';
-            div.querySelector('span').style.width = '24px';
-            div.querySelector('span').style.height = '24px';
-            div.querySelector('span').style.display = 'flex';
-            div.querySelector('span').style.alignItems = 'center';
-            div.querySelector('span').style.justifyContent = 'center';
-        }
-
-        // Highlight selected date
-        if (typeof _filters !== 'undefined' && _filters.calendarDate === dateStr) {
-            div.style.backgroundColor = 'var(--bg-hover, #f0f0f0)';
-            div.style.border = '1px solid var(--accent, #4e54c8)';
-            div.style.borderRadius = '8px';
-        }
-
-        // Add click listener to filter
-        div.addEventListener('click', () => {
-            if (typeof _filters !== 'undefined' && typeof _applyFilters === 'function') {
-                if (_filters.calendarDate === dateStr) {
-                    _filters.calendarDate = null; // Toggle off
-                } else {
-                    _filters.calendarDate = dateStr; // Toggle on
+    // Extract dates from Server via API
+    const ctx = (typeof _getContext === 'function') ? _getContext() : 'home';
+    fetch(`/api/calendar-dates/?context=${ctx}`)
+        .then(res => res.json())
+        .then(data => {
+            const createdDates = new Set(data.created_dates || []);
+            const reminderDates = new Set(data.reminder_dates || []);
+            
+            // Render current month's days
+            const today = new Date();
+            for (let i = 1; i <= daysInMonth; i++) {
+                const div = document.createElement('div');
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+                
+                const hasCreated = createdDates.has(dateStr);
+                const hasReminder = reminderDates.has(dateStr);
+                
+                let html = `<span>${i}</span>`;
+                if (hasCreated || hasReminder) {
+                    html += `<div style="display:flex; justify-content:center; gap:3px; margin-top:2px;">`;
+                    if (hasCreated) html += `<span style="width:5px;height:5px;border-radius:50%;background-color:var(--accent, #4e54c8);"></span>`;
+                    if (hasReminder) html += `<span style="width:5px;height:5px;border-radius:50%;background-color:var(--warning, #f39c12);"></span>`;
+                    html += `</div>`;
                 }
-                renderCalendar();
-                _applyFilters();
-                if (typeof _updateClearBtn === 'function') _updateClearBtn();
+                div.innerHTML = html;
+                div.style.display = 'flex';
+                div.style.flexDirection = 'column';
+                div.style.alignItems = 'center';
+                div.style.justifyContent = 'center';
+                div.style.cursor = 'pointer';
+                div.style.padding = '2px 0';
+                
+                // Highlight today
+                if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
+                    div.querySelector('span').style.backgroundColor = 'var(--accent)';
+                    div.querySelector('span').style.color = '#fff';
+                    div.querySelector('span').style.borderRadius = '50%';
+                    div.querySelector('span').style.width = '24px';
+                    div.querySelector('span').style.height = '24px';
+                    div.querySelector('span').style.display = 'flex';
+                    div.querySelector('span').style.alignItems = 'center';
+                    div.querySelector('span').style.justifyContent = 'center';
+                }
+
+                div.classList.add('calendar-day');
+
+                // Highlight selected date
+                if (typeof _filters !== 'undefined' && _filters.calendarDate === dateStr) {
+                    div.style.backgroundColor = 'var(--bg-hover, #f0f0f0)';
+                    div.style.border = '1px solid var(--accent, #4e54c8)';
+                    div.style.borderRadius = '8px';
+                    div.classList.add('calendar-day-selected');
+                }
+
+                // Add click listener to filter
+                div.addEventListener('click', () => {
+                    if (typeof _filters !== 'undefined') {
+                        if (_filters.calendarDate === dateStr) {
+                            _filters.calendarDate = null; // Toggle off
+                            div.style.backgroundColor = '';
+                            div.style.border = '';
+                            div.style.borderRadius = '';
+                            div.classList.remove('calendar-day-selected');
+                        } else {
+                            // Reset any previously selected day
+                            document.querySelectorAll('.calendar-day-selected').forEach(el => {
+                                el.style.backgroundColor = '';
+                                el.style.border = '';
+                                el.style.borderRadius = '';
+                                el.classList.remove('calendar-day-selected');
+                            });
+                            
+                            _filters.calendarDate = dateStr; // Toggle on
+                            div.style.backgroundColor = 'var(--bg-hover, #f0f0f0)';
+                            div.style.border = '1px solid var(--accent, #4e54c8)';
+                            div.style.borderRadius = '8px';
+                            div.classList.add('calendar-day-selected');
+                        }
+                        
+                        if (typeof _scheduleSearch === 'function') {
+                            _scheduleSearch(true);
+                        } else if (typeof _applyFilters === 'function') {
+                            _applyFilters();
+                        }
+                        if (typeof _updateClearBtn === 'function') _updateClearBtn();
+                    }
+                });
+                
+                calendarGrid.appendChild(div);
             }
-        });
-        
-        calendarGrid.appendChild(div);
-    }
+        })
+        .catch(err => console.error("Error fetching calendar dates:", err));
 }
 
 window.clearCalendarSelection = function() {

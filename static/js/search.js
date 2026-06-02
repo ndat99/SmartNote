@@ -62,6 +62,8 @@ function _buildParams(page) {
     params.set('page', page || _currentPage);
 
     if (q) params.set('q', q);
+    
+    if (_filters.calendarDate) params.set('date', _filters.calendarDate);
 
     _filters.types.forEach(function(t)      { params.append('type',     t); });
     _filters.colors.forEach(function(c)     { params.append('color',    c); });
@@ -82,7 +84,8 @@ function _hasActiveSearch() {
         _filters.colors.size > 0 ||
         _filters.priorities.size > 0 ||
         _filters.categories.size > 0 ||
-        _filters.task;
+        _filters.task ||
+        _filters.calendarDate !== null;
 }
 
 /* ══════════════════════════════════════════

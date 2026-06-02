@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 
 PRIORITY_CHOICES = [
@@ -128,3 +128,27 @@ def delete_note_image_file(sender, instance, **kwargs):
     """Automatically delete the physical file from storage when the NoteImage is deleted"""
     if instance.image:
         instance.image.delete(save=False)
+
+# NOTIFICATION
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    message = models.CharField(max_length=255)
+    note = models.ForeignKey(Note, on_delete=models.CASCADE, null=True, blank=True)
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Notification for {self.user.username}: {self.message}"
+
+@receiver(post_save, sender=Notification)
+def limit_notifications(sender, instance, created, **kwargs):
+    """Giới hạn tối đa 20 thông báo mới nhất cho mỗi user để tránh rác DB."""
+    if created:
+        MAX_NOTIFICATIONS = 20
+        user_notifs = Notification.objects.filter(user=instance.user)
+        if user_notifs.count() > MAX_NOTIFICATIONS:
+            ids_to_keep = list(user_notifs.values_list('id', flat=True)[:MAX_NOTIFICATIONS])
+            user_notifs.exclude(id__in=ids_to_keep).delete()
