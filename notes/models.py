@@ -128,3 +128,17 @@ def delete_note_image_file(sender, instance, **kwargs):
     """Automatically delete the physical file from storage when the NoteImage is deleted"""
     if instance.image:
         instance.image.delete(save=False)
+
+# NOTIFICATION
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    message = models.CharField(max_length=255)
+    note = models.ForeignKey(Note, on_delete=models.CASCADE, null=True, blank=True)
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Notification for {self.user.username}: {self.message}"

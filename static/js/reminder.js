@@ -426,6 +426,7 @@ async function _checkDueReminders() {
                 _showBrowserNotification(note);
                 _showReminderToast(`🔔 Nhắc nhở: ${note.title}`, 'reminder', note.id);
             });
+            if (typeof fetchNotifications === 'function') fetchNotifications();
         }
     } catch (err) {
         // Silent fail — không làm phiền user

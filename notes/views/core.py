@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.core.paginator import Paginator
 from datetime import timedelta
-from notes.models import Note, Category, ChecklistItem, NoteImage
+from notes.models import Note, Category, ChecklistItem, NoteImage, Notification
 from django.db.models import Prefetch, Q
 from django.utils import timezone
 import json
@@ -56,6 +56,13 @@ def home(request):
 
             thread = threading.Thread(target=run_ai_background, args=(note.id, title, content))
             thread.start()
+
+            # Báo log hoạt động tạo ghi chú
+            Notification.objects.create(
+                user=request.user,
+                message=f"📝 Đã tạo ghi chú: {title or '(Không tiêu đề)'}",
+                note=note
+            )
 
         return redirect('home')
 

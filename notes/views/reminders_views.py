@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from datetime import timedelta
-from notes.models import Note, Category, ChecklistItem, NoteImage
+from notes.models import Note, Category, ChecklistItem, NoteImage, Notification
 from django.db.models import Prefetch, Q
 from django.utils import timezone
 import json
@@ -109,5 +109,14 @@ def get_due_reminders(request):
 
     if ids_to_mark:
         Note.objects.filter(id__in=ids_to_mark).update(reminder_sent=True)
+        # Create notifications for the user
+        notifications = []
+        for note in due_notes:
+            notifications.append(Notification(
+                user=request.user,
+                message=f"⏰ Lời nhắc: {note.title or '(Không tiêu đề)'}",
+                note=note
+            ))
+        Notification.objects.bulk_create(notifications)
 
     return JsonResponse({'reminders': reminders})

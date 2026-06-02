@@ -9,3 +9,5 @@ from .images import add_note_images, delete_note_image
 from .reminders_views import reminders_page, set_reminder, get_due_reminders
 from .ai_views import run_ai_background
 from .utils import _auto_clean_trash, _checklist_prefetch
+
+from .notification_views import *

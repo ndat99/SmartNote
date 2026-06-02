@@ -37,6 +37,10 @@ urlpatterns = [
     path('reminder/<int:note_id>/', views.set_reminder, name='set_reminder'),
     path('api/reminders/due/', views.get_due_reminders, name='get_due_reminders'),
 
+    # Notification endpoints
+    path('api/notifications/', views.get_notifications, name='get_notifications'),
+    path('api/notifications/mark-read/', views.mark_notifications_read, name='mark_notifications_read'),
+
     # Search API
     path('api/search/', views.search_notes, name='search_notes'),
     path('api/calendar-dates/', views.get_calendar_dates, name='get_calendar_dates'),

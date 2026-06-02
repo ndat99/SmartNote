@@ -34,6 +34,7 @@ async function deleteNote(noteId, triggerEl) {
             setTimeout(() => {
                 cardWrapper?.remove();
                 _cleanEmptySections();
+                if (typeof fetchNotifications === 'function') fetchNotifications();
             }, 200);
         } else {
             if (card) { card.style.opacity = ''; card.style.transform = ''; }
@@ -246,6 +247,8 @@ function closeKeepModal() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRFToken': _csrf() },
         body: JSON.stringify(body),
+    }).then(res => res.json()).then(data => {
+        if (data.ok && data.has_changed && typeof fetchNotifications === 'function') fetchNotifications();
     }).catch(err => console.error('[Modal] Lưu thất bại:', err));
 
     document.getElementById('keepModal').classList.remove('show');

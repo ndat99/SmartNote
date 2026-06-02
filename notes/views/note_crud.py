@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from datetime import timedelta
-from notes.models import Note, Category, ChecklistItem, NoteImage
+from notes.models import Note, Category, ChecklistItem, NoteImage, Notification
 from django.db.models import Prefetch, Q
 from django.utils import timezone
 import json
@@ -20,11 +20,26 @@ def update_note(request, note_id):
     except Exception:
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
-    note.title   = data.get('title',   note.title)
-    note.content = data.get('content', note.content)
+    old_title = note.title
+    old_content = note.content
+
+    new_title = data.get('title', note.title)
+    new_content = data.get('content', note.content)
+
+    has_changed = (old_title != new_title) or (old_content != new_content)
+
+    note.title = new_title
+    note.content = new_content
     note.save(update_fields=['title', 'content', 'updated_at'])
 
-    return JsonResponse({'ok': True})
+    if has_changed:
+        Notification.objects.create(
+            user=request.user,
+            message=f"✏️ Đã cập nhật ghi chú: {note.title or '(Không tiêu đề)'}",
+            note=note
+        )
+
+    return JsonResponse({'ok': True, 'has_changed': has_changed})
 
 
 def update_note_meta(request, note_id):
@@ -103,6 +118,12 @@ def delete_note(request, note_id):
     note.is_deleted = True
     note.deleted_at = timezone.now()
     note.save(update_fields=['is_deleted', 'deleted_at'])
+    
+    Notification.objects.create(
+        user=request.user,
+        message=f"🗑️ Đã chuyển vào thùng rác: {note.title or '(Không tiêu đề)'}",
+        note=None
+    )
     if request.method == 'POST':
         return JsonResponse({'ok': True})
     return redirect('home')
@@ -113,12 +134,25 @@ def restore_note(request, note_id):
     note.is_deleted = False
     note.deleted_at = None
     note.save()
+    
+    Notification.objects.create(
+        user=request.user,
+        message=f"♻️ Đã khôi phục ghi chú: {note.title or '(Không tiêu đề)'}",
+        note=note
+    )
     return redirect('trash')
 
 
 def hard_delete_note(request, note_id):
     note = get_object_or_404(Note, id=note_id, user=request.user)
+    title_to_log = note.title or '(Không tiêu đề)'
     note.delete()
+    
+    Notification.objects.create(
+        user=request.user,
+        message=f"🧨 Đã xóa vĩnh viễn ghi chú: {title_to_log}",
+        note=None
+    )
     return redirect('trash')
 
 
