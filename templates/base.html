@@ -50,6 +50,9 @@
 
     <div class="app-layout d-flex">
 
+        <!-- Mobile Sidebar Backdrop -->
+        <div class="mobile-sidebar-backdrop" id="mobileSidebarBackdrop" onclick="closeAllMobileSidebars()"></div>
+
         <!-- CỘT TRÁI: FILTER PANEL -->
         <div class="filter-panel d-flex flex-column" id="filterPanel"
             style="position: static; flex-shrink: 0; width: 270px; height: 100vh; border-right: none; background: transparent; padding-top: 20px;">
@@ -156,13 +159,20 @@
 
             <!-- HEADER (SPAN ACROSS CENTER AND RIGHT) -->
             <header class="app-header d-flex align-items-center justify-content-between px-4 py-4">
-                <div class="header-greeting">
-                    <h2 class="mb-1 fw-bold" id="greetingText"
-                        style="font-family: 'Pangolin', cursive; color: var(--text); font-size: 1.75rem;">
-                        Chào buổi sáng, {{ user.get_full_name|default:user.username }} ✌︎︎
-                    </h2>
-                    <p class="text-muted mb-0" style="font-size: 0.95rem;">Hôm nay là một ngày tuyệt để ghi lại điều gì
-                        đó.</p>
+                <div class="header-greeting d-flex align-items-center gap-3">
+                    <button class="btn d-lg-none p-2 border-0 shadow-sm rounded-circle d-flex align-items-center justify-content-center" 
+                            style="width: 44px; height: 44px; background: var(--surface);" 
+                            onclick="toggleMobileSidebar()">
+                        <i class="ph ph-list" style="font-size: 1.5rem; color: var(--text);"></i>
+                    </button>
+                    <div>
+                        <h2 class="mb-1 fw-bold" id="greetingText"
+                            style="font-family: 'Pangolin', cursive; color: var(--text); font-size: 1.75rem;">
+                            Chào buổi sáng, {{ user.get_full_name|default:user.username }} ✌︎︎
+                        </h2>
+                        <p class="text-muted mb-0 d-none d-md-block" style="font-size: 0.95rem;">Hôm nay là một ngày tuyệt để ghi lại điều gì
+                            đó.</p>
+                    </div>
                 </div>
 
                 <div class="header-actions d-flex align-items-center gap-3">
@@ -171,6 +181,12 @@
                         onclick="openCreateNoteModal()" onmouseover="this.style.opacity='0.9'"
                         onmouseout="this.style.opacity='1'">
                         <i class="ph ph-plus fw-bold"></i> Ghi chú mới <i class="ph ph-pencil-simple ms-1"></i>
+                    </button>
+                    
+                    <button class="btn d-lg-none p-2 border-0 shadow-sm rounded-circle d-flex align-items-center justify-content-center" 
+                            style="width: 44px; height: 44px; background: var(--surface);" 
+                            onclick="toggleMobileRightSidebar()">
+                        <i class="ph ph-sidebar-simple" style="font-size: 1.5rem; color: var(--text);"></i>
                     </button>
 
                     <div class="dropdown">
@@ -238,7 +254,7 @@
                 </main>
 
                 <!-- CỘT PHẢI -->
-                <aside class="right-sidebar d-flex flex-column gap-4 flex-shrink-0"
+                <aside class="right-sidebar d-flex flex-column gap-4 flex-shrink-0" id="rightSidebar"
                     style="width: 290px; padding: 0 24px 32px 16px; overflow-y: auto;">
 
                     <!-- NAV LIST -->
@@ -431,6 +447,40 @@
                 }
             });
         })();
+
+        function toggleMobileSidebar() {
+            const filterPanel = document.getElementById('filterPanel');
+            const rightSidebar = document.getElementById('rightSidebar');
+            const backdrop = document.getElementById('mobileSidebarBackdrop');
+            if (filterPanel.classList.contains('mobile-open')) {
+                filterPanel.classList.remove('mobile-open');
+                backdrop.classList.remove('show');
+            } else {
+                rightSidebar.classList.remove('mobile-open');
+                filterPanel.classList.add('mobile-open');
+                backdrop.classList.add('show');
+            }
+        }
+
+        function toggleMobileRightSidebar() {
+            const filterPanel = document.getElementById('filterPanel');
+            const rightSidebar = document.getElementById('rightSidebar');
+            const backdrop = document.getElementById('mobileSidebarBackdrop');
+            if (rightSidebar.classList.contains('mobile-open')) {
+                rightSidebar.classList.remove('mobile-open');
+                backdrop.classList.remove('show');
+            } else {
+                filterPanel.classList.remove('mobile-open');
+                rightSidebar.classList.add('mobile-open');
+                backdrop.classList.add('show');
+            }
+        }
+
+        function closeAllMobileSidebars() {
+            document.getElementById('filterPanel').classList.remove('mobile-open');
+            document.getElementById('rightSidebar').classList.remove('mobile-open');
+            document.getElementById('mobileSidebarBackdrop').classList.remove('show');
+        }
     </script>
     {% block extra_js %}{% endblock %}
 </body>

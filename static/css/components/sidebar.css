@@ -290,3 +290,41 @@
 .filter-color-dot[data-color="brown"] {
     background: #f2e8dc;
 }
+
+/* ─── Mobile Sidebar Backdrop & Responsive ─── */
+.mobile-sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1040;
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-sidebar-backdrop.show {
+    display: block;
+    opacity: 1;
+}
+
+@media (max-width: 991px) {
+    .filter-panel {
+        position: fixed !important;
+        top: 0 !important;
+        left: -280px !important;
+        width: 270px !important;
+        height: 100vh !important;
+        background-color: var(--surface) !important;
+        z-index: 1050 !important;
+        transition: left 0.3s ease !important;
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .filter-panel.mobile-open {
+        left: 0 !important;
+    }
+}

@@ -121,3 +121,53 @@ a {
     background: var(--surface);
     border-radius: 16px;
 }
+
+/* ─── Responsive Adjustments ─── */
+@media (max-width: 991px) {
+    .app-layout {
+        overflow: auto !important;
+        flex-direction: column;
+    }
+    .app-center-column {
+        overflow: visible !important;
+        flex-grow: 1;
+    }
+    .app-center-column > .d-flex {
+        flex-direction: column !important;
+        overflow: visible !important;
+    }
+    .main-content {
+        padding: 16px 16px 32px 16px !important;
+        overflow: visible !important;
+    }
+    .right-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        right: -320px !important;
+        width: 290px !important;
+        height: 100vh !important;
+        background-color: var(--surface) !important;
+        z-index: 1050 !important;
+        transition: right 0.3s ease !important;
+        box-shadow: -4px 0 15px rgba(0, 0, 0, 0.05) !important;
+        padding: 20px 16px 32px 16px !important;
+        overflow-y: auto !important;
+    }
+
+    .right-sidebar.mobile-open {
+        right: 0 !important;
+    }
+    .app-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 16px;
+        padding: 16px !important;
+    }
+    .app-header .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    #greetingText {
+        font-size: 1.4rem !important;
+    }
+}

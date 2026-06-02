@@ -1,0 +1,3074 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2026-02-27T17:06:43.475Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "1",
+    "object_repr": "Study (System)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2026-02-27T17:09:52.889Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "BTVN",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2026-03-04T06:49:52.713Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "17",
+    "object_repr": "đi chợ",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2026-03-04T06:49:52.713Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "16",
+    "object_repr": "đi chợ",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2026-03-04T06:49:52.713Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "15",
+    "object_repr": "đi chợ",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2026-03-04T06:49:52.713Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "14",
+    "object_repr": "tập gym",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2026-03-04T06:49:52.713Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "13",
+    "object_repr": "tập gym",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2026-03-04T06:49:52.713Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "12",
+    "object_repr": "tập gym",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2026-03-04T06:49:52.713Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "11",
+    "object_repr": "học bài",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2026-03-04T06:49:52.713Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "10",
+    "object_repr": "tập gym",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2026-03-04T06:49:52.713Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "9",
+    "object_repr": "Đi chợ",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2026-03-04T06:49:52.713Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "8",
+    "object_repr": "ádsa",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2026-03-04T06:49:52.713Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "5",
+    "object_repr": "Note ID: 5",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2026-03-04T06:49:52.713Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "2",
+    "object_repr": "ádandjka",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2026-03-04T06:50:43.892Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "18",
+    "object_repr": "tập gym",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Priority\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2026-03-04T06:53:36.688Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "BTVN",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Is task source\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2026-03-04T06:56:12.239Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "2",
+    "object_repr": "Shopping (nguyen_ang_anh)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2026-03-04T07:12:28.305Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "20",
+    "object_repr": "BTVN",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2026-03-04T07:12:28.305Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "19",
+    "object_repr": "làm bài tập về nhà",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 20,
+  "fields": {
+    "action_time": "2026-03-04T07:12:28.305Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "18",
+    "object_repr": "tập gym",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 21,
+  "fields": {
+    "action_time": "2026-03-04T07:12:28.305Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "7",
+    "object_repr": "dfasâcscascascascasc âcvdavadvasvasccasdcn               ákcnajkcnsakljcnasklcnaslkcnascnkasfnaslkfnasldfnasnfklasfasfas",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 22,
+  "fields": {
+    "action_time": "2026-03-04T07:12:28.305Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "6",
+    "object_repr": "âcscascascascasc",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 23,
+  "fields": {
+    "action_time": "2026-03-04T07:12:28.305Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "4",
+    "object_repr": "Đi chợ",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 24,
+  "fields": {
+    "action_time": "2026-03-04T07:12:28.305Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "3",
+    "object_repr": "Làm bài tập",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 25,
+  "fields": {
+    "action_time": "2026-03-04T07:12:28.305Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "BTVN",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 26,
+  "fields": {
+    "action_time": "2026-03-04T07:19:56.492Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "3",
+    "object_repr": "Study (nguyen_ang_anh)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 27,
+  "fields": {
+    "action_time": "2026-03-04T07:23:02.921Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "2",
+    "object_repr": "Shopping (nguyen_ang_anh)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 28,
+  "fields": {
+    "action_time": "2026-03-04T07:23:16.806Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "4",
+    "object_repr": "Fitness (nguyen_ang_anh)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 29,
+  "fields": {
+    "action_time": "2026-03-04T07:23:57.221Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "24",
+    "object_repr": "Note ID: 24",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 30,
+  "fields": {
+    "action_time": "2026-03-04T07:23:57.221Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "23",
+    "object_repr": "Note ID: 23",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 31,
+  "fields": {
+    "action_time": "2026-03-04T07:23:57.221Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "22",
+    "object_repr": "Mua đồ cho mẹ",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 32,
+  "fields": {
+    "action_time": "2026-03-04T07:23:57.221Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "21",
+    "object_repr": "Làm bài tập",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 33,
+  "fields": {
+    "action_time": "2026-03-04T07:31:27.197Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "6",
+    "object_repr": "Work (System)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 34,
+  "fields": {
+    "action_time": "2026-03-04T07:31:43.797Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "7",
+    "object_repr": "Personal (System)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 35,
+  "fields": {
+    "action_time": "2026-03-04T07:31:51.307Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "8",
+    "object_repr": "Health (System)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 36,
+  "fields": {
+    "action_time": "2026-03-04T07:31:56.575Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "9",
+    "object_repr": "Finance (System)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 37,
+  "fields": {
+    "action_time": "2026-03-04T07:32:00.836Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "10",
+    "object_repr": "Home (System)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 38,
+  "fields": {
+    "action_time": "2026-03-04T07:32:08.864Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "11",
+    "object_repr": "Entertainment (System)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 39,
+  "fields": {
+    "action_time": "2026-03-04T07:32:17.390Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "12",
+    "object_repr": "Travel (System)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 40,
+  "fields": {
+    "action_time": "2026-03-04T07:32:21.666Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "13",
+    "object_repr": "Ideas (System)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 41,
+  "fields": {
+    "action_time": "2026-03-04T07:48:57.847Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "26",
+    "object_repr": "Note ID: 26",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 42,
+  "fields": {
+    "action_time": "2026-03-04T07:57:54.317Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "28",
+    "object_repr": "sóc lọ",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 43,
+  "fields": {
+    "action_time": "2026-03-04T16:11:48.064Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "36",
+    "object_repr": "Xem đá banh",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Is task source\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 44,
+  "fields": {
+    "action_time": "2026-03-04T16:13:41.639Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "25",
+    "object_repr": "Note ID: 25",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Priority\", \"Is task source\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 45,
+  "fields": {
+    "action_time": "2026-03-04T16:14:14.489Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "25",
+    "object_repr": "Note ID: 25",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Priority source\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 46,
+  "fields": {
+    "action_time": "2026-03-04T16:14:42.844Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "25",
+    "object_repr": "Note ID: 25",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 47,
+  "fields": {
+    "action_time": "2026-03-04T16:16:16.466Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "37",
+    "object_repr": "Xem đá bóng",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Priority\", \"Priority source\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 48,
+  "fields": {
+    "action_time": "2026-03-04T16:21:45.117Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "37",
+    "object_repr": "Xem đá bóng",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Priority source\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 49,
+  "fields": {
+    "action_time": "2026-03-04T16:22:19.695Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "25",
+    "object_repr": "Note ID: 25",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 50,
+  "fields": {
+    "action_time": "2026-03-04T16:24:16.090Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "36",
+    "object_repr": "Xem đá banh",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 51,
+  "fields": {
+    "action_time": "2026-03-08T16:28:21.482Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "18",
+    "object_repr": "Utilities (admin)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 52,
+  "fields": {
+    "action_time": "2026-03-08T16:28:42.008Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "17",
+    "object_repr": "Notes (admin)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$AsIbmdWkXi0TLbt9tGpiYu$HcIdlXv92ktxftpxkX5QkzMOsBkKPbvViL55lSASijs=",
+    "last_login": "2026-05-30T07:57:44.886Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-02-27T17:02:00.818Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$cr703IaMLhCQ6YJpSy9C80$iW2PJidY9dy7Eazkd6xwHCUsuJRqXz1TwCwVY4oEKY8=",
+    "last_login": "2026-03-04T09:51:23.897Z",
+    "is_superuser": false,
+    "username": "tien",
+    "first_name": "",
+    "last_name": "",
+    "email": "tien@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-02-28T16:26:15.683Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "!SiZwzyUewIYvkIuvwu8TtGJrJhWsvJESOMU1szFF",
+    "last_login": "2026-05-30T09:51:38.987Z",
+    "is_superuser": false,
+    "username": "nguyen_ang_anh",
+    "first_name": "Nguyễn Đăng Anh",
+    "last_name": "Tiến",
+    "email": "nguyentrongtai1602@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-03T00:46:36.857Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "!XpLgoZpxTD1eW8Z8zq6JpAdXK0sB37QSxQCHVvAn",
+    "last_login": "2026-04-21T01:08:37.571Z",
+    "is_superuser": false,
+    "username": "tien2",
+    "first_name": "Tiến",
+    "last_name": "Nguyễn Đăng Anh",
+    "email": "ndat1602.vip@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-03T00:57:38.763Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 5,
+  "fields": {
+    "password": "!ZwQLfvOgqOy6Ncr4k0j0POzIGbBYfpbNpNhneeii",
+    "last_login": "2026-03-03T14:15:28.389Z",
+    "is_superuser": false,
+    "username": "tien61",
+    "first_name": "Tiến",
+    "last_name": "Nguyễn Đăng Anh",
+    "email": "ndatien191@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-03T14:15:28.319Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 6,
+  "fields": {
+    "password": "!R2OPyquLxXcGvCn7uQJKrqUUytWtMOeOVYfPpvZa",
+    "last_login": "2026-03-16T14:56:05.321Z",
+    "is_superuser": false,
+    "username": "nguyen_ang_anh7",
+    "first_name": "Nguyễn Đăng Anh",
+    "last_name": "Tiến",
+    "email": "nguyendanganhtien1602@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-04T07:58:53.092Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$9NTIZH4qa4gkWV9zymQTd3$b9VerebJIDytnIvoXnfAmp97xFYRJurzmuVWGrT4q70=",
+    "last_login": "2026-03-04T16:08:27.986Z",
+    "is_superuser": false,
+    "username": "ahihi",
+    "first_name": "",
+    "last_name": "",
+    "email": "ahihihihi@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-04T09:53:26.111Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "2j4u2eu5lgv6g64j6gfnxtgdbseqksaq",
+  "fields": {
+    "session_data": ".eJxVjMEOgjAQRP-lZ9N0oVDWm_4IWXa3KZGUxJaT8d8Fw0GP82bmvcxIW03jVvQ5zmKuBszll03ED81HQctyYEvM65ar_W7OutjbnjTXmanOa76frz9VopJ2D0LjlZQdYsROEHrfq4J3JN4FFQjYON_SEEMLQui6TiIDTRgGYQrm_QGu9TxP:1vxotL:XgolaxrTWyTFLAYFtHq-iIsPeiv2ynq8_xYRLoblDwk",
+    "expire_date": "2026-03-18T16:16:07.482Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "4gmoyxy98p536vcrtq87imeodq8pmhuy",
+  "fields": {
+    "session_data": ".eJxVkMFuhDAMRP_FZ4QSEgjm1v5GVSFvYkTUJaxwUFut9t-72XLhZs2Mn0ZzB_J-3VMeac8zpxw95bimceE8r0Fg-LjD_w0D3Ejke90CVEAZBu2csaiU6WvTYINtV8EuvCVa-JmmsMQEj88KXvCxWGMsHA0n7UL-i1Mx6Hotcn2Uql-Zw5b67VTx_fg6oWaS-clB3Vgm9gpxwjag7mzHrK2iYJXjoB02yhrqJ2d0IFRtGyav6YKuD55cgQqLlCX45xa3XxjU4w-zq2Sd:1w1Nm2:lJfIrVqDYk4Hm7-6sW3odDOP3WiKj-eQFNBGLVrq9Co",
+    "expire_date": "2026-03-28T12:07:18.357Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "90yitvrt1ymc8cd87qrg0qdqhq6jdz90",
+  "fields": {
+    "session_data": ".eJxVkMFuhDAMRP_FZ4TiJBDCrf2Nqoq8iRGoEFYkqK1W--8lWy7crJnxszUPIO_XPWZHex455slTntboFs7jGhL0Hw_4n6GHO6X0vW4BKqAMPRqjWqNEi7VSGhU2FeyJt0gLH2kKyxTh-VnBC-6K5abCQbhoN_JfHItB81zk-nyqfmVOO9Vvlxffz60LaqQ0HhyLUjOxF9YOtgkWW90yoxYUtDAc0FgptKJuMAoDWdE0YfBIN2u64MkUaOKUShP8c5-2X-hFBTOl7PJ23HB-ZopnBZ1E2dZGaqnw-QcNJG85:1w2BkE:FFjOAptVU28C4SUqD_YBKa4PeCSwCuHZPR1JN3XjQgU",
+    "expire_date": "2026-03-30T17:28:46.799Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "gdr75kximzg9c00ajdgecucjh2nko128",
+  "fields": {
+    "session_data": ".eJxVkMFugzAQRP9lzwh5sY0xt-Y3ogpt7EVYDQZho7aK8u-NUy7cVjOzT6N5ADm37DEPtOeJYw6OcljiMHOeFp-gvz7g_4YeVkrpe9k8VEAZejSmaWWHWtZSCoVWV7An3iLN_EqTn0OE52cFb_hQrCEUDsJJu5H74lgMut-LXB-l6nfmsFP9cap4Ob5OqInS9OJYbBQTO2HtaLW32KqWGZUgr4Rhj8Y2QknqRiPRkxVa-9Eh3azpvCNToIlTKkvwzxq2X-jF8w-q4GST:1vxo9x:AZ7Cg0KaLxczbfh0_wU8FgUjHb0MJtolddoS3LBTVx0",
+    "expire_date": "2026-03-18T15:29:13.355Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "gw1uke2bsj1wqx3rxn6i0ctdxrma8mbp",
+  "fields": {
+    "session_data": ".eJxVkMFuhDAMRP_FZ4SSkGw23NrfqKrImxgRFcIKB7XVav-9ZMuFmzUzfh75ARjCsuXicSsj5ZIClrRkP1MZl8jQfzzgf4Ye7sj8vawRGsACvbTWGHXRF90qIYwwDWxMa8aZ9jDGOWV4fjbwYvtq-VQxEk7aDcMX5WrgNFW5PTq1r8xhc_t2avh-bJ1QI_K4c5xUmpCCcG5wJjq5dySSWmDUwlKU1imhO7wOtpMRnTAmDkHizdlrDGgrlIm5PoJ-7mn9hV40MCEXX9b9hg8TYT5_QBljuucfwJpvDg:1w9vXc:gzkM86UsLfaxUGgW_smd_y-3ucixcBNOdLbF11zH7NU",
+    "expire_date": "2026-04-21T01:47:44.257Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "hzdf2otaj8g658tq94ez6ar77yex2eo7",
+  "fields": {
+    "session_data": ".eJxVkE1uhTAMhO-SNULkh5C8XXuNqoqMYx6oKalI6AZx9wYeXbCzxjOfPN5YijhBAMS4ztmlDJkSe2x7xf41WPNIc54Q8hRn9015jL54Pjb2mtnjTmElm9mDd6bhUmlraqu11FZV7GeJv5OnpUSeMT4DFe86HQTOm0ZaJVppWyW5kkZ1nO2fFTsPcGuixZ1OyW5aD_hF87GAEA65vs6oT8-1TvXbrcb7lbqhRkhj4YieE4FGblvSIHTvuUIcEE1fegjvB-Wl6awBwkFL9KLVhKC1AknYQ4EGSNnlpfAcBoL59Q3FJbe65l1ju0bsf-mgfNA:1wUQns:sBDhvLFucpRsRblL2Fk2r76fQOddQg-2lkeQpm8pLHo",
+    "expire_date": "2026-06-16T15:13:16.255Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "mkirn7lxdr9qfodikvok8ubquh421jyb",
+  "fields": {
+    "session_data": ".eJytkM1qwzAQhN9FZ2MsS15buaX0j0ILpfRUilmvNomJagVLzqEh7145TQ--9yZ2RvPt7EkETz06JPLTENsQMXIQq5Oo1-P3ZF7Xx9vbt2qCR7H6OInD6IlD0oXz234QmbAYUayGyblMHPbELXnL7ZHHftPz-KucM1nXTamNqmReVAag_MzE3tzV4f3rpTiMz_cPT81_ALSGXJeVLLX-PGfirxVOccdD7Alj74f2i-PO23AB_r4Tb3GHxMUoVtdUMEVeNYU2MpsXPPZ2Bout91vHyTr1c4CURaFMoitTaSW1anQtxTk1vfDbKfDYXpxKLGYd0p6HWUDn5nF-3SK_eK5yyNeLFjfXX4uoHYZdyik7yYxA0lQMWEJnpSbaEDUdgCqt3Wirmto0yLQBRbasgAkBNCqmDlOowxDbOKa8lhzjsDgGgIRCqvMP1X25-w:1wLLyc:YZ566fwyhei0Rpl_uQKCcu-WgSCYLsAWqEy9wUlm1i8",
+    "expire_date": "2026-05-22T14:14:50.748Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "nesfb8alzuad42wqxddv94z3i1m4pyq9",
+  "fields": {
+    "session_data": ".eJytzU0LgjAcgPHv8j-LzDmaeitC6yJWB8EQWXPVcDlfpgbid0_oK3h8eA6_GXrNJVOMcz3UpugNM6KHYIYwarNqipP0xJPs8JYQ3GdoOs1Fv35Q-iVrsKBkhkFQD0pZ0FRcFFyXohhFJ59SdP-zWA6lHiY-ptTeUYKR7-UWxBM7y72XmvCWHb8XvIXgutQmLl5rBZB3pZ-w1SjNRhT5j20A33ZchBAh-bL8AIYxZ5Q:1wLLsx:7d7hsaTm5kzT5DghEYRnua1t-_ns8rKHBh3gCUGagig",
+    "expire_date": "2026-05-22T14:08:59.130Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "r61zq7o2bnlod8vqqtdaswc14lozfjty",
+  "fields": {
+    "session_data": ".eJxVkM1ugzAQhN9lzwjZYDDm1l4qVZXyAFWENvYSaIiNsEl_It69JqGVcvJqZ_3NaK7gne5xQK3dbEPjAwbyUF9BfuzejmL38qMur8ennYT6_Qrj5DT5qMPgjr2FBAwGhNrOw5DAeNLUaGeoudDUtz1Nd2VJuJSirMoiZ6nIc5bJYr8k8GeKc-jIhl5j6J1tzhQ6Z_zN8D5HvxG9_3STiZYYoP4HVmnF4sOzBGZPk8UzxWs055hu2Sdwgzer1PQrh8PD7oD6RHYVcBjWdbqFSm83m-zTp4eIz9uvB1SHvoscxTNBSJop1arCKF6KkogLhkYwSYZLlTGRY9XKnBtUrChMqzkelKyMRrlCfex4bYK-xn76hpolMKAPTZiiR6MHQrtVoLjgMi0rlotcLL_OLJgp:1w6QJ7:HiXQMZyUHd5XgBXEPP282Fzm-4-jNDI-oV3pFEu-spU",
+    "expire_date": "2026-04-11T09:50:17.755Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "s627plynoz8xc1z39p94iu3bcajjm404",
+  "fields": {
+    "session_data": ".eJxVkMFuhDAMRP_FZ4RiEgjh1v5GVSFvYkTUJaxwUFut9t-72XLhZs2Mn0ZzB_J-3VMeac8zpxw95bimceE8r0Fg-LjD_w0D3Ejke90CVEAZBrS26Qxq1DX2ukHVV7ALb4kWfqYpLDHB47OCF3ws1hgLB-GkXch_cSoGXa9Fro9S9Stz2FK_nSq-H18n1EwyPzkOG8PEXjk3uTY47EzHjEZRMMpyQOsaZTT1k9UYyKm2DZNHujjbB0-2QIVFyhL8c4vbLwzq8Qeh42SJ:1vxoyv:EM2mYjAXFF9nzKQjD3Uo4bR4OrbdvLor5EZJxizX7nI",
+    "expire_date": "2026-03-18T16:21:53.202Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "s7tnp5g7ldnred1nqsq4nk27chlbvf86",
+  "fields": {
+    "session_data": ".eJxVkMFuhDAMRP_FZ4SSEAjm1v5GVSFvbETUJaxIUFut9t-72XLhZs2Mn0ZzB_J-3WMeac-zxBw85bDGcZE8r5xg-LjD_w0D3Cil73VjqIAyDNo5g6ozxtRNY3trTAV7ki3SIs808RIiPD4reMHHYo2hcDSctAv5L4nFoOu1yPVRqn5lDjvVb6eK78fXCTVTmp8c1MYKiVeIE7aMurOdiLaK2ConrB0aZRvqJ9doJlRty5PXdEHXsydXoElSKkvIzy1svzCoxx-nU2SP:1vyvte:v5ZTA31TkJibUx8Bm_IRwepHAp-nzGKfkCCZz2J1CdE",
+    "expire_date": "2026-03-21T17:57:02.349Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ui6d1vhwv2tpqt5zgs6xhsbn5jaw1vlx",
+  "fields": {
+    "session_data": ".eJxVkE1uhTAMhO-SNUL5J7xde42qioxjHqiUVCR0g7h7A48u2FnjmU8ebyxFHGECxLjO2acMmRJ7bHvF_jVY80BzHhHyGGf_TXmIoXg-Nvaa2eNOYSWb2UM0jgvpuOO1aZRW3FTsZ4m_Y6ClRJ4xPicq3nU8CEJwrlotjWqNVkIrpxvB9s-KnQf4NdHiT6diN60D_KL5WMA0HXJ9nVGfnmud6rdbjfcrdUMNkIbCkZ0gAouiNWRB2i4Ijdgjus5aJUPodVCuaR0Q9lZhkMYSgrUaFGEHBTpByj4vhedxIphf39CiFBN1axtl9z_SgXxP:1wUQn0:W8WZn8hR_0YQdETLLYoXAAEiJ1JgFRq-Soo6mm8PvUY",
+    "expire_date": "2026-06-16T15:12:22.495Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "yt6e2hyuzn7hta9it77h3ikk98ghlbc7",
+  "fields": {
+    "session_data": ".eJxVkMFugzAMht_FZ4RwKAnhtr3GNCEnMSJaGyoctE1V332k44JP9v_bny0_gLxftpRH2vLMKUdPOS5pvHGelyAwfDzgP4cB7iTyvawBKqAMAxqjNOoLmtrafq_aCjbhNdGN9-4cOcHzs4IXeyzOGAtGwUlz5L84FYOu1yLXx031q-ewpX47Xfh-TJ1QM8m8cxx32GrbGO561E4pPYUG2RO1E3cBvTGOe2qIrJ8cXtp9RwlFGHqrpgIVFimP4J97XH9haJ5_ku5lqQ:1vxiVO:1sl0-gmIs2VCBs1dzl7mE1xukke1LntJBg-PygYkPNY",
+    "expire_date": "2026-03-18T09:26:58.042Z"
+  }
+},
+{
+  "model": "sites.site",
+  "pk": 1,
+  "fields": {
+    "domain": "example.com",
+    "name": "example.com"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 1,
+  "fields": {
+    "name": "Study",
+    "user": null,
+    "created_at": "2026-02-27T17:06:43.474Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 5,
+  "fields": {
+    "name": "Shopping",
+    "user": 1,
+    "created_at": "2026-03-04T07:18:30.604Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 6,
+  "fields": {
+    "name": "Work",
+    "user": null,
+    "created_at": "2026-03-04T07:31:27.194Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 7,
+  "fields": {
+    "name": "Personal",
+    "user": null,
+    "created_at": "2026-03-04T07:31:43.795Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 8,
+  "fields": {
+    "name": "Health",
+    "user": null,
+    "created_at": "2026-03-04T07:31:51.306Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 9,
+  "fields": {
+    "name": "Finance",
+    "user": null,
+    "created_at": "2026-03-04T07:31:56.573Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 10,
+  "fields": {
+    "name": "Home",
+    "user": null,
+    "created_at": "2026-03-04T07:32:00.835Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 11,
+  "fields": {
+    "name": "Entertainment",
+    "user": null,
+    "created_at": "2026-03-04T07:32:08.863Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 12,
+  "fields": {
+    "name": "Travel",
+    "user": null,
+    "created_at": "2026-03-04T07:32:17.389Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 13,
+  "fields": {
+    "name": "Ideas",
+    "user": null,
+    "created_at": "2026-03-04T07:32:21.663Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 14,
+  "fields": {
+    "name": "Security",
+    "user": 4,
+    "created_at": "2026-03-05T06:52:38.952Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 15,
+  "fields": {
+    "name": "Threat",
+    "user": 4,
+    "created_at": "2026-03-05T06:54:58.851Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 16,
+  "fields": {
+    "name": "Disclaimer",
+    "user": 1,
+    "created_at": "2026-03-05T06:58:08.295Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 19,
+  "fields": {
+    "name": "Vớ vẩn",
+    "user": 1,
+    "created_at": "2026-03-14T15:50:49.917Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 20,
+  "fields": {
+    "name": "Alphabet",
+    "user": 1,
+    "created_at": "2026-03-14T15:53:46.432Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 21,
+  "fields": {
+    "name": "Greeting",
+    "user": 1,
+    "created_at": "2026-03-14T16:08:26.378Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 22,
+  "fields": {
+    "name": "Abc",
+    "user": 3,
+    "created_at": "2026-03-16T09:49:51.040Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 23,
+  "fields": {
+    "name": "Shopping",
+    "user": 3,
+    "created_at": "2026-03-17T00:30:44.059Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 24,
+  "fields": {
+    "name": "Number",
+    "user": 3,
+    "created_at": "2026-03-27T17:45:51.538Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 25,
+  "fields": {
+    "name": "Algorithm",
+    "user": 3,
+    "created_at": "2026-03-28T08:55:15.605Z"
+  }
+},
+{
+  "model": "notes.category",
+  "pk": 28,
+  "fields": {
+    "name": "Other",
+    "user": 3,
+    "created_at": "2026-05-30T13:37:11.287Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 29,
+  "fields": {
+    "user": 6,
+    "category": null,
+    "note_type": "note",
+    "title": "dsadasdas",
+    "content": "dầgasgqefqwfqdfqwfqw",
+    "background_color": "#FFFFFF",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": null,
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": false,
+    "is_task_source": "AI",
+    "created_at": "2026-03-04T08:01:22.163Z",
+    "updated_at": "2026-03-04T08:01:25.803Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 30,
+  "fields": {
+    "user": 6,
+    "category": 11,
+    "note_type": "note",
+    "title": "đi xem phim",
+    "content": "đi xem phim conan 17h ngày 8/3",
+    "background_color": "#FFFFFF",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": null,
+    "due_date": "2026-03-08T10:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-04T08:02:09.410Z",
+    "updated_at": "2026-03-04T08:02:12.562Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 31,
+  "fields": {
+    "user": 6,
+    "category": 7,
+    "note_type": "note",
+    "title": "code",
+    "content": "tối mai sang nhà code giúp thằng Thiện. haizzzz",
+    "background_color": "#FFFFFF",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": null,
+    "due_date": "2026-03-05T12:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-04T08:04:16.584Z",
+    "updated_at": "2026-03-04T08:04:23.523Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 32,
+  "fields": {
+    "user": 6,
+    "category": 1,
+    "note_type": "note",
+    "title": "code",
+    "content": "tối nay sang nhà code giúp thằng Thiện. haizzzz",
+    "background_color": "#FFFFFF",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": null,
+    "due_date": "2026-03-04T13:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-04T08:04:55.786Z",
+    "updated_at": "2026-03-04T08:05:05.333Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 33,
+  "fields": {
+    "user": 6,
+    "category": null,
+    "note_type": "note",
+    "title": "",
+    "content": "3 rưỡi sang nhà code giúp thằng Thiện. haizzzz",
+    "background_color": "#FFFFFF",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": null,
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": null,
+    "is_task_source": null,
+    "created_at": "2026-03-04T08:07:11.837Z",
+    "updated_at": "2026-03-04T08:07:11.837Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 34,
+  "fields": {
+    "user": 6,
+    "category": 7,
+    "note_type": "note",
+    "title": "",
+    "content": "4 rưỡi sang nhà code giúp thằng Thiện. haizzzz",
+    "background_color": "#FFFFFF",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": null,
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-04T08:38:42.568Z",
+    "updated_at": "2026-03-04T08:38:53.920Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 35,
+  "fields": {
+    "user": 2,
+    "category": 7,
+    "note_type": "note",
+    "title": "Đi chơi 8/3",
+    "content": "Thứ 6 qua nhà chở em người yêu đi chơi, ko qua là coi chừng",
+    "background_color": "#FFFFFF",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": "High",
+    "priority_source": null,
+    "due_date": "2026-03-06T11:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-04T09:30:20.780Z",
+    "updated_at": "2026-03-04T09:30:30.076Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 36,
+  "fields": {
+    "user": 1,
+    "category": 11,
+    "note_type": "note",
+    "title": "Xem đá banh",
+    "content": "3h15 sáng mai xem MU đá",
+    "background_color": "red",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": null,
+    "due_date": "2026-03-04T20:15:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "USER",
+    "created_at": "2026-03-04T16:08:58.377Z",
+    "updated_at": "2026-03-14T15:45:03.755Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 38,
+  "fields": {
+    "user": 4,
+    "category": 6,
+    "note_type": "note",
+    "title": "báo cáo",
+    "content": "tìm hiểu về model AI nhận diện khuôn mặt + làm slide thứ 7 báo cáo",
+    "background_color": "purple",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": "Medium",
+    "priority_source": "AI",
+    "due_date": "2026-03-07T16:59:59Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-05T00:29:56.462Z",
+    "updated_at": "2026-03-05T00:30:03.882Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 39,
+  "fields": {
+    "user": 4,
+    "category": 14,
+    "note_type": "note",
+    "title": "Giật gân",
+    "content": "Khủng bố Nhà Trắng lúc 3h chiều",
+    "background_color": "berry",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": "High",
+    "priority_source": "AI",
+    "due_date": "2026-03-05T08:00:00Z",
+    "due_date_source": "AI",
+    "is_task": false,
+    "is_task_source": "AI",
+    "created_at": "2026-03-05T06:52:32.654Z",
+    "updated_at": "2026-03-05T06:52:38.964Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 40,
+  "fields": {
+    "user": 4,
+    "category": 6,
+    "note_type": "note",
+    "title": "Giật gân",
+    "content": "Phát hiện tin vớ vẩn lúc 3h, 3h1p công bố",
+    "background_color": "red",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": "High",
+    "priority_source": "AI",
+    "due_date": "2026-03-04T20:01:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-05T06:53:49.662Z",
+    "updated_at": "2026-03-05T06:53:57.093Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 41,
+  "fields": {
+    "user": 4,
+    "category": 15,
+    "note_type": "note",
+    "title": "Nói xạo",
+    "content": "ném bom khủng bố tòa nhà chính phủ đêm nay",
+    "background_color": "blue",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": "High",
+    "priority_source": "AI",
+    "due_date": "2026-03-05T16:59:59Z",
+    "due_date_source": "AI",
+    "is_task": false,
+    "is_task_source": "AI",
+    "created_at": "2026-03-05T06:54:52.365Z",
+    "updated_at": "2026-03-05T06:54:58.858Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 43,
+  "fields": {
+    "user": 1,
+    "category": 10,
+    "note_type": "note",
+    "title": "Nấu chè bắp",
+    "content": "sáng mai nấu chè bắp",
+    "background_color": "teal",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": "2026-03-08T01:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-07T14:29:00.940Z",
+    "updated_at": "2026-03-14T15:26:40.682Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 44,
+  "fields": {
+    "user": 3,
+    "category": 1,
+    "note_type": "note",
+    "title": "ôn tập",
+    "content": "ôn bài kinh tế quản lý doanh nghiệp để thứ 4 thi",
+    "background_color": "yellow",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": "High",
+    "priority_source": "AI",
+    "due_date": "2026-03-11T16:59:59Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-08T08:56:38.825Z",
+    "updated_at": "2026-05-30T13:42:23.737Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 45,
+  "fields": {
+    "user": 1,
+    "category": 20,
+    "note_type": "note",
+    "title": "",
+    "content": "abcdefghijklmnopqrstuvwxyz",
+    "background_color": "indigo",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": false,
+    "is_task_source": "USER",
+    "created_at": "2026-03-08T16:21:20.602Z",
+    "updated_at": "2026-03-14T15:53:47.381Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 47,
+  "fields": {
+    "user": 1,
+    "category": 7,
+    "note_type": "note",
+    "title": "todolist",
+    "content": "ngày mai:\nđi chợ\nnấu ăn\nđi học\nlàm bài\nchơi game\nđi ngủ",
+    "background_color": "teal",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": "2026-03-08T17:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-08T16:29:48.525Z",
+    "updated_at": "2026-03-28T08:31:19.958Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 48,
+  "fields": {
+    "user": 1,
+    "category": 1,
+    "note_type": "note",
+    "title": "",
+    "content": "học bài ôn thi và báo cáo",
+    "background_color": "orange",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-09T15:29:15.509Z",
+    "updated_at": "2026-03-14T12:18:27.434Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 49,
+  "fields": {
+    "user": 1,
+    "category": 7,
+    "note_type": "note",
+    "title": "",
+    "content": "đi chợ\nnấu cơm\nhọc bài\ntắm rửa\năn tối\nchơi game\nđi ngủ",
+    "background_color": "brown",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-09T15:37:33.907Z",
+    "updated_at": "2026-03-14T15:27:46.966Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 50,
+  "fields": {
+    "user": 4,
+    "category": 1,
+    "note_type": "note",
+    "title": "",
+    "content": "học bài ngày mai thi",
+    "background_color": "#FFFFFF",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": "High",
+    "priority_source": "AI",
+    "due_date": "2026-03-11T01:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-10T05:00:07.692Z",
+    "updated_at": "2026-03-10T05:00:11.105Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 51,
+  "fields": {
+    "user": 1,
+    "category": null,
+    "note_type": "checklist",
+    "title": "",
+    "content": "",
+    "background_color": "orange",
+    "is_pinned": true,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": false,
+    "is_task_source": "AI",
+    "created_at": "2026-03-14T09:31:24.887Z",
+    "updated_at": "2026-03-14T16:27:23.347Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 52,
+  "fields": {
+    "user": 1,
+    "category": 19,
+    "note_type": "checklist",
+    "title": "hihi",
+    "content": "",
+    "background_color": "indigo",
+    "is_pinned": true,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": true,
+    "is_task_source": "USER",
+    "created_at": "2026-03-14T09:31:53.752Z",
+    "updated_at": "2026-03-28T08:33:35.943Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 53,
+  "fields": {
+    "user": 1,
+    "category": null,
+    "note_type": "checklist",
+    "title": "hmm",
+    "content": "",
+    "background_color": "purple",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": false,
+    "is_task_source": "AI",
+    "created_at": "2026-03-14T11:10:42.071Z",
+    "updated_at": "2026-03-14T15:39:21.319Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 55,
+  "fields": {
+    "user": 1,
+    "category": 7,
+    "note_type": "note",
+    "title": "",
+    "content": "tắm rửa ăn cơm",
+    "background_color": "blue",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-14T11:27:45.851Z",
+    "updated_at": "2026-03-14T16:09:44.237Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 56,
+  "fields": {
+    "user": 1,
+    "category": 11,
+    "note_type": "note",
+    "title": "",
+    "content": "tối mai 9h xem MU hẹ hẹ",
+    "background_color": "teal",
+    "is_pinned": true,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": "2026-03-14T14:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "USER",
+    "created_at": "2026-03-14T11:33:34.911Z",
+    "updated_at": "2026-03-16T17:28:40.350Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 57,
+  "fields": {
+    "user": 1,
+    "category": 7,
+    "note_type": "note",
+    "title": "abc",
+    "content": "hihihihihi",
+    "background_color": "pink",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": false,
+    "is_task_source": "USER",
+    "created_at": "2026-03-14T13:19:17.289Z",
+    "updated_at": "2026-03-14T17:22:43.882Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 58,
+  "fields": {
+    "user": 1,
+    "category": 1,
+    "note_type": "note",
+    "title": "",
+    "content": "đêm nay phải hoàn thành bài tập ngay",
+    "background_color": "brown",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": null,
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": true,
+    "is_task_source": "USER",
+    "created_at": "2026-03-14T15:42:11.319Z",
+    "updated_at": "2026-03-14T17:27:22.287Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 59,
+  "fields": {
+    "user": 1,
+    "category": 1,
+    "note_type": "note",
+    "title": "",
+    "content": "phải nộp bài trước đêm nay",
+    "background_color": "blue",
+    "is_pinned": true,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": "High",
+    "priority_source": "AI",
+    "due_date": "2026-03-14T16:59:59Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "USER",
+    "created_at": "2026-03-14T15:56:42.363Z",
+    "updated_at": "2026-03-28T08:32:58.596Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 61,
+  "fields": {
+    "user": 3,
+    "category": 13,
+    "note_type": "checklist",
+    "title": "task remaining",
+    "content": "",
+    "background_color": "indigo",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": true,
+    "is_task_source": "USER",
+    "created_at": "2026-03-14T16:39:55.350Z",
+    "updated_at": "2026-05-30T14:26:00.694Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 62,
+  "fields": {
+    "user": 3,
+    "category": 11,
+    "note_type": "note",
+    "title": "",
+    "content": "xem bóng đá rồi đi ngủ",
+    "background_color": "blue",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": false,
+    "is_task_source": "USER",
+    "created_at": "2026-03-14T17:38:27.136Z",
+    "updated_at": "2026-05-30T09:59:02.182Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 63,
+  "fields": {
+    "user": 6,
+    "category": 7,
+    "note_type": "note",
+    "title": "",
+    "content": "mai qua nhà người yêu chơi",
+    "background_color": "pink",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": "2026-03-16T17:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "USER",
+    "created_at": "2026-03-16T14:56:23.776Z",
+    "updated_at": "2026-03-16T14:56:56.367Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 65,
+  "fields": {
+    "user": 3,
+    "category": 23,
+    "note_type": "note",
+    "title": "",
+    "content": "10h đi chợ mua đồ ăn trưa",
+    "background_color": "teal",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": "medium",
+    "priority_source": "USER",
+    "due_date": "2026-03-17T03:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "USER",
+    "created_at": "2026-03-17T00:30:41.268Z",
+    "updated_at": "2026-05-30T09:58:58.976Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 66,
+  "fields": {
+    "user": 3,
+    "category": 1,
+    "note_type": "note",
+    "title": "abc",
+    "content": "Hoàn thành báo cáo TTNT để thứ 5 thuyết trình",
+    "background_color": "purple",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": "High",
+    "priority_source": "AI",
+    "due_date": "2026-03-19T16:59:59Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "USER",
+    "created_at": "2026-03-17T00:32:51.224Z",
+    "updated_at": "2026-06-02T15:29:48.675Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 69,
+  "fields": {
+    "user": 3,
+    "category": null,
+    "note_type": "note",
+    "title": "haizz",
+    "content": "sáng mai 8h lên trường làm slide TTNT",
+    "background_color": "purple",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": true,
+    "deleted_at": "2026-05-30T09:22:14.373Z",
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": "2026-03-28T01:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "USER",
+    "created_at": "2026-03-26T18:05:48.723Z",
+    "updated_at": "2026-04-21T01:31:16.659Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 70,
+  "fields": {
+    "user": 3,
+    "category": 1,
+    "note_type": "note",
+    "title": "Báo cáo",
+    "content": "Mai 7h sáng báo cáo tiến độ PBL",
+    "background_color": "red",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": "high",
+    "priority_source": "USER",
+    "due_date": "2026-03-29T00:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-03-27T17:16:55.670Z",
+    "updated_at": "2026-04-07T01:40:01.121Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 71,
+  "fields": {
+    "user": 3,
+    "category": 24,
+    "note_type": "checklist",
+    "title": "",
+    "content": "",
+    "background_color": "brown",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": false,
+    "is_task_source": "AI",
+    "created_at": "2026-03-27T17:45:47.968Z",
+    "updated_at": "2026-05-30T13:52:50.993Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 72,
+  "fields": {
+    "user": 3,
+    "category": null,
+    "note_type": "note",
+    "title": "abc",
+    "content": "def",
+    "background_color": "",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": false,
+    "is_task_source": "USER",
+    "created_at": "2026-03-28T01:08:21.759Z",
+    "updated_at": "2026-06-02T15:29:40.711Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 73,
+  "fields": {
+    "user": 3,
+    "category": 13,
+    "note_type": "note",
+    "title": "hình nền",
+    "content": "lưu background\nsấkfnsakfjanfkasnfkasnfklasfnklasnfa\nĐasafnsakflasnflasnflasf\nẦmkaslfnoqhdowiqdhsdjnalskdasldmnas",
+    "background_color": "blue",
+    "is_pinned": true,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": false,
+    "is_task_source": "AI",
+    "created_at": "2026-03-28T01:08:58.228Z",
+    "updated_at": "2026-06-02T15:30:35.086Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 75,
+  "fields": {
+    "user": 1,
+    "category": 13,
+    "note_type": "note",
+    "title": "",
+    "content": "Charlie kirk angry bird",
+    "background_color": "berry",
+    "is_pinned": true,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": false,
+    "is_task_source": "AI",
+    "created_at": "2026-03-28T08:29:27.923Z",
+    "updated_at": "2026-04-21T01:16:26.011Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 76,
+  "fields": {
+    "user": 3,
+    "category": null,
+    "note_type": "note",
+    "title": "",
+    "content": "hello",
+    "background_color": "indigo",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": true,
+    "deleted_at": "2026-05-30T09:22:56.527Z",
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": null,
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": true,
+    "is_task_source": "USER",
+    "created_at": "2026-03-28T08:53:01.795Z",
+    "updated_at": "2026-05-30T07:21:21.492Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 78,
+  "fields": {
+    "user": 3,
+    "category": 7,
+    "note_type": "note",
+    "title": "",
+    "content": "kỷ niệm đi đá bóng",
+    "background_color": "teal",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": false,
+    "is_task_source": "AI",
+    "created_at": "2026-03-28T09:01:36.235Z",
+    "updated_at": "2026-06-02T15:29:46.905Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 79,
+  "fields": {
+    "user": 3,
+    "category": 6,
+    "note_type": "checklist",
+    "title": "todo PBL",
+    "content": "",
+    "background_color": "blue",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": "high",
+    "priority_source": "USER",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": true,
+    "is_task_source": "USER",
+    "created_at": "2026-04-09T15:17:04.261Z",
+    "updated_at": "2026-05-30T14:25:51.990Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 81,
+  "fields": {
+    "user": 3,
+    "category": 6,
+    "note_type": "note",
+    "title": "báo cáo",
+    "content": "hoàn thành báo cáo qlda trước ngày mốt",
+    "background_color": "yellow",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": "2026-05-28T14:25:00Z",
+    "reminder_sent": true,
+    "priority": "medium",
+    "priority_source": "USER",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-05-28T14:23:51.209Z",
+    "updated_at": "2026-05-30T13:42:28.362Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 82,
+  "fields": {
+    "user": 3,
+    "category": 1,
+    "note_type": "note",
+    "title": "hoàn thành PBL",
+    "content": "lắp ráp mô hình PBL",
+    "background_color": "orange",
+    "is_pinned": true,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": null,
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": null,
+    "due_date_source": null,
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-05-30T06:58:15.433Z",
+    "updated_at": "2026-06-02T15:30:36.456Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 88,
+  "fields": {
+    "user": 3,
+    "category": 1,
+    "note_type": "note",
+    "title": "LT Python",
+    "content": "Hoàn thành dự án Django trước ngày 3/6",
+    "background_color": "pink",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": "2026-06-02T17:00:00Z",
+    "reminder_sent": true,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": "2026-06-02T17:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-05-30T13:38:33.102Z",
+    "updated_at": "2026-06-02T15:27:31.380Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 89,
+  "fields": {
+    "user": 3,
+    "category": 1,
+    "note_type": "checklist",
+    "title": "thi ck",
+    "content": "",
+    "background_color": "",
+    "is_pinned": true,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": "2026-06-10T17:00:00Z",
+    "reminder_sent": false,
+    "priority": "High",
+    "priority_source": "AI",
+    "due_date": "2026-06-02T17:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-05-30T13:59:31.323Z",
+    "updated_at": "2026-06-02T15:27:34.913Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 90,
+  "fields": {
+    "user": 3,
+    "category": 6,
+    "note_type": "note",
+    "title": "báo cáo project python",
+    "content": "sáng mai báo cáo python lúc 7h",
+    "background_color": "",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": true,
+    "deleted_at": "2026-06-02T15:28:03.945Z",
+    "reminder_at": "2026-06-03T00:00:00Z",
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": "2026-06-03T00:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-06-02T15:25:10.638Z",
+    "updated_at": "2026-06-02T15:27:29.748Z"
+  }
+},
+{
+  "model": "notes.note",
+  "pk": 91,
+  "fields": {
+    "user": 3,
+    "category": 6,
+    "note_type": "note",
+    "title": "báo cáo project python",
+    "content": "sáng mai 7h",
+    "background_color": "teal",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "deleted_at": null,
+    "reminder_at": "2026-06-03T00:00:00Z",
+    "reminder_sent": false,
+    "priority": null,
+    "priority_source": "AI",
+    "due_date": "2026-06-03T00:00:00Z",
+    "due_date_source": "AI",
+    "is_task": true,
+    "is_task_source": "AI",
+    "created_at": "2026-06-02T15:27:05.786Z",
+    "updated_at": "2026-06-02T15:29:28.627Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 1,
+  "fields": {
+    "note": 51,
+    "content": "abc",
+    "is_checked": true,
+    "position": 0,
+    "created_at": "2026-03-14T09:31:24.897Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 2,
+  "fields": {
+    "note": 52,
+    "content": "abc",
+    "is_checked": true,
+    "position": 0,
+    "created_at": "2026-03-14T09:31:53.763Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 3,
+  "fields": {
+    "note": 52,
+    "content": "def",
+    "is_checked": true,
+    "position": 1,
+    "created_at": "2026-03-14T09:31:53.768Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 5,
+  "fields": {
+    "note": 51,
+    "content": "123",
+    "is_checked": true,
+    "position": 2,
+    "created_at": "2026-03-14T09:33:12.606Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 6,
+  "fields": {
+    "note": 51,
+    "content": "456",
+    "is_checked": true,
+    "position": 1,
+    "created_at": "2026-03-14T09:33:14.298Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 7,
+  "fields": {
+    "note": 51,
+    "content": "789",
+    "is_checked": true,
+    "position": 3,
+    "created_at": "2026-03-14T09:33:15.837Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 8,
+  "fields": {
+    "note": 53,
+    "content": "123",
+    "is_checked": true,
+    "position": 2,
+    "created_at": "2026-03-14T11:10:42.086Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 9,
+  "fields": {
+    "note": 53,
+    "content": "456",
+    "is_checked": true,
+    "position": 1,
+    "created_at": "2026-03-14T11:10:42.092Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 11,
+  "fields": {
+    "note": 53,
+    "content": "aaa",
+    "is_checked": true,
+    "position": 3,
+    "created_at": "2026-03-14T11:10:42.102Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 12,
+  "fields": {
+    "note": 53,
+    "content": "bbb",
+    "is_checked": false,
+    "position": 0,
+    "created_at": "2026-03-14T11:12:10.759Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 13,
+  "fields": {
+    "note": 52,
+    "content": "ghi",
+    "is_checked": true,
+    "position": 2,
+    "created_at": "2026-03-14T15:54:07.697Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 14,
+  "fields": {
+    "note": 52,
+    "content": "jkl",
+    "is_checked": true,
+    "position": 3,
+    "created_at": "2026-03-14T15:54:10.263Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 15,
+  "fields": {
+    "note": 52,
+    "content": "mno",
+    "is_checked": true,
+    "position": 4,
+    "created_at": "2026-03-14T15:54:12.839Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 16,
+  "fields": {
+    "note": 52,
+    "content": "pqr",
+    "is_checked": false,
+    "position": 5,
+    "created_at": "2026-03-14T15:54:16.298Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 17,
+  "fields": {
+    "note": 52,
+    "content": "stu",
+    "is_checked": false,
+    "position": 6,
+    "created_at": "2026-03-14T15:54:27.368Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 18,
+  "fields": {
+    "note": 52,
+    "content": "vwx",
+    "is_checked": false,
+    "position": 7,
+    "created_at": "2026-03-14T15:54:50.974Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 19,
+  "fields": {
+    "note": 52,
+    "content": "yz",
+    "is_checked": false,
+    "position": 8,
+    "created_at": "2026-03-14T15:54:53.983Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 20,
+  "fields": {
+    "note": 61,
+    "content": "tìm kiếm (search bar)",
+    "is_checked": true,
+    "position": 4,
+    "created_at": "2026-03-14T16:39:55.359Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 21,
+  "fields": {
+    "note": 61,
+    "content": "lời nhắc",
+    "is_checked": true,
+    "position": 1,
+    "created_at": "2026-03-14T16:39:55.364Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 23,
+  "fields": {
+    "note": 61,
+    "content": "kho lưu trữ",
+    "is_checked": true,
+    "position": 5,
+    "created_at": "2026-03-14T16:40:56.333Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 24,
+  "fields": {
+    "note": 61,
+    "content": "Note image",
+    "is_checked": true,
+    "position": 3,
+    "created_at": "2026-03-17T00:39:27.815Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 25,
+  "fields": {
+    "note": 61,
+    "content": "Note priority",
+    "is_checked": true,
+    "position": 2,
+    "created_at": "2026-03-17T00:39:56.280Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 27,
+  "fields": {
+    "note": 61,
+    "content": "Sửa giao diện",
+    "is_checked": true,
+    "position": 6,
+    "created_at": "2026-03-27T17:16:24.993Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 28,
+  "fields": {
+    "note": 71,
+    "content": "123",
+    "is_checked": true,
+    "position": 2,
+    "created_at": "2026-03-27T17:45:47.975Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 29,
+  "fields": {
+    "note": 71,
+    "content": "456",
+    "is_checked": true,
+    "position": 3,
+    "created_at": "2026-03-27T17:45:47.982Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 30,
+  "fields": {
+    "note": 71,
+    "content": "789",
+    "is_checked": false,
+    "position": 4,
+    "created_at": "2026-03-27T17:45:47.987Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 31,
+  "fields": {
+    "note": 71,
+    "content": "000",
+    "is_checked": false,
+    "position": 0,
+    "created_at": "2026-03-28T10:01:01.688Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 32,
+  "fields": {
+    "note": 71,
+    "content": "111",
+    "is_checked": false,
+    "position": 1,
+    "created_at": "2026-03-28T10:01:16.469Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 33,
+  "fields": {
+    "note": 79,
+    "content": "làm web điều khiển các thiết bị trên wokki",
+    "is_checked": false,
+    "position": 0,
+    "created_at": "2026-04-09T15:17:04.281Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 34,
+  "fields": {
+    "note": 79,
+    "content": "xây dựng phần mềm xử lý ảnh từ camera",
+    "is_checked": true,
+    "position": 1,
+    "created_at": "2026-04-09T15:17:04.288Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 35,
+  "fields": {
+    "note": 79,
+    "content": "hoàn thiện model face recognition",
+    "is_checked": true,
+    "position": 2,
+    "created_at": "2026-04-09T15:17:04.295Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 37,
+  "fields": {
+    "note": 79,
+    "content": "hoàn thiện slide",
+    "is_checked": true,
+    "position": 3,
+    "created_at": "2026-04-09T15:18:44.552Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 38,
+  "fields": {
+    "note": 61,
+    "content": "Chỉnh sửa nhãn",
+    "is_checked": false,
+    "position": 0,
+    "created_at": "2026-04-21T01:33:37.364Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 39,
+  "fields": {
+    "note": 89,
+    "content": "19/5: TTNT",
+    "is_checked": true,
+    "position": 0,
+    "created_at": "2026-05-30T13:59:31.331Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 40,
+  "fields": {
+    "note": 89,
+    "content": "21/5: KT&QLDN",
+    "is_checked": true,
+    "position": 1,
+    "created_at": "2026-05-30T13:59:31.336Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 41,
+  "fields": {
+    "note": 89,
+    "content": "24/5: VĐK",
+    "is_checked": true,
+    "position": 2,
+    "created_at": "2026-05-30T13:59:31.341Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 42,
+  "fields": {
+    "note": 89,
+    "content": "26/5: KHDL",
+    "is_checked": true,
+    "position": 3,
+    "created_at": "2026-05-30T13:59:31.347Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 43,
+  "fields": {
+    "note": 89,
+    "content": "3/6: LT Python",
+    "is_checked": false,
+    "position": 4,
+    "created_at": "2026-05-30T13:59:31.352Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 44,
+  "fields": {
+    "note": 89,
+    "content": "4/6: QLDA",
+    "is_checked": false,
+    "position": 5,
+    "created_at": "2026-05-30T14:00:01.915Z"
+  }
+},
+{
+  "model": "notes.checklistitem",
+  "pk": 45,
+  "fields": {
+    "note": 89,
+    "content": "11/6: PBL5",
+    "is_checked": false,
+    "position": 6,
+    "created_at": "2026-05-30T14:00:11.702Z"
+  }
+},
+{
+  "model": "notes.noteimage",
+  "pk": 1,
+  "fields": {
+    "note": 72,
+    "image": "note_images/il_1588xN.5028705157_nk07.jpg",
+    "ocr_text": null,
+    "created_at": "2026-03-28T01:08:21.779Z"
+  }
+},
+{
+  "model": "notes.noteimage",
+  "pk": 3,
+  "fields": {
+    "note": 73,
+    "image": "note_images/photorealistic-earth-planet.jpg",
+    "ocr_text": null,
+    "created_at": "2026-03-28T01:08:58.256Z"
+  }
+},
+{
+  "model": "notes.noteimage",
+  "pk": 13,
+  "fields": {
+    "note": 72,
+    "image": "note_images/abc.jpg",
+    "ocr_text": null,
+    "created_at": "2026-03-28T01:13:19.260Z"
+  }
+},
+{
+  "model": "notes.noteimage",
+  "pk": 14,
+  "fields": {
+    "note": 66,
+    "image": "note_images/vsthemes-org_4.jpg",
+    "ocr_text": null,
+    "created_at": "2026-03-28T01:24:24.514Z"
+  }
+},
+{
+  "model": "notes.noteimage",
+  "pk": 19,
+  "fields": {
+    "note": 75,
+    "image": "note_images/1000011637.png",
+    "ocr_text": null,
+    "created_at": "2026-03-28T08:29:27.935Z"
+  }
+},
+{
+  "model": "notes.noteimage",
+  "pk": 20,
+  "fields": {
+    "note": 62,
+    "image": "note_images/wp4729524.jpg",
+    "ocr_text": null,
+    "created_at": "2026-03-28T08:40:10.956Z"
+  }
+},
+{
+  "model": "notes.noteimage",
+  "pk": 23,
+  "fields": {
+    "note": 76,
+    "image": "note_images/vsthemes-org_4_3xyTadR.jpg",
+    "ocr_text": null,
+    "created_at": "2026-03-28T09:19:57.040Z"
+  }
+},
+{
+  "model": "notes.noteimage",
+  "pk": 24,
+  "fields": {
+    "note": 76,
+    "image": "note_images/vurv3exb_kLaLE5Y.png",
+    "ocr_text": null,
+    "created_at": "2026-03-28T09:19:57.063Z"
+  }
+},
+{
+  "model": "notes.noteimage",
+  "pk": 25,
+  "fields": {
+    "note": 76,
+    "image": "note_images/rectangle-neon-3840x2160-16717_lyWBOl9.jpg",
+    "ocr_text": null,
+    "created_at": "2026-03-28T09:20:24.905Z"
+  }
+},
+{
+  "model": "notes.noteimage",
+  "pk": 27,
+  "fields": {
+    "note": 78,
+    "image": "note_images/DSC03519.JPG",
+    "ocr_text": null,
+    "created_at": "2026-05-30T13:07:21.686Z"
+  }
+},
+{
+  "model": "notes.notification",
+  "pk": 1,
+  "fields": {
+    "user": 3,
+    "message": "📝 Đã tạo ghi chú: báo cáo project python",
+    "note": 91,
+    "is_read": true,
+    "created_at": "2026-06-02T15:27:05.797Z"
+  }
+},
+{
+  "model": "notes.notification",
+  "pk": 2,
+  "fields": {
+    "user": 3,
+    "message": "🗑️ Đã chuyển vào thùng rác: báo cáo project python",
+    "note": null,
+    "is_read": true,
+    "created_at": "2026-06-02T15:28:03.952Z"
+  }
+},
+{
+  "model": "notes.notification",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "message": "⏰ Lời nhắc: LT Python",
+    "note": 88,
+    "is_read": false,
+    "created_at": "2026-06-02T16:58:55.229Z"
+  }
+},
+{
+  "model": "account.emailaddress",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "email": "admin@gmail.com",
+    "verified": false,
+    "primary": false
+  }
+},
+{
+  "model": "account.emailaddress",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "email": "tien@gmail.com",
+    "verified": false,
+    "primary": true
+  }
+},
+{
+  "model": "account.emailaddress",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "email": "nguyentrongtai1602@gmail.com",
+    "verified": true,
+    "primary": true
+  }
+},
+{
+  "model": "account.emailaddress",
+  "pk": 4,
+  "fields": {
+    "user": 4,
+    "email": "ndat1602.vip@gmail.com",
+    "verified": true,
+    "primary": true
+  }
+},
+{
+  "model": "account.emailaddress",
+  "pk": 5,
+  "fields": {
+    "user": 5,
+    "email": "ndatien191@gmail.com",
+    "verified": true,
+    "primary": true
+  }
+},
+{
+  "model": "account.emailaddress",
+  "pk": 6,
+  "fields": {
+    "user": 6,
+    "email": "nguyendanganhtien1602@gmail.com",
+    "verified": true,
+    "primary": true
+  }
+},
+{
+  "model": "account.emailaddress",
+  "pk": 7,
+  "fields": {
+    "user": 7,
+    "email": "ahihihihi@gmail.com",
+    "verified": false,
+    "primary": true
+  }
+},
+{
+  "model": "socialaccount.socialaccount",
+  "pk": 1,
+  "fields": {
+    "user": 3,
+    "provider": "google",
+    "uid": "110039425395431438471",
+    "last_login": "2026-05-30T09:51:38.953Z",
+    "date_joined": "2026-03-03T00:46:36.916Z",
+    "extra_data": {
+      "aud": "956002233285-ospq7aare6nhhenklguk6cqsq4uliq87.apps.googleusercontent.com",
+      "azp": "956002233285-ospq7aare6nhhenklguk6cqsq4uliq87.apps.googleusercontent.com",
+      "exp": 1780138299,
+      "iat": 1780134699,
+      "iss": "https://accounts.google.com",
+      "sub": "110039425395431438471",
+      "name": "Nguyễn Đăng Anh Tiến",
+      "email": "nguyentrongtai1602@gmail.com",
+      "at_hash": "_1A4d8WO3YZ_8-SO1Gam9A",
+      "picture": "https://lh3.googleusercontent.com/a/ACg8ocJHauoK6USiHAxHxbHTCNYMH4-GcSrNr5fuguizhagZi6-Y9P8Q=s96-c",
+      "given_name": "Nguyễn Đăng Anh",
+      "family_name": "Tiến",
+      "email_verified": true
+    }
+  }
+},
+{
+  "model": "socialaccount.socialaccount",
+  "pk": 2,
+  "fields": {
+    "user": 4,
+    "provider": "google",
+    "uid": "104559623216164123643",
+    "last_login": "2026-04-21T01:08:37.538Z",
+    "date_joined": "2026-03-03T00:57:38.827Z",
+    "extra_data": {
+      "aud": "956002233285-ospq7aare6nhhenklguk6cqsq4uliq87.apps.googleusercontent.com",
+      "azp": "956002233285-ospq7aare6nhhenklguk6cqsq4uliq87.apps.googleusercontent.com",
+      "exp": 1776737317,
+      "iat": 1776733717,
+      "iss": "https://accounts.google.com",
+      "sub": "104559623216164123643",
+      "name": "Tiến Nguyễn Đăng Anh",
+      "email": "ndat1602.vip@gmail.com",
+      "at_hash": "Xq4mNd_1Kyi9iJFkSESkjw",
+      "picture": "https://lh3.googleusercontent.com/a/ACg8ocJZ9UbCXkxnucT0Z47Fj7l3-MHzXJBAlcy4Whs2F0Gv0JNm_sXB=s96-c",
+      "given_name": "Tiến",
+      "family_name": "Nguyễn Đăng Anh",
+      "email_verified": true
+    }
+  }
+},
+{
+  "model": "socialaccount.socialaccount",
+  "pk": 3,
+  "fields": {
+    "user": 5,
+    "provider": "google",
+    "uid": "104971668981855638303",
+    "last_login": "2026-03-03T14:15:28.349Z",
+    "date_joined": "2026-03-03T14:15:28.349Z",
+    "extra_data": {
+      "aud": "956002233285-ospq7aare6nhhenklguk6cqsq4uliq87.apps.googleusercontent.com",
+      "azp": "956002233285-ospq7aare6nhhenklguk6cqsq4uliq87.apps.googleusercontent.com",
+      "exp": 1772550928,
+      "iat": 1772547328,
+      "iss": "https://accounts.google.com",
+      "sub": "104971668981855638303",
+      "name": "Tiến Nguyễn Đăng Anh",
+      "email": "ndatien191@gmail.com",
+      "at_hash": "B_dEok_FZmAIJ2Y82I0GRQ",
+      "picture": "https://lh3.googleusercontent.com/a/ACg8ocImnHhJPeh6VT4EojU7B1StM-SENeks9sB8DqZvVsJz0FrCYrQ=s96-c",
+      "given_name": "Tiến",
+      "family_name": "Nguyễn Đăng Anh",
+      "email_verified": true
+    }
+  }
+},
+{
+  "model": "socialaccount.socialaccount",
+  "pk": 4,
+  "fields": {
+    "user": 6,
+    "provider": "google",
+    "uid": "108995698480732329995",
+    "last_login": "2026-03-16T14:56:05.291Z",
+    "date_joined": "2026-03-04T07:58:53.118Z",
+    "extra_data": {
+      "aud": "956002233285-ospq7aare6nhhenklguk6cqsq4uliq87.apps.googleusercontent.com",
+      "azp": "956002233285-ospq7aare6nhhenklguk6cqsq4uliq87.apps.googleusercontent.com",
+      "exp": 1773676564,
+      "iat": 1773672964,
+      "iss": "https://accounts.google.com",
+      "sub": "108995698480732329995",
+      "name": "Nguyễn Đăng Anh Tiến",
+      "email": "nguyendanganhtien1602@gmail.com",
+      "at_hash": "qAdr_xpye92i_GETzZSLOg",
+      "picture": "https://lh3.googleusercontent.com/a/ACg8ocLB9H6Bf8Z4liNd4yfjtYmlHvWBjxxWSOs9wrrKeatvgSiCgsZpUA=s96-c",
+      "given_name": "Nguyễn Đăng Anh",
+      "family_name": "Tiến",
+      "email_verified": true
+    }
+  }
+}
+]
