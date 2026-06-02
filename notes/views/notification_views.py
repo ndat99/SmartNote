@@ -7,8 +7,8 @@ import json
 
 @login_required
 def get_notifications(request):
-    """Lấy danh sách thông báo của user (tối đa 50 cái mới nhất)."""
-    notifications = Notification.objects.filter(user=request.user).select_related('note')[:50]
+    """Lấy danh sách thông báo của user (tối đa 20 cái mới nhất)."""
+    notifications = Notification.objects.filter(user=request.user).select_related('note')[:20]
     
     data = []
     unread_count = 0

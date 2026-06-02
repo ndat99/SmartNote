@@ -1,15 +1,15 @@
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from django.conf import settings
 import json
 from datetime import datetime
 
-# Cấu hình API Key
-genai.configure(api_key=settings.GEMINI_API_KEY)
+# Initialize client
+client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
 def analyze_note_with_ai(title, content):
     if not title and not content:
         return None
-    model = genai.GenerativeModel('gemini-2.5-flash')
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     note_text = ""
@@ -39,9 +39,12 @@ def analyze_note_with_ai(title, content):
     """
 
     try:
-        response = model.generate_content(
-            prompt,
-            generation_config={"response_mime_type": "application/json"}
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+            )
         )
         
         # Chuyển JSON string thành Dictionary của Python
