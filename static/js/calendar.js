@@ -83,11 +83,14 @@ function renderCalendar() {
                     div.querySelector('span').style.justifyContent = 'center';
                 }
 
+                div.classList.add('calendar-day');
+
                 // Highlight selected date
                 if (typeof _filters !== 'undefined' && _filters.calendarDate === dateStr) {
                     div.style.backgroundColor = 'var(--bg-hover, #f0f0f0)';
                     div.style.border = '1px solid var(--accent, #4e54c8)';
                     div.style.borderRadius = '8px';
+                    div.classList.add('calendar-day-selected');
                 }
 
                 // Add click listener to filter
@@ -95,10 +98,26 @@ function renderCalendar() {
                     if (typeof _filters !== 'undefined') {
                         if (_filters.calendarDate === dateStr) {
                             _filters.calendarDate = null; // Toggle off
+                            div.style.backgroundColor = '';
+                            div.style.border = '';
+                            div.style.borderRadius = '';
+                            div.classList.remove('calendar-day-selected');
                         } else {
+                            // Reset any previously selected day
+                            document.querySelectorAll('.calendar-day-selected').forEach(el => {
+                                el.style.backgroundColor = '';
+                                el.style.border = '';
+                                el.style.borderRadius = '';
+                                el.classList.remove('calendar-day-selected');
+                            });
+                            
                             _filters.calendarDate = dateStr; // Toggle on
+                            div.style.backgroundColor = 'var(--bg-hover, #f0f0f0)';
+                            div.style.border = '1px solid var(--accent, #4e54c8)';
+                            div.style.borderRadius = '8px';
+                            div.classList.add('calendar-day-selected');
                         }
-                        renderCalendar();
+                        
                         if (typeof _scheduleSearch === 'function') {
                             _scheduleSearch(true);
                         } else if (typeof _applyFilters === 'function') {

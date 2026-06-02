@@ -70,11 +70,19 @@ def set_reminder(request, note_id):
             dt = local_tz.localize(dt)
         note.reminder_at = dt
         note.reminder_sent = False  # Reset để gửi lại nếu đổi giờ
+        msg = f"⏰ Đã đặt nhắc nhở cho: {note.title or '(Không tiêu đề)'}"
     else:
         note.reminder_at = None
         note.reminder_sent = False
+        msg = f"⏰ Đã hủy nhắc nhở cho: {note.title or '(Không tiêu đề)'}"
 
     note.save(update_fields=['reminder_at', 'reminder_sent'])
+
+    Notification.objects.create(
+        user=request.user,
+        message=msg,
+        note=note
+    )
 
     return JsonResponse({
         'ok': True,
